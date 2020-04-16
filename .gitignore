@@ -1,0 +1,8 @@
+docs
+local_data
+*~
+*.o
+*.so
+.Rproj.user
+.Rhistory
+MsBackendMsp.Rproj

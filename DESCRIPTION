@@ -1,0 +1,48 @@
+Package: MsBackendMsp
+Title: Mass Spectrometry Data Backend for NIST msp Files
+Version: 0.0.1
+Authors@R: 
+    c(person(given = "Laurent", family = "Gatto",
+             role = c("aut", "cre"),
+             email = "laurent.gatto@uclouvain.be",
+             comment = c(ORCID = "0000-0002-1520-2268")),
+      person(given = "Johannes", family = "Rainer",
+             email = "Johannes.Rainer@eurac.edu",
+             role = "aut",
+             comment = c(ORCID = "0000-0002-6977-7147")),
+      person(given = "Sebastian", family = "Gibb",
+             comment = c(ORCID = "0000-0001-7406-4443"),
+             email = "mail@sebastiangibb.de",
+             role = "aut"))
+Description: Mass spectrometry (MS) data backend supporting import and
+	     handling of MS/MS spectra from NIST MSP Format
+	     (msp) files.
+Depends:
+    R (>= 3.5.0),
+    Spectra (>= 0.5.0)
+Imports:
+    BiocParallel,
+    S4Vectors,
+    IRanges,
+    methods    
+Suggests:
+    testthat,
+    knitr (>= 1.1.0),
+    roxygen2,
+    BiocStyle (>= 2.5.19),
+    rmarkdown
+Remotes:
+   RforMassSpectrometry/Spectra
+License: Artistic-2.0
+LazyData: yes
+Encoding: UTF-8
+VignetteBuilder: knitr
+BugReports: https://github.com/RforMassSpectrometry/MsBackendMsp/issues
+URL: https://github.com/RforMassSpectrometry/MsBackendMsp
+biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics
+Roxygen: list(markdown=TRUE)
+RoxygenNote: 7.1.0
+Collate: 
+    'hidden_aliases.R'
+    'MsBackendMsp.R'
+    'functions-msp.R'
