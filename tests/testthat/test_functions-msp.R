@@ -23,3 +23,9 @@ test_that(".read_msp works", {
     #                    "File193 Spectrum1944 scans: 2406",
     #                    "File193 Spectrum1968 scans: 2432"))
 })
+
+test_that(".read_lipidblast_msp works", {
+    f <- system.file("extdata/small-export-LipidBlast.msp", package = "MsBackendMsp")
+    res1 <- .read_msp(f)
+    expect(all(dim(res1)==c(5,8)), "Dimensionality should be 5,8")
+})

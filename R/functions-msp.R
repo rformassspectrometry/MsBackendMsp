@@ -21,7 +21,7 @@ if (FALSE) {
     f <- "/vol/R/BioC/devel/MsBackendMsp/inst/extdata/Spectrum.msp"
     f <- "/vol/R/BioC/devel/MsBackendMsp/inst/extdata/Spectrum2.msp"
     f <- "/vol/R/BioC/devel/MsBackendMsp/inst/extdata/msdial_pos.msp"
-    
+    f <- "/vol/R/BioC/devel/MsBackendMsp/inst/extdata/first-export-LipidBlast.msp"
     massbank <- .read_msp(f)
     orgmassbank <- ReadMspFile(f)
     
@@ -45,7 +45,9 @@ if (FALSE) {
         msp <- msp[-cmts]
 
     ## Find individual records
-    begin <- grep("^NAME:", msp)
+    begin <- grep("^NAME:", msp, ignore.case = TRUE)
+    stopifnot(!isEmpty(begin)) ## NO! DONT STOP ON ERROR! FIND OUT HOW EXCEPTIONS WORK!
+    
     end <- c(begin[-1], length(msp))
     
     n <- length(begin)
