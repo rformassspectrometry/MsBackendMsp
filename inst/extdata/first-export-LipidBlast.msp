@@ -1,0 +1,21 @@
+
+Name: ACar 4:0
+Synon: [M]+
+Synon: $:00in-source
+DB#: LipidBlast000001
+InChIKey: QWYFHHGCZUCMBN-UHFFFAOYSA-O
+Precursor_type: [M]+
+Spectrum_type: MS2
+PrecursorMZ: 232.15433
+Instrument_type: in-silico QTOF
+Instrument: SCIEX 5600
+Ion_mode: P
+Collision_energy: 45 V
+Formula: [C11H22NO4]+
+MW: 232
+ExactMass: 232.1543346040907
+Comments: "SMILES=CCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C11H21NO4/c1-5-6-11(15)16-9(7-10(13)14)8-12(2,3)4/h9H,5-8H2,1-4H3/p+1" "retention time=0.51" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.3431646471704717" "computed mass error=5.439758187435473E-4" "SPLASH=splash10-001r-7090000000-aa12589a2481560ea0d5" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"
+Num Peaks: 2
+85.02841 80.080080
+232.1543 100.000000
+

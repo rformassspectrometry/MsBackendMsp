@@ -1,19 +1,11 @@
 Package: MsBackendMsp
 Title: Mass Spectrometry Data Backend for NIST msp Files
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
-    c(person(given = "Laurent", family = "Gatto",
+    c(person(given = "Neumann", family = "Steffen",
              role = c("aut", "cre"),
-             email = "laurent.gatto@uclouvain.be",
-             comment = c(ORCID = "0000-0002-1520-2268")),
-      person(given = "Johannes", family = "Rainer",
-             email = "Johannes.Rainer@eurac.edu",
-             role = "aut",
-             comment = c(ORCID = "0000-0002-6977-7147")),
-      person(given = "Sebastian", family = "Gibb",
-             comment = c(ORCID = "0000-0001-7406-4443"),
-             email = "mail@sebastiangibb.de",
-             role = "aut"))
+             email = "sneumann@ipb-halle.de",
+             comment = c(ORCID = "0000-0002-7899-7192")))
 Description: Mass spectrometry (MS) data backend supporting import and
 	     handling of MS/MS spectra from NIST MSP Format
 	     (msp) files.
@@ -37,8 +29,8 @@ License: Artistic-2.0
 LazyData: yes
 Encoding: UTF-8
 VignetteBuilder: knitr
-BugReports: https://github.com/RforMassSpectrometry/MsBackendMsp/issues
-URL: https://github.com/RforMassSpectrometry/MsBackendMsp
+BugReports: https://github.com/sneumann/MsBackendMsp/issues
+URL: https://github.com/sneumann/MsBackendMsp
 biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics
 Roxygen: list(markdown=TRUE)
 RoxygenNote: 7.1.0

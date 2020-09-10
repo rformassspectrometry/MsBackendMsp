@@ -33,5 +33,5 @@ test_that("backendInitialize,MsBackendMsp works", {
     ## errors
     expect_error(backendInitialize(be), "'files' is mandatory")
     expect_error(backendInitialize(be, 4), "expected to be a character")
-    expect_error(backendInitialize(be, "a"), "a not found")
+    expect_error(suppressWarnings(backendInitialize(be, "a")), "a not found")
 })
