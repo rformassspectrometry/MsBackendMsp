@@ -20,6 +20,7 @@ if (FALSE) {
     f <- "/vol/R/BioC/devel/2018-03-09_14_10_01_pos_387850_nist_msms_HR.MSP"
     f <- "/vol/R/BioC/devel/MsBackendMsp/inst/extdata/Spectrum.msp"
     f <- "/vol/R/BioC/devel/MsBackendMsp/inst/extdata/Spectrum2.msp"
+    f <- "/vol/R/BioC/devel/MsBackendMsp/inst/extdata/msdial_pos.msp"
     
     massbank <- .read_msp(f)
     orgmassbank <- ReadMspFile(f)
@@ -90,7 +91,7 @@ if (FALSE) {
     r <- regexpr(":", desc, fixed = TRUE)
     desc <- setNames(substring(desc, r + 1L, nchar(desc)), substring(desc, 1L, r - 1L))
     name <- unname(desc["NAME"])
-    
+
     ## select only values of interest and convert to numeric
     voi <- c("RETENTIONTIME", "IONMODE", "PRECURSORMZ")
     desc <- setNames(as.numeric(desc[voi]), voi)
