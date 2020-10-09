@@ -91,18 +91,26 @@ if (FALSE) {
         ms <- matrix(numeric(), ncol = 2L)
 
     r <- regexpr(":", desc, fixed = TRUE)
-    desc <- setNames(substring(desc, r + 1L, nchar(desc)), substring(desc, 1L, r - 1L))
-    name <- unname(desc["NAME"])
+    desc <- setNames(substring(desc, r + 1L, nchar(desc)), tolower(substring(desc, 1L, r - 1L)))
+    name <- unname(desc["name"])
+    accession <- unname(desc["db#"])
+    formula <- unname(desc["formula"])
+    inchikey <- unname(desc["inchikey"])
+    adduct <- unname(desc["precursor_type"])
 
     ## select only values of interest and convert to numeric
-    voi <- c("RETENTIONTIME", "IONMODE", "PRECURSORMZ")
+    voi <- c("retentiontime", "ionmode", "precursormz")
     desc <- setNames(as.numeric(desc[voi]), voi)
     desc[is.na(desc[voi])] <- 0L
     
-    list(rtime = unname(desc["RETENTIONTIME"]),
-         precursorMz = unname(desc["PRECURSORMZ"]),
-         precursorCharge = unname(as.integer(desc["IONMODE"])),
+    list(rtime = unname(desc["retentiontime"]),
+         precursorMz = unname(desc["precursormz"]),
+         precursorCharge = unname(as.integer(desc["ionmode"])),
          mz = ms[, 1L],
          intensity = ms[, 2L],
-         name = name)
+         accession = accession,
+         name = name,
+         formula = formula,
+         inchikey = inchikey,
+         adduct = adduct)
 }
