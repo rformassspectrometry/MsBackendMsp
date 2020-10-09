@@ -33,7 +33,7 @@ BugReports: https://github.com/sneumann/MsBackendMsp/issues
 URL: https://github.com/sneumann/MsBackendMsp
 biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics
 Roxygen: list(markdown=TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate: 
     'hidden_aliases.R'
     'MsBackendMsp.R'
