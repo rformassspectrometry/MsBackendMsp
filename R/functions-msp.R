@@ -91,7 +91,7 @@ if (FALSE) {
         ms <- matrix(numeric(), ncol = 2L)
 
     r <- regexpr(":", desc, fixed = TRUE)
-    desc <- setNames(substring(desc, r + 1L, nchar(desc)), tolower(substring(desc, 1L, r - 1L)))
+    desc <- setNames(substring(desc, r + 2L, nchar(desc)), tolower(substring(desc, 1L, r - 1L)))
     name <- unname(desc["name"])
     accession <- unname(desc["db#"])
     formula <- unname(desc["formula"])
