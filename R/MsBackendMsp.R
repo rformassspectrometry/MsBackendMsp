@@ -69,7 +69,7 @@ setClass("MsBackendMsp",
                                readonly = FALSE,
                                version = "0.1"))
 
-#' @importMethodsFrom Spectra backendInitialize asDataFrame<- $<- $
+#' @importMethodsFrom Spectra backendInitialize spectraData<- $<- $
 #'
 #' @importFrom BiocParallel bpparam
 #'
@@ -103,7 +103,7 @@ setMethod("backendInitialize", signature = "MsBackendMsp",
               if (nonStop && length(files) > nrow(res))
                       warning("Import failed for ", length(files) - nrow(res),
                               " files")
-              asDataFrame(object) <- res
+              spectraData(object) <- res
               object$dataStorage <- "<memory>"
               object$centroided <- TRUE
               validObject(object)
