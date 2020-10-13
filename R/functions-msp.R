@@ -97,6 +97,7 @@ if (FALSE) {
     formula <- unname(desc["formula"])
     inchikey <- unname(desc["inchikey"])
     adduct <- unname(desc["precursor_type"])
+    exactmass <- unname(desc["exactmass"])
 
     ## select only values of interest and convert to numeric
     voi <- c("retentiontime", "ionmode", "precursormz")
@@ -112,5 +113,6 @@ if (FALSE) {
          name = name,
          formula = formula,
          inchikey = inchikey,
-         adduct = adduct)
+         adduct = adduct,
+         exactmass = exactmass)
 }
