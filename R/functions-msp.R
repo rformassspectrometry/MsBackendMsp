@@ -90,7 +90,8 @@ if (FALSE) {
     if (!length(ms))
         ms <- matrix(numeric(), ncol = 2L)
     
-    ms <- ms[order(ms[, 1L]),]
+    if(length(ms) > 2)
+        ms <- ms[order(ms[, 1L]),]
     
     r <- regexpr(":", desc, fixed = TRUE)
     desc <- setNames(substring(desc, r + 2L, nchar(desc)), tolower(substring(desc, 1L, r - 1L)))
