@@ -195,7 +195,7 @@ if (FALSE) {
 }
 
 
-#'
+#' This list defines the order and fields used for export
 #'
 #' @noRd
 .getEntries <- function() {
