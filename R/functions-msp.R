@@ -119,3 +119,98 @@ if (FALSE) {
          adduct = adduct,
          exactmass = exactmass)
 }
+
+#' @description
+#'
+#' Function to export a `Spectra` object in .msp format to `con`.
+#'
+#' @param x `Spectra`
+#'
+#' @param con output file.
+#'
+#' @param mapping named `character` vector that maps from `spectraVariables`
+#'    (i.e. `names(mapping)`) to the variable name that should be used in the
+#'    MGF file.
+#'
+#' @author Michael Witting
+#'
+#' @importMethodsFrom Spectra spectraVariables spectraNames spectraData
+#'
+#' @noRd
+.export_msp <- function(x, con = stdout(), mapping = spectraVariableMapping()) {
+    
+    if (class(con) == "character" && file.exists(con)) {
+        
+        message("Overwriting ", con, "!")
+        unlink(con)
+        
+    }
+    
+    if (class(con)[1] == "character") {
+        con <- file(description = con, open = "at")
+        on.exit(close(con))
+    }
+    
+    # custom cat function for writing of content
+    .cat <- function(..., file = con, sep = " ", append = TRUE) {
+        cat(..., file = file, sep = sep, append = append)
+    }
+    
+    
+    # iterate over all spectra
+    for(i in 1:length(x)) {
+        
+        spv <- spectraVariables(x[i])
+        spd <- spectraData(x[i], spv[!(spv %in% c("dataOrigin", "dataStorage"))])
+        idx <- match(colnames(spd), names(mapping))
+        colnames(spd)[!is.na(idx)] <- mapping[idx[!is.na(idx)]]
+        
+        spp <- peaksData(x[i])
+        
+        # here list with stuff in right order
+        entries <- .getEntries()
+        
+        for(entry in entries) {
+            
+            #print(entry)
+            
+            if(entry %in% colnames(spd)) {
+                
+                value <- spd[entry][[1]]
+                
+                .cat(entry, value, "\n")
+            
+            }
+        }
+        
+        .cat("Num Peaks:", length(peaksData(x[i])[[1]][,1]), "\n")
+        
+        .cat(paste0(peaksData(x[i])[[1]][,1],
+                    " ",
+                    peaksData(x[i])[[1]][,2],
+                    collapse = "\n"))
+        
+        .cat("\n\n\n")
+    }
+}
+
+
+#'
+#'
+#' @noRd
+.getEntries <- function() {
+    
+    c(
+        # record specific information
+        "NAME:",
+        "DB#:",
+        "INCHIKEY:",
+        "PRECURSORTYPE:",
+        "PRECURSORMZ:",
+        "RETENTIONTIME:",
+        "EXACTMASS:",
+        "FORMULA:"
+        )
+}
+
+

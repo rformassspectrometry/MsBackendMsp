@@ -4,11 +4,14 @@
 \alias{MsBackendMsp}
 \alias{MsBackendMsp-class}
 \alias{backendInitialize,MsBackendMsp-method}
+\alias{spectraVariableMapping}
 \title{MS data backend for msp files}
 \usage{
 \S4method{backendInitialize}{MsBackendMsp}(object, files, nonStop = FALSE, ..., BPPARAM = bpparam())
 
 MsBackendMsp()
+
+spectraVariableMapping(format = c("msp"))
 }
 \arguments{
 \item{object}{Instance of \code{MsBackendMsp} class.}

@@ -118,3 +118,36 @@ setMethod("backendInitialize", signature = "MsBackendMsp",
 MsBackendMsp <- function() {
     new("MsBackendMsp")
 }
+
+#' @export
+#' 
+#' @rdname MsBackendMsp
+spectraVariableMapping <- function(format = c("msp")) {
+  ## In future eventually define that in a text file and import upon package
+  ## init.
+  switch(match.arg(format),
+         "msp" = c(
+          # minimal information
+           name = "NAME:",
+           accession = "DB#:",
+           formula = "FORMULA:",
+           inchikey = "INCHIKEY:",
+           adduct = "PRECURSORTYPE:",
+           exactmass = "EXACTMASS:",
+           rtime = "RETENTIONTIME:",
+           precursorMz = "PRECURSORMZ:"
+          
+         )
+  )
+}
+
+#' @importMethodsFrom Spectra export
+#'
+#' @exportMethod export
+#'
+#' @rdname MsBackendMassbank
+setMethod("export", "MsBackendMsp", function(object, x, file = tempfile(),
+                                                  mapping = spectraVariableMapping(),
+                                                  ...) {
+  .export_msp(x = x, con = file, mapping = mapping)
+})
