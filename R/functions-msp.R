@@ -89,7 +89,10 @@ if (FALSE) {
 
     if (!length(ms))
         ms <- matrix(numeric(), ncol = 2L)
-
+    
+    if(length(ms) > 2)
+        ms <- ms[order(ms[, 1L]),]
+    
     r <- regexpr(":", desc, fixed = TRUE)
     desc <- setNames(substring(desc, r + 2L, nchar(desc)), tolower(substring(desc, 1L, r - 1L)))
     name <- unname(desc["name"])
@@ -97,6 +100,7 @@ if (FALSE) {
     formula <- unname(desc["formula"])
     inchikey <- unname(desc["inchikey"])
     adduct <- unname(desc["precursor_type"])
+    exactmass <- as.numeric(unname(desc["exactmass"]))
 
     ## select only values of interest and convert to numeric
     voi <- c("retentiontime", "ionmode", "precursormz")
@@ -112,5 +116,101 @@ if (FALSE) {
          name = name,
          formula = formula,
          inchikey = inchikey,
-         adduct = adduct)
+         adduct = adduct,
+         exactmass = exactmass)
 }
+
+#' @description
+#'
+#' Function to export a `Spectra` object in .msp format to `con`.
+#'
+#' @param x `Spectra`
+#'
+#' @param con output file.
+#'
+#' @param mapping named `character` vector that maps from `spectraVariables`
+#'    (i.e. `names(mapping)`) to the variable name that should be used in the
+#'    MGF file.
+#'
+#' @author Michael Witting
+#'
+#' @importMethodsFrom Spectra spectraVariables spectraNames spectraData
+#'
+#' @noRd
+.export_msp <- function(x, con = stdout(), mapping = spectraVariableMapping()) {
+    
+    if (class(con) == "character" && file.exists(con)) {
+        
+        message("Overwriting ", con, "!")
+        unlink(con)
+        
+    }
+    
+    if (class(con)[1] == "character") {
+        con <- file(description = con, open = "at")
+        on.exit(close(con))
+    }
+    
+    # custom cat function for writing of content
+    .cat <- function(..., file = con, sep = " ", append = TRUE) {
+        cat(..., file = file, sep = sep, append = append)
+    }
+    
+    
+    # iterate over all spectra
+    for(i in 1:length(x)) {
+        
+        spv <- spectraVariables(x[i])
+        spd <- spectraData(x[i], spv[!(spv %in% c("dataOrigin", "dataStorage"))])
+        idx <- match(colnames(spd), names(mapping))
+        colnames(spd)[!is.na(idx)] <- mapping[idx[!is.na(idx)]]
+        
+        spp <- peaksData(x[i])
+        
+        # here list with stuff in right order
+        entries <- .getEntries()
+        
+        for(entry in entries) {
+            
+            #print(entry)
+            
+            if(entry %in% colnames(spd)) {
+                
+                value <- spd[entry][[1]]
+                
+                .cat(entry, value, "\n")
+            
+            }
+        }
+        
+        .cat("Num Peaks:", length(peaksData(x[i])[[1]][,1]), "\n")
+        
+        .cat(paste0(peaksData(x[i])[[1]][,1],
+                    " ",
+                    peaksData(x[i])[[1]][,2],
+                    collapse = "\n"))
+        
+        .cat("\n\n\n")
+    }
+}
+
+
+#' This list defines the order and fields used for export
+#'
+#' @noRd
+.getEntries <- function() {
+    
+    c(
+        # record specific information
+        "NAME:",
+        "DB#:",
+        "INCHIKEY:",
+        "PRECURSORTYPE:",
+        "PRECURSORMZ:",
+        "RETENTIONTIME:",
+        "EXACTMASS:",
+        "FORMULA:"
+        )
+}
+
+
