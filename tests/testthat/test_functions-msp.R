@@ -27,5 +27,5 @@ test_that(".read_msp works", {
 test_that(".read_lipidblast_msp works", {
     f <- system.file("extdata/small-export-LipidBlast.msp", package = "MsBackendMsp")
     res1 <- .read_msp(f)
-    expect(all(dim(res1)==c(5,8)), "Dimensionality should be 5,8")
+    expect(all(dim(res1)==c(5,15)), "Dimensionality should be 5,15")
 })
