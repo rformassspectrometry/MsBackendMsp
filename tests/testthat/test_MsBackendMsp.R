@@ -10,6 +10,11 @@ test_that("backendInitialize,MsBackendMsp works", {
     expect_true(all(res$msLevel == 2L))
     expect_true(all(is.na(res$precursorMz)))
 
+    res <- backendInitialize(be, fls,
+                             mapping = spectraVariableMapping(be, "lipidblast"))
+    expect_true(all(!is.na(res$precursorMz)))
+    expect_equal(polarity(res), c(1L, 1L, 1L, 0L, 0L))
+    
     ## Import MoNa
     f <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
     res <- backendInitialize(be, f)

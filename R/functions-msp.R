@@ -132,6 +132,8 @@ readMsp <- function(f, msLevel = 2L,
     ## polarity
     if (any(have <- colnames(res) == "polarity"))
         res[, have] <- .process_polarity(res[, have])
+    if (any(have <- colnames(res) == "msLevel"))
+        res[, have] <- .process_mslevel(res[, have])
 
     res$mz = list(ms[, 1L])
     res$intensity = list(ms[, 2L])
@@ -144,6 +146,10 @@ readMsp <- function(f, msLevel = 2L,
     if (grepl("^(n|-)", x, ignore.case = TRUE))
         return(0L)
     -1L
+}
+
+.process_mslevel <- function(x) {
+    as.integer(sub("ms", "", x, ignore.case = TRUE))
 }
 
 #' @description

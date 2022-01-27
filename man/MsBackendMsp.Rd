@@ -18,7 +18,7 @@
 
 MsBackendMsp()
 
-\S4method{spectraVariableMapping}{MsBackendMsp}(object, format = c("msp"))
+\S4method{spectraVariableMapping}{MsBackendMsp}(object, format = c("msp", "lipidblast", "mona"))
 
 \S4method{export}{MsBackendMsp}(object, x, file = tempfile(), mapping = spectraVariableMapping(), ...)
 }
@@ -40,7 +40,9 @@ setup to import data in parallel. Defaults to \code{BPPARAM = bpparam()}. See \c
 
 \item{format}{For \code{spectraVariableMapping}: \code{character(1)} specifying for
 which MSP \emph{flavour} the mapping should be returned. Currently supported
-are: \code{format = "msp"} (generic MSP format).}
+are: \code{format = "msp"} (generic MSP format, for example for MS-DIAL MSP
+files), \code{format = "lipidblast"} (MSP files in LipidBlast flavour) and
+\code{format = "mona"} (MSP files in MoNA flavour).}
 
 \item{x}{For \code{export}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
 specified MSP file.}
@@ -74,8 +76,29 @@ be$msLevel
 be$intensity
 be$mz
 
+## precursor m/z are however all missing
+be$precursorMz
+
 ## Default spectra variable mapping
 spectraVariableMapping(MsBackendMsp())
+
+## In fact, to read MSP files in "LipidBlast flavour" we should use a
+## different spectra variable mapping
+spectraVariableMapping(MsBackendMsp(), "lipidblast")
+
+## Importing the data with this will correctly retrieve data
+be <- backendInitialize(MsBackendMsp(), f,
+    mapping = spectraVariableMapping(MsBackendMsp(), "lipidblast"))
+be$precursorMz
+
+## Other fields are also correctly mapped, but might need to be converted
+## to e.g. numeric, such as "exactmass"
+be$exactmass
+
+be$exactmass <- as.numeric(be$exactmass)
+
+be$adduct
+be$formula
 }
 \author{
 Laurent Gatto and Johannes Rainer

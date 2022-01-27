@@ -1,3 +1,10 @@
+# MsBackendMsp 0.98
+
+## Changes in 0.98.0
+
+- Add additional spectra variable mappings.
+- Call unit tests from the Spectra package.
+
 # MsBackendMsp 0.0
 
 ## Changes in 0.0.5
