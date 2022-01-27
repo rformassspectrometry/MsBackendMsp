@@ -4,61 +4,78 @@
 \alias{MsBackendMsp}
 \alias{MsBackendMsp-class}
 \alias{backendInitialize,MsBackendMsp-method}
-\alias{spectraVariableMapping}
+\alias{spectraVariableMapping,MsBackendMsp-method}
+\alias{export,MsBackendMsp-method}
 \title{MS data backend for msp files}
 \usage{
-\S4method{backendInitialize}{MsBackendMsp}(object, files, nonStop = FALSE, ..., BPPARAM = bpparam())
+\S4method{backendInitialize}{MsBackendMsp}(
+  object,
+  file,
+  mapping = spectraVariableMapping(object),
+  ...,
+  BPPARAM = bpparam()
+)
 
 MsBackendMsp()
 
-spectraVariableMapping(format = c("msp"))
+\S4method{spectraVariableMapping}{MsBackendMsp}(object, format = c("msp"))
+
+\S4method{export}{MsBackendMsp}(object, x, file = tempfile(), mapping = spectraVariableMapping(), ...)
 }
 \arguments{
 \item{object}{Instance of \code{MsBackendMsp} class.}
 
-\item{files}{\code{character} with the (full) file name(s) of the msp file(s)
-from which MS/MS data should be imported.}
+\item{file}{\code{character} with the (full) file name(s) of the msp file(s)
+from which MS/MS data should be imported or exported.}
 
-\item{nonStop}{\code{logical(1)} whether import should be stopped if an
-xml file does not contain all required fields. Defaults to
-\code{nonStop = FALSE}.}
+\item{mapping}{named \code{character} vector to rename MSP fields to spectra
+variables (see \code{\link[=spectraVariableMapping]{spectraVariableMapping()}}). This allows to correctly
+import also custom fields or data from files with different MSP
+\emph{flavors}.}
 
 \item{...}{Currently ignored.}
 
 \item{BPPARAM}{Parameter object defining the parallel processing
 setup to import data in parallel. Defaults to \code{BPPARAM = bpparam()}. See \code{\link[=bpparam]{bpparam()}} for more information.}
+
+\item{format}{For \code{spectraVariableMapping}: \code{character(1)} specifying for
+which MSP \emph{flavour} the mapping should be returned. Currently supported
+are: \code{format = "msp"} (generic MSP format).}
+
+\item{x}{For \code{export}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
+specified MSP file.}
 }
 \description{
 The \code{MsBackendMsp} class supports import of MS/MS spectra data from
-files in Mascot Generic Format
-(\href{http://www.matrixscience.com/help/data_file_help.html}{msp})
-files. After initial import, the full MS data is kept in
-memory. \code{MsBackendMsp} extends the \code{\link[=MsBackendDataFrame]{MsBackendDataFrame()}} backend
-directly and supports thus the \code{\link[=applyProcessing]{applyProcessing()}} function to make
-data manipulations persistent. The backend does however not
-support export to msp files yet.
+files in NIST MSP file format. \code{MsBackendMsp} extends the
+\code{\link[=MsBackendDataFrame]{MsBackendDataFrame()}} backend directly and supports thus the
+\code{\link[=applyProcessing]{applyProcessing()}} function to make data manipulations persistent.
 
 New objects are created with the \code{MsBackendMsp} function. The
 \code{backendInitialize} method has to be subsequently called to
 initialize the object and import MS/MS data from (one or more) msp
-files.  Optional parameter \code{nonStop} allows to specify whether the
-import returns with an error if one of the xml files lacks required
-data, such as \code{mz} and \code{intensity} values (default \code{nonStop = FALSE}), or whether only affected file(s) is(are) skipped and a
-warning is shown (\code{nonStop = TRUE}). Note that any other error
-(such as xml import error) will abort import regardless of
-parameter \code{nonStop}.
+files.
+
+The \code{spectraVariableMapping} function allows to provide the mapping between
+spectra variable names (i.e. the names that will be used for the spectra
+variables in the \code{\link[=Spectra]{Spectra()}} object) and the data field names of the
+MSP file. Parameter \code{format} allows to select pre-defined mapping (e.g. for
+MSP files from MoNA).
 }
 \examples{
 
-## Create an MsBackendHmdbXml backend and import data from test xml files.
-fls <- dir(system.file("extdata", package = "MsBackendMsp"),
-    full.names = TRUE, pattern = "msp$")
-be <- backendInitialize(MsBackendMsp(), fls)
+## Import spectra from a MSP file from LipidBlast
+f <- system.file("extdata", "small-export-LipidBlast.msp",
+    package = "MsBackendMsp")
+be <- backendInitialize(MsBackendMsp(), f)
 be
 
 be$msLevel
 be$intensity
 be$mz
+
+## Default spectra variable mapping
+spectraVariableMapping(MsBackendMsp())
 }
 \author{
 Laurent Gatto and Johannes Rainer

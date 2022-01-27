@@ -13,8 +13,6 @@ fls <- dir(system.file("extdata", package = "MsBackendMsp"),
            full.names = TRUE, pattern = "msp$")
 be <- MsBackendMsp()
 
-spectraTestthat <- system.file("test_msmslibraries", package = "Spectra")
-test_dir(spectraTestthat)
 
 
 

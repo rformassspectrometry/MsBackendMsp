@@ -1,37 +1,42 @@
 test_that("backendInitialize,MsBackendMsp works", {
-    fls <- dir(system.file("extdata", package = "MsBackendMsp"),
-               full.names = TRUE, pattern = "msp$")
+    fls <- system.file("extdata", "small-export-LipidBlast.msp",
+                       package = "MsBackendMsp")
     be <- MsBackendMsp()
 
-    ## Import a single file.
-    res1 <- backendInitialize(be, fls[1])
-    n1 <- length(res1) ## 3
+    ## Import a LipidBlast file.
+    res <- backendInitialize(be, fls)
+    expect_s4_class(res, "MsBackendMsp")
+    expect_true(length(res) == 5L)
+    expect_true(all(res$msLevel == 2L))
+    expect_true(all(is.na(res$precursorMz)))
 
-    # expect_identical(length(res1), n1)
-    # expect_identical(res1$dataStorage, rep("<memory>", n1))
-    # expect_identical(res1$dataOrigin, rep(normalizePath(fls[1]), n1))
-    # expect_identical(res1$msLevel, rep(2L, n1))
-    # expect_identical(lengths(res1$mz), c(14L, 21L, 14L))
-
-    res2 <- backendInitialize(be, fls[2])
-    n2 <- length(res2) ## 4
+    ## Import MoNa
+    f <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
+    res <- backendInitialize(be, f)
+    expect_s4_class(res, "MsBackendMsp")
+    expect_true(length(res) == 30L)
+    expect_true(all(res$msLevel == 2L))
+    expect_true(all(is.na(res$precursorMz)))
+    expect_true(is.list(res$Synon))
     
-    ## Import multiple files.
-    res_all <- backendInitialize(be, fls)
-    # expect_true(length(res_all) == n1 + n2)
-    # expect_identical(res_all[1]$mz, res1[1]$mz)
-    # expect_identical(res_all[n1 + 1]$mz, res2[1]$mz)
-    # expect_true(all(res_all$msLevel == 2L))
-    # expect_identical(res_all$dataOrigin,
-    #                  c(rep(normalizePath(fls[1]), n1),
-    #                    rep(normalizePath(fls[2]), n2)))
-    # expect_true(is.integer(res_all@spectraData$msLevel))
-
-    ## TODO: Import with failing file.
-    ## TODO: Import with failing file and nonStop = TRUE
+    ## Import MoNa and LipidBlast file
+    res <- backendInitialize(be, c(fls, f))
+    expect_s4_class(res, "MsBackendMsp")
+    expect_true(length(res) == 35L)
+    expect_true(all(res$msLevel == 2L))
+    expect_true(all(is.na(res$precursorMz)))
+    expect_true(length(grep("MoNA", res$accession)) == 30L)
+    expect_true(length(grep("LipidBlast", res$accession)) == 5L)
     
     ## errors
-    expect_error(backendInitialize(be), "'files' is mandatory")
+    expect_error(backendInitialize(be), "'file' is mandatory")
     expect_error(backendInitialize(be, 4), "expected to be a character")
     expect_error(suppressWarnings(backendInitialize(be, "a")), "a not found")
+})
+
+test_that("spectraVariableMapping works", {
+    res <- spectraVariableMapping(MsBackendMsp())
+    expect_true(is.character(res))
+    expect_true(length(res) > 0)
+    expect_error(spectraVariableMapping(MsBackendMsp(), "other"), "should be")
 })

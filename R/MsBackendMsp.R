@@ -8,38 +8,42 @@ NULL
 #' @description
 #'
 #' The `MsBackendMsp` class supports import of MS/MS spectra data from
-#' files in Mascot Generic Format
-#' ([msp](http://www.matrixscience.com/help/data_file_help.html))
-#' files. After initial import, the full MS data is kept in
-#' memory. `MsBackendMsp` extends the [MsBackendDataFrame()] backend
-#' directly and supports thus the [applyProcessing()] function to make
-#' data manipulations persistent. The backend does however not
-#' support export to msp files yet.
+#' files in NIST MSP file format. `MsBackendMsp` extends the
+#' [MsBackendDataFrame()] backend directly and supports thus the
+#' [applyProcessing()] function to make data manipulations persistent.
 #'
 #' New objects are created with the `MsBackendMsp` function. The
 #' `backendInitialize` method has to be subsequently called to
 #' initialize the object and import MS/MS data from (one or more) msp
-#' files.  Optional parameter `nonStop` allows to specify whether the
-#' import returns with an error if one of the xml files lacks required
-#' data, such as `mz` and `intensity` values (default `nonStop =
-#' FALSE`), or whether only affected file(s) is(are) skipped and a
-#' warning is shown (`nonStop = TRUE`). Note that any other error
-#' (such as xml import error) will abort import regardless of
-#' parameter `nonStop`.
+#' files.
 #'
+#' The `spectraVariableMapping` function allows to provide the mapping between
+#' spectra variable names (i.e. the names that will be used for the spectra
+#' variables in the [Spectra()] object) and the data field names of the
+#' MSP file. Parameter `format` allows to select pre-defined mapping (e.g. for
+#' MSP files from MoNA).
+#' 
 #' @param object Instance of `MsBackendMsp` class.
 #'
-#' @param files `character` with the (full) file name(s) of the msp file(s)
-#'     from which MS/MS data should be imported.
+#' @param file `character` with the (full) file name(s) of the msp file(s)
+#'     from which MS/MS data should be imported or exported.
 #'
-#' @param nonStop `logical(1)` whether import should be stopped if an
-#'     xml file does not contain all required fields. Defaults to
-#'     `nonStop = FALSE`.
-#'
+#' @param format For `spectraVariableMapping`: `character(1)` specifying for
+#'     which MSP *flavour* the mapping should be returned. Currently supported
+#'     are: `format = "msp"` (generic MSP format).
+#' 
+#' @param mapping named `character` vector to rename MSP fields to spectra
+#'     variables (see [spectraVariableMapping()]). This allows to correctly
+#'     import also custom fields or data from files with different MSP
+#'     *flavors*.
+#' 
 #' @param BPPARAM Parameter object defining the parallel processing
 #'     setup to import data in parallel. Defaults to `BPPARAM =
 #'     bpparam()`. See [bpparam()] for more information.
 #'
+#' @param x For `export`: a [Spectra()] object that should be exported to the
+#'     specified MSP file.
+#' 
 #' @param ... Currently ignored.
 #'
 #' @author Laurent Gatto and Johannes Rainer
@@ -52,15 +56,18 @@ NULL
 #'
 #' @examples
 #'
-#' ## Create an MsBackendHmdbXml backend and import data from test xml files.
-#' fls <- dir(system.file("extdata", package = "MsBackendMsp"),
-#'     full.names = TRUE, pattern = "msp$")
-#' be <- backendInitialize(MsBackendMsp(), fls)
+#' ## Import spectra from a MSP file from LipidBlast
+#' f <- system.file("extdata", "small-export-LipidBlast.msp",
+#'     package = "MsBackendMsp")
+#' be <- backendInitialize(MsBackendMsp(), f)
 #' be
 #'
 #' be$msLevel
 #' be$intensity
 #' be$mz
+#'
+#' ## Default spectra variable mapping
+#' spectraVariableMapping(MsBackendMsp())
 NULL
 
 setClass("MsBackendMsp",
@@ -81,31 +88,30 @@ setClass("MsBackendMsp",
 #'
 #' @rdname MsBackendMsp
 setMethod("backendInitialize", signature = "MsBackendMsp",
-          function(object, files, nonStop = FALSE, ..., BPPARAM = bpparam()) {
-              if (missing(files) || !length(files))
-                  stop("Parameter 'files' is mandatory for ", class(object))
-              if (!is.character(files))
-                  stop("Parameter 'files' is expected to be a character vector",
-                       " with the files names from where data should be",
+          function(object, file, 
+                   mapping = spectraVariableMapping(object), ...,
+                   BPPARAM = bpparam()) {
+              if (missing(file) || !length(file))
+                  stop("Parameter 'file' is mandatory for ", class(object))
+              if (!is.character(file))
+                  stop("Parameter 'file' is expected to be a character vector",
+                       " with the file names from where data should be",
                        " imported")
-              files <- normalizePath(files)
-              if (any(!file.exists(files)))
+              file <- normalizePath(file)
+              if (any(!file.exists(file)))
                   stop("file(s) ",
-                       paste(files[!file.exists(files)], collapse = ", "),
+                       paste(file[!file.exists(file)], collapse = ", "),
                        " not found")
               ## Import data and rbind.
-              message("Start data import from ", length(files), " files ... ",
+              message("Start data import from ", length(file), " files ... ",
                       appendLF = FALSE)
-              res <- bplapply(files, FUN = .read_msp,
-                              nonStop = nonStop, BPPARAM = BPPARAM)
+              res <- bplapply(file, FUN = readMsp, mapping = mapping,
+                              BPPARAM = BPPARAM)
               message("done")
-              res <- do.call(rbind, res)
-              if (nonStop && length(files) > nrow(res))
-                      warning("Import failed for ", length(files) - nrow(res),
-                              " files")
+              res <- do.call(rbindFill, res)
               spectraData(object) <- res
               object$dataStorage <- "<memory>"
-              object$centroided <- TRUE
+              ## object$centroided <- TRUE
               validObject(object)
               object
           })
@@ -119,35 +125,40 @@ MsBackendMsp <- function() {
     new("MsBackendMsp")
 }
 
-#' @export
+#' @importMethodsFrom Spectra spectraVariableMapping
 #' 
+#' @exportMethod spectraVariableMapping
+#'
 #' @rdname MsBackendMsp
-spectraVariableMapping <- function(format = c("msp")) {
-  ## In future eventually define that in a text file and import upon package
-  ## init.
-  switch(match.arg(format),
-         "msp" = c(
-          # minimal information
-           name = "NAME:",
-           accession = "DB#:",
-           formula = "FORMULA:",
-           inchikey = "INCHIKEY:",
-           adduct = "PRECURSORTYPE:",
-           exactmass = "EXACTMASS:",
-           rtime = "RETENTIONTIME:",
-           precursorMz = "PRECURSORMZ:"
-          
-         )
-  )
-}
+setMethod("spectraVariableMapping", "MsBackendMsp",
+          function(object, format = c("msp")) {
+              switch(match.arg(format),
+                     "msp" = c(
+                         name = "NAME",
+                         accession = "DB#",
+                         formula = "FORMULA",
+                         inchikey = "INCHIKEY",
+                         adduct = "PRECURSORTYPE",
+                         exactmass = "EXACTMASS",
+                         rtime = "RETENTIONTIME",
+                         precursorMz = "PRECURSORMZ"
+                     )
+                     )
+          })
 
 #' @importMethodsFrom Spectra export
 #'
 #' @exportMethod export
 #'
-#' @rdname MsBackendMassbank
+#' @rdname MsBackendMsp
 setMethod("export", "MsBackendMsp", function(object, x, file = tempfile(),
-                                                  mapping = spectraVariableMapping(),
-                                                  ...) {
-  .export_msp(x = x, con = file, mapping = mapping)
+                                             mapping = spectraVariableMapping(),
+                                             ...) {
+    if (missing(x))
+        stop("Required parameter 'x' is missing. 'x' should be a 'Spectra' ",
+             "object with the full spectra data.")
+    if (!inherits(x, "Spectra"))
+        stop("Parameter 'x' is supposed to be a 'Spectra' object with the full",
+             " spectra data to be exported.")
+    .export_msp(x = x, con = file, mapping = mapping)
 })
