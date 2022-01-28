@@ -5,6 +5,10 @@
 [![codecov.io](http://codecov.io/github/rformassspectrometry/MsBackendMsp/coverage.svg?branch=master)](http://codecov.io/github/rformassspectrometry/MsBackendMsp?branch=master)
 [![license](https://img.shields.io/badge/license-Artistic--2.0-brightgreen.svg)](https://opensource.org/licenses/Artistic-2.0)
 
+<img
+src="https://raw.githubusercontent.com/rformassspectrometry/stickers/master/MsBackendMsp/MsBackendMsp.png"
+height="150">
+
 The `MsBackendMsp` package provides functionality to import and handle
 MS/MS spectrum data from MSP files.
 The package defines the `MsBackendMsp` backend which can be used to
