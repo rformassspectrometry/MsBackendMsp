@@ -1,5 +1,10 @@
 # MsBackendMsp 0.98
 
+## Changes in 0.98.1
+
+- Improve export method to support multi-value fields and user-provided 
+  mappings.
+
 ## Changes in 0.98.0
 
 - Add additional spectra variable mappings.

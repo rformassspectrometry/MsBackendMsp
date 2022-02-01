@@ -17,11 +17,32 @@ NULL
 #' initialize the object and import MS/MS data from (one or more) msp
 #' files.
 #'
+#' The `MsBackendMsp` backend provides an `export` method that allows to export
+#' the data from the `Spectra` object (parameter `x`) to a file in msp format.
+#' Parameters to this function are:
+#'
+#' - `x`: the `Spectra` object that should be exported.
+#' - `file`: `character(1)` with the desired file name.
+#' - `mapping`: named `character` providing the mapping between spectra
+#'   variables and MSP data fields. Defaults to
+#'   `mapping = spectraVariableMapping(MsBackendMsp())`.
+#' - `allVariables`: `logical(1)` whether all spectra variables in `x` should be
+#'   exported or only those defined with `mapping`.
+#' - `exportName`: `logical(1)` whether a `NAME` field should always be exported
+#'   even if not provided in `x`.
+#' 
+#' See the package vignette for details and examples.
+#'
 #' The `spectraVariableMapping` function allows to provide the mapping between
 #' spectra variable names (i.e. the names that will be used for the spectra
 #' variables in the [Spectra()] object) and the data field names of the
-#' MSP file. Parameter `format` allows to select pre-defined mapping (e.g. for
-#' MSP files from MoNA).
+#' MSP file. Parameter `format` allows to select pre-defined mappings. Currently
+#' supported mapping flavors are:
+#' 
+#' - `format = "msp"`: default MSP field names. Should work with standard NIST
+#'   MSP files or MSP files exported from MS-DIAL.
+#' - `format = "mona"`: MSP file format from MoNA.
+#' - `format = "lipidblast": MSP file format from LipidBlast.
 #' 
 #' @param object Instance of `MsBackendMsp` class.
 #'
@@ -39,6 +60,12 @@ NULL
 #'     import also custom fields or data from files with different MSP
 #'     *flavors*.
 #' 
+#' @param allVariables `logical(1)` whether all spectra variables in `x`
+#'     should be exported or only those defined with `mapping`.
+#'
+#' @param exportName `logical(1)` whether a `NAME` field should always be
+#'     exported even if not provided in `x`.
+#' 
 #' @param BPPARAM Parameter object defining the parallel processing
 #'     setup to import data in parallel. Defaults to `BPPARAM =
 #'     bpparam()`. See [bpparam()] for more information.
@@ -48,7 +75,7 @@ NULL
 #' 
 #' @param ... Currently ignored.
 #'
-#' @author Laurent Gatto and Johannes Rainer
+#' @author Steffen Neumann, Michael Witting, Laurent Gatto and Johannes Rainer
 #'
 #' @importClassesFrom Spectra MsBackendDataFrame
 #'
@@ -91,6 +118,11 @@ NULL
 #'
 #' be$adduct
 #' be$formula
+#'
+#' ## Exporting Spectra objects in MSP format.
+#' 
+#' sps <- Spectra(be)
+#' export(MsBackendMsp(), sps, file = stdout())
 NULL
 
 setClass("MsBackendMsp",
@@ -164,7 +196,12 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          adduct = "PRECURSORTYPE",
                          exactmass = "EXACTMASS",
                          rtime = "RETENTIONTIME",
-                         precursorMz = "PRECURSORMZ"
+                         precursorMz = "PRECURSORMZ",
+                         adduct = "PRECURSORTYPE",
+                         smiles = "SMILES",
+                         inchi = "INCHI",
+                         polarity = "IONMODE",
+                         instrument = "INSTRUMENT"
                      ),
                      "lipidblast" = c(
                          name = "Name",
@@ -184,8 +221,11 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          inchikey = "InChIKey",
                          adduct = "Precursor_type",
                          precursorMz = "PrecursorMZ",
+                         polarity = "Ion_mode",
                          formula = "Formula",
-                         exactmass = "ExactMass"
+                         exactmass = "ExactMass",
+                         collision_energy_text = "Collision_energy",
+                         msLevel = "Precursor_type"
                      )
                      )
           })
@@ -195,14 +235,16 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
 #' @exportMethod export
 #'
 #' @rdname MsBackendMsp
-setMethod("export", "MsBackendMsp", function(object, x, file = tempfile(),
-                                             mapping = spectraVariableMapping(),
-                                             ...) {
+setMethod("export", "MsBackendMsp",
+          function(object, x, file = tempfile(),
+                   mapping = spectraVariableMapping(MsBackendMsp()),
+                   allVariables = TRUE, exportName = TRUE, ...) {
     if (missing(x))
         stop("Required parameter 'x' is missing. 'x' should be a 'Spectra' ",
              "object with the full spectra data.")
     if (!inherits(x, "Spectra"))
         stop("Parameter 'x' is supposed to be a 'Spectra' object with the full",
              " spectra data to be exported.")
-    .export_msp(x = x, con = file, mapping = mapping)
+    .export_msp(x = x, con = file, mapping = mapping,
+                allVariables = allVariables, exportName = exportName)
 })

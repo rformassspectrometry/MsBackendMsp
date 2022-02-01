@@ -140,21 +140,35 @@ readMsp <- function(f, msLevel = 2L,
     res
 }
 
-.process_polarity <- function(x) {
-    if (grepl("^(p|\\+)", x, ignore.case = TRUE))
-        return(1L)
-    if (grepl("^(n|-)", x, ignore.case = TRUE))
-        return(0L)
-    -1L
+.process_polarity <- function(x, input = TRUE) {
+    if (input) {
+        if (grepl("^(p|\\+)", x, ignore.case = TRUE))
+            return(1L)
+        if (grepl("^(n|-)", x, ignore.case = TRUE))
+            return(0L)
+        -1L
+    } else {
+        xnew <- rep(NA_character_, length(x))
+        xnew[x == 1L] <- "Positive"
+        xnew[x == 0L] <- "Negative"
+        xnew
+    }
 }
 
-.process_mslevel <- function(x) {
-    as.integer(sub("ms", "", x, ignore.case = TRUE))
+#' @param x value to be formatted
+#'
+#' @param input `logical(1)` whether the data is imported or exported.
+#'
+#' @noRd
+.process_mslevel <- function(x, input = TRUE) {
+    if (input)
+        as.integer(sub("ms", "", x, ignore.case = TRUE))
+    else paste0("MS", x)
 }
 
 #' @description
 #'
-#' Function to export a `Spectra` object in .msp format to `con`.
+#' Function to export a `Spectra` object in MSP format to `con`.
 #'
 #' @param x `Spectra`
 #'
@@ -162,89 +176,76 @@ readMsp <- function(f, msLevel = 2L,
 #'
 #' @param mapping named `character` vector that maps from `spectraVariables`
 #'    (i.e. `names(mapping)`) to the variable name that should be used in the
-#'    MGF file.
+#'    MSP file.
 #'
-#' @author Michael Witting
+#' @param allVariables `logical(1)` whether all spectra variables in `x` should
+#'    be exported or only those that are listed in `mapping`. Note that if
+#'    `exportName = TRUE` a field *NAME* will be exported regardless of
+#'    `mapping`.
 #'
-#' @importMethodsFrom Spectra spectraVariables spectraNames
+#' @param exportName `logical(1)` whether a NAME field will always be exported
+#'    even if no such spectra variable is available in `x`.
+#' 
+#' @author Michael Witting, Johannes Rainer
 #'
-#' @importMethodsFrom Spectra spectraData peaksData
-#'
-#' @noRd
-.export_msp <- function(x, con = stdout(), mapping = spectraVariableMapping()) {
-    
-    if (class(con) == "character" && file.exists(con)) {
-        
-        message("Overwriting ", con, "!")
-        unlink(con)
-        
-    }
-    
-    if (class(con)[1] == "character") {
-        con <- file(description = con, open = "at")
-        on.exit(close(con))
-    }
-    
-    # custom cat function for writing of content
-    .cat <- function(..., file = con, sep = " ", append = TRUE) {
-        cat(..., file = file, sep = sep, append = append)
-    }
-    
-    
-    # iterate over all spectra
-    for(i in 1:length(x)) {
-        
-        spv <- spectraVariables(x[i])
-        spd <- spectraData(x[i], spv[!(spv %in% c("dataOrigin", "dataStorage"))])
-        idx <- match(colnames(spd), names(mapping))
-        colnames(spd)[!is.na(idx)] <- mapping[idx[!is.na(idx)]]
-        
-        spp <- peaksData(x[i])
-        
-        # here list with stuff in right order
-        entries <- .getEntries()
-        
-        for(entry in entries) {
-            
-            #print(entry)
-            
-            if(entry %in% colnames(spd)) {
-                
-                value <- spd[entry][[1]]
-                
-                .cat(entry, value, "\n")
-            
-            }
-        }
-        
-        .cat("Num Peaks:", length(peaksData(x[i])[[1]][,1]), "\n")
-        
-        .cat(paste0(peaksData(x[i])[[1]][,1],
-                    " ",
-                    peaksData(x[i])[[1]][,2],
-                    collapse = "\n"))
-        
-        .cat("\n\n\n")
-    }
-}
-
-
-#' This list defines the order and fields used for export
+#' @importMethodsFrom Spectra spectraVariables spectraNames peaksData spectraData
 #'
 #' @noRd
-.getEntries <- function() {
-    
-    c(
-        # record specific information
-        "NAME:",
-        "DB#:",
-        "INCHIKEY:",
-        "PRECURSORTYPE:",
-        "PRECURSORMZ:",
-        "RETENTIONTIME:",
-        "EXACTMASS:",
-        "FORMULA:"
-        )
+#'
+#' @examples
+#'
+#' spd <- DataFrame(msLevel = c(2L, 2L, 2L), rtime = c(1, 2, 3))
+#' spd$mz <- list(c(12, 14, 45, 56), c(14.1, 34, 56.1), c(12.1, 14.15, 34.1))
+#' spd$intensity <- list(c(10, 20, 30, 40), c(11, 21, 31), c(12, 22, 32))
+#'
+#' sps <- Spectra(spd)
+#'
+#' .export_msp(sps)
+#'
+#' ## Handling of variables with multiple entries
+#' sps$synonym <- list(c("a", "b"), "d", c("e", "f", "g"))
+#' .export_msp(sps)
+#'
+.export_msp <- function(x, con = stdout(),
+                        mapping = spectraVariableMapping(MsBackendMsp()),
+                        allVariables = TRUE, exportName = TRUE) {
+    spv <- spectraVariables(x)
+    spv <- spv[!(spv %in% c("dataOrigin", "dataStorage"))]
+    if (!allVariables)
+        spv <- spv[spv %in% names(mapping)]
+    spd <- spectraData(x, spv)
+    ## Process any known required data conversions
+    if (any(spv == "msLevel"))
+        spd$msLevel <- .process_mslevel(spd$msLevel, input = FALSE)
+    if (any(spv == "polarity"))
+        spd$polarity <- .process_polarity(spd$polarity, input = FALSE)
+    idx <- match(colnames(spd), names(mapping))
+    colnames(spd)[!is.na(idx)] <- mapping[idx[!is.na(idx)]]
+    ## Force variable NAME:
+    if (!any(colnames(spd) == "NAME") && exportName)
+        spd$NAME <- seq_len(nrow(spd))
+    if (any(colnames(spd) == "NAME"))
+        spd <- cbind(NAME = spd$NAME, spd[, colnames(spd) != "NAME"])
+
+    ## Determine which columns contain list-like data (i.e. multiple entries).
+    mult <- colnames(spd)[!vapply(spd, function(z) is.vector(z) & !is.list(z),
+                                  logical(1))]
+    for (m in mult) {
+        spd[, m] <- vapply(
+            spd[, m], function(z) paste0(z, collapse = paste0("\n", m, ": ")),
+            character(1))
+    }
+
+    tmp <- lapply(colnames(spd), function(z) {
+        paste0(z, ": ", spd[, z], "\n")
+    })
+
+    pks <- vapply(peaksData(x), function(z)
+        paste0("Num Peaks: ", nrow(z), "\n",
+               paste0(paste0(z[, 1], " ", z[, 2], "\n"), collapse = ""),
+               collapse = ""),
+        character(1))
+    tmp <- do.call(cbind, c(tmp, list(pks)))
+    tmp[grep(": NA\n", tmp, fixed = TRUE)] <- ""
+    writeLines(apply(tmp, 1, paste0, collapse = ""), con = con)
 }
-
-

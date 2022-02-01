@@ -50,5 +50,35 @@ test_that(".process_polarity works", {
     expect_equal(.process_polarity("+"), 1L)
     expect_equal(.process_polarity("Neg"), 0L)
     expect_equal(.process_polarity("-"), 0L)
+
+    expect_equal(.process_polarity(1, input = FALSE), "Positive")
+    expect_equal(.process_polarity(0, input = FALSE), "Negative")
+    expect_equal(.process_polarity(2, input = FALSE), NA_character_)
 })
 
+test_that(".process_mslevel works", {
+    expect_equal(.process_mslevel("MS 2"), 2L)
+    expect_equal(.process_mslevel("ms1"), 1L)
+    expect_equal(.process_mslevel(1, input = FALSE), "MS1")
+})
+
+test_that(".export_msp works", {
+    spd <- DataFrame(msLevel = c(2L, 1L, 2L), rtime = c(1, 2, 3.2))
+    spd$mz <- list(c(12, 14, 45, 56), c(14.1, 34, 56.1), c(12.1, 14.15, 34.1))
+    spd$intensity <- list(c(10, 20, 30, 40), c(11, 21, 31), c(12, 22, 32))
+    sps <- Spectra(spd)
+
+    expect_output(.export_msp(sps[1], exportName = FALSE), "^msLevel: MS2")
+    expect_output(.export_msp(sps[1], exportName = FALSE), "Num Peaks: 4")
+
+    expect_output(.export_msp(sps[1], exportName = TRUE), "^NAME: 1")
+
+    sps$multi <- list("a", c("b", "c"), "e")
+    expect_output(.export_msp(sps), "multi: b\\nmulti: c")
+
+    map <- c(msLevel = "MSL", rtime = "TIME", multi = "OTHER")
+    expect_output(.export_msp(sps, mapping = map), "OTHER: b\\nOTHER: c")
+    expect_output(.export_msp(sps, mapping = map), "TIME: 1")
+    expect_output(.export_msp(sps, mapping = map), "TIME: 2")
+    expect_output(.export_msp(sps, mapping = map), "TIME: 3.2")    
+})

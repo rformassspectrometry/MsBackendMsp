@@ -20,7 +20,15 @@ MsBackendMsp()
 
 \S4method{spectraVariableMapping}{MsBackendMsp}(object, format = c("msp", "lipidblast", "mona"))
 
-\S4method{export}{MsBackendMsp}(object, x, file = tempfile(), mapping = spectraVariableMapping(), ...)
+\S4method{export}{MsBackendMsp}(
+  object,
+  x,
+  file = tempfile(),
+  mapping = spectraVariableMapping(MsBackendMsp()),
+  allVariables = TRUE,
+  exportName = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{Instance of \code{MsBackendMsp} class.}
@@ -46,6 +54,12 @@ files), \code{format = "lipidblast"} (MSP files in LipidBlast flavour) and
 
 \item{x}{For \code{export}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
 specified MSP file.}
+
+\item{allVariables}{\code{logical(1)} whether all spectra variables in \code{x}
+should be exported or only those defined with \code{mapping}.}
+
+\item{exportName}{\code{logical(1)} whether a \code{NAME} field should always be
+exported even if not provided in \code{x}.}
 }
 \description{
 The \code{MsBackendMsp} class supports import of MS/MS spectra data from
@@ -58,11 +72,34 @@ New objects are created with the \code{MsBackendMsp} function. The
 initialize the object and import MS/MS data from (one or more) msp
 files.
 
+The \code{MsBackendMsp} backend provides an \code{export} method that allows to export
+the data from the \code{Spectra} object (parameter \code{x}) to a file in msp format.
+Parameters to this function are:
+\itemize{
+\item \code{x}: the \code{Spectra} object that should be exported.
+\item \code{file}: \code{character(1)} with the desired file name.
+\item \code{mapping}: named \code{character} providing the mapping between spectra
+variables and MSP data fields. Defaults to
+\code{mapping = spectraVariableMapping(MsBackendMsp())}.
+\item \code{allVariables}: \code{logical(1)} whether all spectra variables in \code{x} should be
+exported or only those defined with \code{mapping}.
+\item \code{exportName}: \code{logical(1)} whether a \code{NAME} field should always be exported
+even if not provided in \code{x}.
+}
+
+See the package vignette for details and examples.
+
 The \code{spectraVariableMapping} function allows to provide the mapping between
 spectra variable names (i.e. the names that will be used for the spectra
 variables in the \code{\link[=Spectra]{Spectra()}} object) and the data field names of the
-MSP file. Parameter \code{format} allows to select pre-defined mapping (e.g. for
-MSP files from MoNA).
+MSP file. Parameter \code{format} allows to select pre-defined mappings. Currently
+supported mapping flavors are:
+\itemize{
+\item \code{format = "msp"}: default MSP field names. Should work with standard NIST
+MSP files or MSP files exported from MS-DIAL.
+\item \code{format = "mona"}: MSP file format from MoNA.
+\item `format = "lipidblast": MSP file format from LipidBlast.
+}
 }
 \examples{
 
@@ -99,7 +136,12 @@ be$exactmass <- as.numeric(be$exactmass)
 
 be$adduct
 be$formula
+
+## Exporting Spectra objects in MSP format.
+
+sps <- Spectra(be)
+export(MsBackendMsp(), sps, file = stdout())
 }
 \author{
-Laurent Gatto and Johannes Rainer
+Steffen Neumann, Michael Witting, Laurent Gatto and Johannes Rainer
 }
