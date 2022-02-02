@@ -222,10 +222,13 @@ readMsp <- function(f, msLevel = 2L,
     idx <- match(colnames(spd), names(mapping))
     colnames(spd)[!is.na(idx)] <- mapping[idx[!is.na(idx)]]
     ## Force variable NAME:
-    if (!any(colnames(spd) == "NAME") && exportName)
+    if (!any(tolower(colnames(spd)) == "name") && exportName)
         spd$NAME <- seq_len(nrow(spd))
-    if (any(colnames(spd) == "NAME"))
-        spd <- cbind(NAME = spd$NAME, spd[, colnames(spd) != "NAME"])
+    idx <- which(tolower(colnames(spd)) == "name")
+    if (length(idx)) {
+        idx <- idx[1L]
+        spd <- spd[, c(idx, seq_len(ncol(spd))[-idx])]
+    }
 
     ## Determine which columns contain list-like data (i.e. multiple entries).
     mult <- colnames(spd)[!vapply(spd, function(z) is.vector(z) & !is.list(z),

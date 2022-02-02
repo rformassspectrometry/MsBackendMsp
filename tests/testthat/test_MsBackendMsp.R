@@ -11,7 +11,7 @@ test_that("backendInitialize,MsBackendMsp works", {
     expect_true(all(is.na(res$precursorMz)))
 
     res <- backendInitialize(be, fls,
-                             mapping = spectraVariableMapping(be, "lipidblast"))
+                             mapping = spectraVariableMapping(be, "mona"))
     expect_true(all(!is.na(res$precursorMz)))
     expect_equal(polarity(res), c(1L, 1L, 1L, 0L, 0L))
     

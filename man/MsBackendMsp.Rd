@@ -18,7 +18,7 @@
 
 MsBackendMsp()
 
-\S4method{spectraVariableMapping}{MsBackendMsp}(object, format = c("msp", "lipidblast", "mona"))
+\S4method{spectraVariableMapping}{MsBackendMsp}(object, format = c("msp", "mona"))
 
 \S4method{export}{MsBackendMsp}(
   object,
@@ -49,8 +49,7 @@ setup to import data in parallel. Defaults to \code{BPPARAM = bpparam()}. See \c
 \item{format}{For \code{spectraVariableMapping}: \code{character(1)} specifying for
 which MSP \emph{flavour} the mapping should be returned. Currently supported
 are: \code{format = "msp"} (generic MSP format, for example for MS-DIAL MSP
-files), \code{format = "lipidblast"} (MSP files in LipidBlast flavour) and
-\code{format = "mona"} (MSP files in MoNA flavour).}
+files) and \code{format = "mona"} (MSP files in MoNA flavour).}
 
 \item{x}{For \code{export}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
 specified MSP file.}
@@ -97,8 +96,7 @@ supported mapping flavors are:
 \itemize{
 \item \code{format = "msp"}: default MSP field names. Should work with standard NIST
 MSP files or MSP files exported from MS-DIAL.
-\item \code{format = "mona"}: MSP file format from MoNA.
-\item `format = "lipidblast": MSP file format from LipidBlast.
+\item \code{format = "mona"}: MSP file format from MoNA including LipidBlast.
 }
 }
 \examples{
@@ -119,13 +117,13 @@ be$precursorMz
 ## Default spectra variable mapping
 spectraVariableMapping(MsBackendMsp())
 
-## In fact, to read MSP files in "LipidBlast flavour" we should use a
-## different spectra variable mapping
-spectraVariableMapping(MsBackendMsp(), "lipidblast")
+## In fact, to read MSP files in "LipidBlast flavour" (same as MoNA) we
+## should use a different spectra variable mapping
+spectraVariableMapping(MsBackendMsp(), "mona")
 
 ## Importing the data with this will correctly retrieve data
 be <- backendInitialize(MsBackendMsp(), f,
-    mapping = spectraVariableMapping(MsBackendMsp(), "lipidblast"))
+    mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
 be$precursorMz
 
 ## Other fields are also correctly mapped, but might need to be converted

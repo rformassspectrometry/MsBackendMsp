@@ -41,8 +41,7 @@ NULL
 #' 
 #' - `format = "msp"`: default MSP field names. Should work with standard NIST
 #'   MSP files or MSP files exported from MS-DIAL.
-#' - `format = "mona"`: MSP file format from MoNA.
-#' - `format = "lipidblast": MSP file format from LipidBlast.
+#' - `format = "mona"`: MSP file format from MoNA including LipidBlast.
 #' 
 #' @param object Instance of `MsBackendMsp` class.
 #'
@@ -52,8 +51,7 @@ NULL
 #' @param format For `spectraVariableMapping`: `character(1)` specifying for
 #'     which MSP *flavour* the mapping should be returned. Currently supported
 #'     are: `format = "msp"` (generic MSP format, for example for MS-DIAL MSP
-#'     files), `format = "lipidblast"` (MSP files in LipidBlast flavour) and
-#'     `format = "mona"` (MSP files in MoNA flavour).
+#'     files) and `format = "mona"` (MSP files in MoNA flavour).
 #' 
 #' @param mapping named `character` vector to rename MSP fields to spectra
 #'     variables (see [spectraVariableMapping()]). This allows to correctly
@@ -101,13 +99,13 @@ NULL
 #' ## Default spectra variable mapping
 #' spectraVariableMapping(MsBackendMsp())
 #'
-#' ## In fact, to read MSP files in "LipidBlast flavour" we should use a
-#' ## different spectra variable mapping
-#' spectraVariableMapping(MsBackendMsp(), "lipidblast")
+#' ## In fact, to read MSP files in "LipidBlast flavour" (same as MoNA) we
+#' ## should use a different spectra variable mapping
+#' spectraVariableMapping(MsBackendMsp(), "mona")
 #'
 #' ## Importing the data with this will correctly retrieve data
 #' be <- backendInitialize(MsBackendMsp(), f,
-#'     mapping = spectraVariableMapping(MsBackendMsp(), "lipidblast"))
+#'     mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
 #' be$precursorMz
 #'
 #' ## Other fields are also correctly mapped, but might need to be converted
@@ -186,7 +184,7 @@ MsBackendMsp <- function() {
 #'
 #' @rdname MsBackendMsp
 setMethod("spectraVariableMapping", "MsBackendMsp",
-          function(object, format = c("msp", "lipidblast", "mona")) {
+          function(object, format = c("msp", "mona")) {
               switch(match.arg(format),
                      "msp" = c(
                          name = "NAME",
@@ -203,17 +201,6 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          polarity = "IONMODE",
                          instrument = "INSTRUMENT"
                      ),
-                     "lipidblast" = c(
-                         name = "Name",
-                         synonym = "Synon",
-                         accession = "DB#",
-                         inchikey = "InChIKey",
-                         adduct = "Precursor_type",
-                         precursorMz = "PrecursorMZ",
-                         polarity = "Ion_mode",
-                         formula = "Formula",
-                         exactmass = "ExactMass"
-                     ),
                      "mona" = c(
                          name = "Name",
                          synonym = "Synon",
@@ -225,7 +212,7 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          formula = "Formula",
                          exactmass = "ExactMass",
                          collision_energy_text = "Collision_energy",
-                         msLevel = "Precursor_type"
+                         msLevel = "Spectrum_type"
                      )
                      )
           })

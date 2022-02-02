@@ -1,5 +1,9 @@
 # MsBackendMsp 0.98
 
+## Changes in 0.98.2
+
+- Vignette added.
+
 ## Changes in 0.98.1
 
 - Improve export method to support multi-value fields and user-provided 
