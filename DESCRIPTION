@@ -1,39 +1,51 @@
 Package: MsBackendMsp
 Title: Mass Spectrometry Data Backend for NIST msp Files
-Version: 0.0.4
+Version: 0.99.0
 Authors@R: 
     c(person(given = "Neumann", family = "Steffen",
-             role = c("aut", "cre"),
+             role = c("aut"),
              email = "sneumann@ipb-halle.de",
-             comment = c(ORCID = "0000-0002-7899-7192")))
+             comment = c(ORCID = "0000-0002-7899-7192")),
+      person(given = "Johannes", family = "Rainer",
+             email = "Johannes.Rainer@eurac.edu",
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-6977-7147")),
+      person(given = "Michael", family = "Witting",
+             role = c("ctb"),
+             email = "michael.witting@helmholtz-muenchen.de",
+             comment = c(ORCID = "0000-0002-1462-4426"))
+	     )
 Description: Mass spectrometry (MS) data backend supporting import and
-	     handling of MS/MS spectra from NIST MSP Format
-	     (msp) files.
+	     handling of MS/MS spectra from NIST MSP Format (msp) files. Import
+	     of data from files with different MSP *flavours* is supported.
+	     Objects from this package add support for MSP files to
+	     Bioconductor's Spectra package. This package is thus not supposed
+	     to be used without the Spectra package that provides a complete
+	     infrastructure for MS data handling.
 Depends:
-    R (>= 3.5.0),
-    Spectra (>= 1.1.18)
+    R (>= 4.2.0),
+    Spectra (>= 1.5.8)
 Imports:
     BiocParallel,
     S4Vectors,
     IRanges,
-    methods    
+    MsCoreUtils,
+    methods,
+    stats
 Suggests:
     testthat,
     knitr (>= 1.1.0),
     roxygen2,
     BiocStyle (>= 2.5.19),
     rmarkdown
-Remotes:
-   RforMassSpectrometry/Spectra
 License: Artistic-2.0
-LazyData: yes
 Encoding: UTF-8
 VignetteBuilder: knitr
-BugReports: https://github.com/sneumann/MsBackendMsp/issues
-URL: https://github.com/sneumann/MsBackendMsp
-biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics
+BugReports: https://github.com/RforMassSpectrometry/MsBackendMsp/issues
+URL: https://github.com/RforMassSpectrometry/MsBackendMsp
+biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics, DataImport
 Roxygen: list(markdown=TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Collate: 
     'hidden_aliases.R'
     'MsBackendMsp.R'

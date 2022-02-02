@@ -1,0 +1,194 @@
+---
+title: "Description and usage of MsBackendMsp"
+output:
+    BiocStyle::html_document:
+        toc_float: true
+vignette: >
+    %\VignetteIndexEntry{Description and usage of MsBackendMsp}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+    %\VignettePackage{MsBackendMsp}
+    %\VignetteDepends{Spectra,BiocStyle,BiocParallel}
+---
+
+```{r style, echo = FALSE, results = 'asis', message=FALSE}
+BiocStyle::markdown()
+```
+
+**Package**: `r Biocpkg("MsBackendMsp")`<br />
+**Authors**: `r packageDescription("MsBackendMsp")[["Author"]] `<br />
+**Compiled**: `r date()`
+
+```{r, echo = FALSE, message = FALSE}
+library(Spectra)
+library(BiocStyle)
+```
+
+# Introduction
+
+The `r Biocpkg("Spectra")` package provides a central infrastructure for the
+handling of Mass Spectrometry (MS) data. The package supports interchangeable
+use of different *backends* to import MS data from a variety of sources (such as
+mzML files). The `MsBackendMsp` package adds support for files in NIST MSP
+format which are frequently used to share spectra libraries. This vignette
+illustrates the usage of the `MsBackendMsp` package and how it can be used to
+import and export data in MSP file format.
+
+
+# Installation
+
+To install this package, start `R` and enter:
+
+```{r, eval = FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("MsBackendMsp")
+```
+
+This will install this package and all eventually missing dependencies.
+
+
+# Importing MS/MS data from MSP files
+
+The MSP file format allows to store MS/MS spectra (m/z and intensity of mass
+peaks) along with additional annotations for each spectrum. A single MSP file
+can thus contain a single or multiple spectra. Below we load the package and
+define the file name of an MSP file which is distributed with this package.
+
+```{r, message = FALSE}
+library(MsBackendMsp)
+
+nist <- system.file("extdata", "spectrum2.msp", package = "MsBackendMsp")
+```
+
+We next import the data into a `Spectra` object by specifying in the constructor
+function the *backend* class which can be used to read the data (in our case a
+`MsBackendMsp`).
+
+```{r}
+sp <- Spectra(nist, source = MsBackendMsp())
+```
+
+With that we have now full access to all imported spectra variables that can be
+listed with the `spectraVariables` function.
+
+```{r spectravars}
+spectraVariables(sp)
+```
+
+Besides default spectra variables, such as `msLevel`, `rtime`, `precursorMz`, we
+also have additional spectra variables such as the `name` or `adduct` that are
+additional data fields from the MSP file.
+
+```{r}
+sp$msLevel
+sp$name
+sp$adduct
+```
+
+The NIST file format is however only loosely defined and variety of *flavors*
+(or *dialects*) exist which define their own data fields or use different names
+for the fields. The `MsBackendMsp` supports data import/export from all MSP
+format variations by defining and providing different mappings between MSP data
+fields and spectra variables. Also user-defined mappings can be used, which
+makes import from any MSP flavor possible. Pre-defined mappings between MSP data
+fields and spectra variables (i.e. variables within the `Spectra` object) are
+returned by the `spectraVariableMapping` function.
+
+```{r}
+spectraVariableMapping(MsBackendMsp())
+```
+
+The names of this `character` vector represent the spectra variable names and
+the values of the vector the MSP data fields. Note that by default, also all
+data fields for which no mapping is provided are imported (with the field name
+being used as spectra variable name).
+
+This default mapping works well for MSP files from NIST or from other tools such
+as MS-DIAL. MassBank of North America [MoNA](https://mona.fiehnlab.ucdavis.edu/)
+however, uses a slightly different format. Below we read the first 6 lines of a
+MSP file from MoNA.
+
+```{r}
+mona <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
+head(readLines(mona))
+```
+
+The first 6 lines from a NIST MSP file:
+
+```{r}
+head(readLines(nist))
+```
+
+MSP files with MoNA flavor use slightly different field names, that are also not
+all upper case, and also additional fields are defined. While it is possible to
+import MoNA flavored MSP files using the default variable mapping that was used
+above, most of the spectra variables would however not mapped correctly to the
+respective spectra variable in the resulting `Spectra` object (e.g. the
+precursor m/z would not be available with the expected spectra variable
+`$precursorMz`).
+
+The `spectraVariableMapping` provides however also the mapping for MSP files
+with MoNA flavor.
+
+```{r}
+spectraVariableMapping(MsBackendMsp(), "mona")
+```
+
+Using this mapping in the data import will ensure that the fields get correctly
+mapped.
+
+```{r}
+sp_mona <- Spectra(mona, source = MsBackendMsp(),
+                   mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
+sp_mona$precursorMz
+```
+
+Note that in addition to the predefined variable mappings, it is also possible
+to provide any user-defined variable mapping with the `mapping` parameter thus
+enabling to import from MSP files with a highly customized format.
+
+Multiple values for a certain spectrum are represented as duplicated fields in
+an MSP file. The `MsBackendMsp` supports also import of such data. MoNA MSP
+files use for example multiple `"Synon"` fields to list all synonyms of a
+compound. Below we extract such values for two spectra within our `Spectra`
+object from MoNA.
+
+```{r}
+sp_mona[29:30]$synonym
+```
+
+In addition to importing data from MSP files, `MsBackendMsp` allows also to
+**export** `Spectra` to files in MSP format. Below we export for example the
+`Spectra` with data from MoNA to a temporary file, using the default NIST MSP
+format.
+
+```{r}
+tmpf <- tempfile()
+
+export(sp_mona, backend = MsBackendMsp(), file = tmpf,
+       mapping = spectraVariableMapping(MsBackendMsp()))
+head(readLines(tmpf))
+```
+
+Or export the `Spectra` with data in NIST MSP format to a MSP file with MoNA
+flavor.
+
+```{r}
+tmpf <- tempfile()
+
+export(sp, backend = MsBackendMsp(), file = tmpf,
+       mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
+head(readLines(tmpf))
+```
+
+Thus, this could also be used to convert between MSP files with different
+flavors.
+
+
+# Session information
+
+```{r}
+sessionInfo()
+```

@@ -4,62 +4,147 @@
 \alias{MsBackendMsp}
 \alias{MsBackendMsp-class}
 \alias{backendInitialize,MsBackendMsp-method}
-\alias{spectraVariableMapping}
+\alias{spectraVariableMapping,MsBackendMsp-method}
+\alias{export,MsBackendMsp-method}
 \title{MS data backend for msp files}
 \usage{
-\S4method{backendInitialize}{MsBackendMsp}(object, files, nonStop = FALSE, ..., BPPARAM = bpparam())
+\S4method{backendInitialize}{MsBackendMsp}(
+  object,
+  file,
+  mapping = spectraVariableMapping(object),
+  ...,
+  BPPARAM = bpparam()
+)
 
 MsBackendMsp()
 
-spectraVariableMapping(format = c("msp"))
+\S4method{spectraVariableMapping}{MsBackendMsp}(object, format = c("msp", "mona"))
+
+\S4method{export}{MsBackendMsp}(
+  object,
+  x,
+  file = tempfile(),
+  mapping = spectraVariableMapping(MsBackendMsp()),
+  allVariables = TRUE,
+  exportName = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{Instance of \code{MsBackendMsp} class.}
 
-\item{files}{\code{character} with the (full) file name(s) of the msp file(s)
-from which MS/MS data should be imported.}
+\item{file}{\code{character} with the (full) file name(s) of the msp file(s)
+from which MS/MS data should be imported or exported.}
 
-\item{nonStop}{\code{logical(1)} whether import should be stopped if an
-xml file does not contain all required fields. Defaults to
-\code{nonStop = FALSE}.}
+\item{mapping}{named \code{character} vector to rename MSP fields to spectra
+variables (see \code{\link[=spectraVariableMapping]{spectraVariableMapping()}}). This allows to correctly
+import also custom fields or data from files with different MSP
+\emph{flavors}.}
 
 \item{...}{Currently ignored.}
 
 \item{BPPARAM}{Parameter object defining the parallel processing
 setup to import data in parallel. Defaults to \code{BPPARAM = bpparam()}. See \code{\link[=bpparam]{bpparam()}} for more information.}
+
+\item{format}{For \code{spectraVariableMapping}: \code{character(1)} specifying for
+which MSP \emph{flavour} the mapping should be returned. Currently supported
+are: \code{format = "msp"} (generic MSP format, for example for MS-DIAL MSP
+files) and \code{format = "mona"} (MSP files in MoNA flavour).}
+
+\item{x}{For \code{export}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
+specified MSP file.}
+
+\item{allVariables}{\code{logical(1)} whether all spectra variables in \code{x}
+should be exported or only those defined with \code{mapping}.}
+
+\item{exportName}{\code{logical(1)} whether a \code{NAME} field should always be
+exported even if not provided in \code{x}.}
+}
+\value{
+\code{MsBackendMsp} and \code{backendInitialize} return an instance of a
+\code{MsBackendMsp} class. \code{spectraVariableMapping} a named \code{character}
+vector with the mapping between spectra variables and MSP data fields.
 }
 \description{
 The \code{MsBackendMsp} class supports import of MS/MS spectra data from
-files in Mascot Generic Format
-(\href{http://www.matrixscience.com/help/data_file_help.html}{msp})
-files. After initial import, the full MS data is kept in
-memory. \code{MsBackendMsp} extends the \code{\link[=MsBackendDataFrame]{MsBackendDataFrame()}} backend
-directly and supports thus the \code{\link[=applyProcessing]{applyProcessing()}} function to make
-data manipulations persistent. The backend does however not
-support export to msp files yet.
+files in NIST MSP file format. \code{MsBackendMsp} extends the
+\code{\link[=MsBackendDataFrame]{MsBackendDataFrame()}} backend directly and supports thus the
+\code{\link[=applyProcessing]{applyProcessing()}} function to make data manipulations persistent.
 
 New objects are created with the \code{MsBackendMsp} function. The
 \code{backendInitialize} method has to be subsequently called to
 initialize the object and import MS/MS data from (one or more) msp
-files.  Optional parameter \code{nonStop} allows to specify whether the
-import returns with an error if one of the xml files lacks required
-data, such as \code{mz} and \code{intensity} values (default \code{nonStop = FALSE}), or whether only affected file(s) is(are) skipped and a
-warning is shown (\code{nonStop = TRUE}). Note that any other error
-(such as xml import error) will abort import regardless of
-parameter \code{nonStop}.
+files.
+
+The \code{MsBackendMsp} backend provides an \code{export} method that allows to export
+the data from the \code{Spectra} object (parameter \code{x}) to a file in msp format.
+Parameters to this function are:
+\itemize{
+\item \code{x}: the \code{Spectra} object that should be exported.
+\item \code{file}: \code{character(1)} with the desired file name.
+\item \code{mapping}: named \code{character} providing the mapping between spectra
+variables and MSP data fields. Defaults to
+\code{mapping = spectraVariableMapping(MsBackendMsp())}.
+\item \code{allVariables}: \code{logical(1)} whether all spectra variables in \code{x} should be
+exported or only those defined with \code{mapping}.
+\item \code{exportName}: \code{logical(1)} whether a \code{NAME} field should always be exported
+even if not provided in \code{x}.
+}
+
+See the package vignette for details and examples.
+
+The \code{spectraVariableMapping} function allows to provide the mapping between
+spectra variable names (i.e. the names that will be used for the spectra
+variables in the \code{\link[=Spectra]{Spectra()}} object) and the data field names of the
+MSP file. Parameter \code{format} allows to select pre-defined mappings. Currently
+supported mapping flavors are:
+\itemize{
+\item \code{format = "msp"}: default MSP field names. Should work with standard NIST
+MSP files or MSP files exported from MS-DIAL.
+\item \code{format = "mona"}: MSP file format from MoNA including LipidBlast.
+}
 }
 \examples{
 
-## Create an MsBackendHmdbXml backend and import data from test xml files.
-fls <- dir(system.file("extdata", package = "MsBackendMsp"),
-    full.names = TRUE, pattern = "msp$")
-be <- backendInitialize(MsBackendMsp(), fls)
+## Import spectra from a MSP file from LipidBlast
+f <- system.file("extdata", "small-export-LipidBlast.msp",
+    package = "MsBackendMsp")
+be <- backendInitialize(MsBackendMsp(), f)
 be
 
 be$msLevel
 be$intensity
 be$mz
+
+## precursor m/z are however all missing
+be$precursorMz
+
+## Default spectra variable mapping
+spectraVariableMapping(MsBackendMsp())
+
+## In fact, to read MSP files in "LipidBlast flavour" (same as MoNA) we
+## should use a different spectra variable mapping
+spectraVariableMapping(MsBackendMsp(), "mona")
+
+## Importing the data with this will correctly retrieve data
+be <- backendInitialize(MsBackendMsp(), f,
+    mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
+be$precursorMz
+
+## Other fields are also correctly mapped, but might need to be converted
+## to e.g. numeric, such as "exactmass"
+be$exactmass
+
+be$exactmass <- as.numeric(be$exactmass)
+
+be$adduct
+be$formula
+
+## Exporting Spectra objects in MSP format.
+
+sps <- Spectra(be)
+export(MsBackendMsp(), sps, file = stdout())
 }
 \author{
-Laurent Gatto and Johannes Rainer
+Steffen Neumann, Michael Witting, Laurent Gatto and Johannes Rainer
 }

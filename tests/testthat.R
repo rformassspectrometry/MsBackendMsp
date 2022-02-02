@@ -4,17 +4,17 @@ library(MsBackendMsp)
 ## Run specific (backend) package tests
 test_check("MsBackendMsp")
 
-## Run generic tests defined in Spectra package 
-## for the msmslibraries profile
+## Run additional tests from Spectra:
+test_suite <- system.file("test_backends", "test_MsBackend",
+                          package = "Spectra")
 
-# Initialize backend and test data
-
-fls <- dir(system.file("extdata", package = "MsBackendMsp"),
-           full.names = TRUE, pattern = "msp$")
+fls <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
 be <- MsBackendMsp()
+be <- backendInitialize(
+    be, fls, mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
 
-spectraTestthat <- system.file("test_msmslibraries", package = "Spectra")
-test_dir(spectraTestthat)
+res <- test_file(paste0(test_suite, "/test_spectra_variables.R"),
+                 reporter = check_reporter(), stop_on_failure = TRUE)
 
 
 

@@ -2,6 +2,7 @@
 .gitignore
 .gitignores
 .travis.yml
+.github
 docs
 ^docs$
 Makefile
