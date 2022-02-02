@@ -1,6 +1,6 @@
 Package: MsBackendMsp
 Title: Mass Spectrometry Data Backend for NIST msp Files
-Version: 0.98.2
+Version: 0.99.0
 Authors@R: 
     c(person(given = "Neumann", family = "Steffen",
              role = c("aut"),
@@ -23,14 +23,15 @@ Description: Mass spectrometry (MS) data backend supporting import and
 	     to be used without the Spectra package that provides a complete
 	     infrastructure for MS data handling.
 Depends:
-    R (>= 3.5.0),
+    R (>= 4.2.0),
     Spectra (>= 1.5.8)
 Imports:
     BiocParallel,
     S4Vectors,
     IRanges,
     MsCoreUtils,
-    methods    
+    methods,
+    stats
 Suggests:
     testthat,
     knitr (>= 1.1.0),
@@ -38,12 +39,11 @@ Suggests:
     BiocStyle (>= 2.5.19),
     rmarkdown
 License: Artistic-2.0
-LazyData: yes
 Encoding: UTF-8
 VignetteBuilder: knitr
 BugReports: https://github.com/RforMassSpectrometry/MsBackendMsp/issues
 URL: https://github.com/RforMassSpectrometry/MsBackendMsp
-biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics
+biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics, DataImport
 Roxygen: list(markdown=TRUE)
 RoxygenNote: 7.1.2
 Collate: 

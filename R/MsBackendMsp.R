@@ -73,6 +73,10 @@ NULL
 #' 
 #' @param ... Currently ignored.
 #'
+#' @return `MsBackendMsp` and `backendInitialize` return an instance of a
+#'     `MsBackendMsp` class. `spectraVariableMapping` a named `character`
+#'     vector with the mapping between spectra variables and MSP data fields.
+#' 
 #' @author Steffen Neumann, Michael Witting, Laurent Gatto and Johannes Rainer
 #'
 #' @importClassesFrom Spectra MsBackendDataFrame

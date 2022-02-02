@@ -60,6 +60,11 @@ should be exported or only those defined with \code{mapping}.}
 \item{exportName}{\code{logical(1)} whether a \code{NAME} field should always be
 exported even if not provided in \code{x}.}
 }
+\value{
+\code{MsBackendMsp} and \code{backendInitialize} return an instance of a
+\code{MsBackendMsp} class. \code{spectraVariableMapping} a named \code{character}
+vector with the mapping between spectra variables and MSP data fields.
+}
 \description{
 The \code{MsBackendMsp} class supports import of MS/MS spectra data from
 files in NIST MSP file format. \code{MsBackendMsp} extends the

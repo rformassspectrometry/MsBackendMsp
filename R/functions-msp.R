@@ -135,8 +135,8 @@ readMsp <- function(f, msLevel = 2L,
     if (any(have <- colnames(res) == "msLevel"))
         res[, have] <- .process_mslevel(res[, have])
 
-    res$mz = list(ms[, 1L])
-    res$intensity = list(ms[, 2L])
+    res$mz <- list(ms[, 1L])
+    res$intensity <- list(ms[, 2L])
     res
 }
 
@@ -188,7 +188,9 @@ readMsp <- function(f, msLevel = 2L,
 #' 
 #' @author Michael Witting, Johannes Rainer
 #'
-#' @importMethodsFrom Spectra spectraVariables spectraNames peaksData spectraData
+#' @importMethodsFrom Spectra spectraVariables spectraNames
+#'
+#' @importMethodsFrom Spectra peaksData spectraData
 #'
 #' @noRd
 #'
