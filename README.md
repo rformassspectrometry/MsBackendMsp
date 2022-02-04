@@ -6,8 +6,8 @@
 [![license](https://img.shields.io/badge/license-Artistic--2.0-brightgreen.svg)](https://opensource.org/licenses/Artistic-2.0)
 [![years in bioc](http://bioconductor.org/shields/years-in-bioc/MsBackendMsp.svg)](https://bioconductor.org/packages/release/bioc/html/MsBackendMsp.html)
 [![Ranking by downloads](http://bioconductor.org/shields/downloads/release/MsBackendMsp.svg)](https://bioconductor.org/packages/stats/bioc/MsBackendMsp/)
-Release: [![build release](http://bioconductor.org/shields/build/release/bioc/MsBackendMsp.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/MsBackendMsp/)
-Devel: [![build devel](http://bioconductor.org/shields/build/devel/bioc/MsBackendMsp.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/MsBackendMsp/)
+[![build release](http://bioconductor.org/shields/build/release/bioc/MsBackendMsp.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/MsBackendMsp/)
+[![build devel](http://bioconductor.org/shields/build/devel/bioc/MsBackendMsp.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/MsBackendMsp/)
 
 The `MsBackendMsp` package provides functionality to import and handle
 MS/MS spectrum data from MSP files.
