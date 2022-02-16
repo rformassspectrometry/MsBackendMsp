@@ -216,7 +216,9 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          formula = "Formula",
                          exactmass = "ExactMass",
                          collision_energy_text = "Collision_energy",
-                         msLevel = "Spectrum_type"
+                         msLevel = "Spectrum_type",
+                         instrument = "Instrument",
+                         instrument_type = "Instrument_type"
                      )
                      )
           })

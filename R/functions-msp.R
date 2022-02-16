@@ -254,3 +254,20 @@ readMsp <- function(f, msLevel = 2L,
     tmp[grep(": NA\n", tmp, fixed = TRUE)] <- ""
     writeLines(apply(tmp, 1, paste0, collapse = ""), con = con)
 }
+
+#' @title Parse the comment field from a MoNA MSP file
+#'
+#' 
+#' @author Johannes Rainer
+#'
+#' @noRd
+parseMoNaComment <- function(x, names = c("InChI", "author", "SMILES", "date", "cas", "kegg", "pubchem cid")) {
+    ## extract value between "<name>= and ".
+    names(names) <- names
+    as.data.frame(lapply(names, function(z) {
+        tmp <- sub(paste0(".*?\"", z, "=(.*?)\".*"), "\\1", x, perl = TRUE)
+        tmp[tmp == x] <- NA_character_
+        tmp
+    }))
+}
+
