@@ -58,13 +58,10 @@ readMsp <- function(f, msLevel = 2L,
     ## Find individual records
     begin <- grep("^NAME:", msp, ignore.case = TRUE)
     end <- c(begin[-1] -1L, length(msp))
-    
-    n <- length(begin)
-    sp <- vector("list", length = n)
 
-    for (i in seq_along(sp))
-        sp[[i]] <- .extract_msp_spectrum(msp[begin[i]:end[i]],
-                                         mapping = mapping)
+    sp <- mapply(begin, end, FUN = function(a, b) {
+         .extract_msp_spectrum(msp[a:b], mapping = mapping)
+    }, SIMPLIFY = FALSE, USE.NAMES = FALSE)
     res <- DataFrame(rbindFill(sp))
 
     spv <- Spectra:::.SPECTRA_DATA_COLUMNS
@@ -76,8 +73,8 @@ readMsp <- function(f, msLevel = 2L,
             res[[i]] <- as(res[[i]], spv[col][1])
     }
 
-    res$mz <- IRanges::NumericList(res$mz, compress = FALSE)
-    res$intensity <- IRanges::NumericList(res$intensity, compress = FALSE)
+    res$mz <- NumericList(res$mz, compress = FALSE)
+    res$intensity <- NumericList(res$intensity, compress = FALSE)
     res$dataOrigin <- f
     if (!any(colnames(res) == msLevel))
         res$msLevel <- as.integer(msLevel)
