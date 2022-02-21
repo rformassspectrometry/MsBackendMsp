@@ -261,7 +261,9 @@ readMsp <- function(f, msLevel = 2L,
 #' @author Johannes Rainer
 #'
 #' @noRd
-parseMoNaComment <- function(x, names = c("InChI", "author", "SMILES", "date", "cas", "kegg", "pubchem cid")) {
+parseMoNaComment <- function(x, names = c("InChI", "author", "SMILES",
+                                          "date", "cas", "kegg",
+                                          "pubchem cid")) {
     ## extract value between "<name>= and ".
     names(names) <- names
     as.data.frame(lapply(names, function(z) {
