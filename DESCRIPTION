@@ -1,6 +1,6 @@
 Package: MsBackendMsp
 Title: Mass Spectrometry Data Backend for NIST msp Files
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: 
     c(person(given = "Neumann", family = "Steffen",
              role = c("aut"),
