@@ -24,6 +24,8 @@
 #'
 #' @export
 #'
+#' @importFrom Spectra coreSpectraVariables
+#' 
 #' @importFrom S4Vectors DataFrame
 #'
 #' @importFrom IRanges NumericList
@@ -64,7 +66,7 @@ readMsp <- function(f, msLevel = 2L,
     }, SIMPLIFY = FALSE, USE.NAMES = FALSE)
     res <- DataFrame(rbindFill(sp))
 
-    spv <- Spectra:::.SPECTRA_DATA_COLUMNS
+    spv <- coreSpectraVariables()
     spv <- spv[!names(spv) %in% c("mz", "intensity")]
     for (i in seq_along(res)) {
         if (all(lengths(res[[i]]) == 1))

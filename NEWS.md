@@ -1,5 +1,9 @@
 # MsBackendMsp 0.99
 
+## Changes in 0.99.4
+
+- Import `coreSpectraVariables` from `Spectra`.
+
 ## Changes in 0.99.2
 
 - Small updates and changes.
