@@ -2,10 +2,7 @@
 % Please edit documentation in R/functions-msp.R
 \name{readMsp}
 \alias{readMsp}
-\title{Reading MSP files
-
-The \code{readMsp} function imports the data from a file in MGF format reading
-all specified fields and returning the data as a \code{\link[=DataFrame]{DataFrame()}}.}
+\title{Reading MSP files}
 \usage{
 readMsp(f, msLevel = 2L, mapping = spectraVariableMapping(MsBackendMsp()), ...)
 }
@@ -29,8 +26,6 @@ in the MSP file. m/z and intensity values are available in columns \code{"mz"}
 and \code{"intensity"} in a list representation.
 }
 \description{
-Reading MSP files
-
 The \code{readMsp} function imports the data from a file in MGF format reading
 all specified fields and returning the data as a \code{\link[=DataFrame]{DataFrame()}}.
 }

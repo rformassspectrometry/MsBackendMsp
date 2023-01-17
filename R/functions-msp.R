@@ -1,5 +1,7 @@
 #' @title Reading MSP files
 #'
+#' @description
+#' 
 #' The `readMsp` function imports the data from a file in MGF format reading
 #' all specified fields and returning the data as a [DataFrame()].
 #'

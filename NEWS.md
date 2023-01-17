@@ -1,3 +1,10 @@
+# MsBackendMsp 1.3
+
+## Changes in 1.3.1
+
+- Use the full unit test suite from the `Spectra` package to check validity of
+  the `MsBackendMsp`.
+
 # MsBackendMsp 0.99
 
 ## Changes in 0.99.4
