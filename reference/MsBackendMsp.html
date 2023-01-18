@@ -31,7 +31,7 @@ format = "msp": default MSP field names. Should work with standard NIST
 MSP files or MSP files exported from MS-DIAL.
 format = "mona": MSP file format from MoNA including LipidBlast.
 
-'><title>MS data backend for msp files — MsBackendMsp • MsBackendMsp</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="MS data backend for msp files — MsBackendMsp"><meta property="og:description" content='The MsBackendMsp class supports import of MS/MS spectra data from
+'><title>MS data backend for msp files — MsBackendMsp • MsBackendMsp</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="MS data backend for msp files — MsBackendMsp"><meta property="og:description" content='The MsBackendMsp class supports import of MS/MS spectra data from
 files in NIST MSP file format. MsBackendMsp extends the
 MsBackendDataFrame() backend directly and supports thus the
 applyProcessing() function to make data manipulations persistent.
@@ -74,7 +74,7 @@ format = "mona": MSP file format from MoNA including LipidBlast.
     
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,68 +144,90 @@ MSP files or MSP files exported from MS-DIAL.</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S4 method for MsBackendMsp</span>
-<span class="fu">backendInitialize</span><span class="op">(</span>
-  <span class="va">object</span>,
-  <span class="va">file</span>,
-  mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="va">object</span><span class="op">)</span>,
-  <span class="va">...</span>,
-  BPPARAM <span class="op">=</span> <span class="fu">bpparam</span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># S4 method for MsBackendMsp</span>
-<span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"msp"</span>, <span class="st">"mona"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># S4 method for MsBackendMsp</span>
-<span class="fu">export</span><span class="op">(</span>
-  <span class="va">object</span>,
-  <span class="va">x</span>,
-  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>,
-  mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,
-  allVariables <span class="op">=</span> <span class="cn">TRUE</span>,
-  exportName <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S4 method for MsBackendMsp</span></span>
+<span><span class="fu">backendInitialize</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">file</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="va">object</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">bpparam</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for MsBackendMsp</span></span>
+<span><span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"msp"</span>, <span class="st">"mona"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for MsBackendMsp</span></span>
+<span><span class="fu">export</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  allVariables <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  exportName <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
 <dd><p>Instance of <code>MsBackendMsp</code> class.</p></dd>
+
+
 <dt>file</dt>
 <dd><p><code>character</code> with the (full) file name(s) of the msp file(s)
 from which MS/MS data should be imported or exported.</p></dd>
+
+
 <dt>mapping</dt>
 <dd><p>named <code>character</code> vector to rename MSP fields to spectra
 variables (see <code>spectraVariableMapping()</code>). This allows to correctly
 import also custom fields or data from files with different MSP
 <em>flavors</em>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Currently ignored.</p></dd>
+
+
 <dt>BPPARAM</dt>
 <dd><p>Parameter object defining the parallel processing
 setup to import data in parallel. Defaults to <code>BPPARAM = bpparam()</code>. See <code>bpparam()</code> for more information.</p></dd>
+
+
 <dt>format</dt>
 <dd><p>For <code>spectraVariableMapping</code>: <code>character(1)</code> specifying for
 which MSP <em>flavour</em> the mapping should be returned. Currently supported
 are: <code>format = "msp"</code> (generic MSP format, for example for MS-DIAL MSP
 files) and <code>format = "mona"</code> (MSP files in MoNA flavour).</p></dd>
+
+
 <dt>x</dt>
 <dd><p>For <code>export</code>: a <code>Spectra()</code> object that should be exported to the
 specified MSP file.</p></dd>
+
+
 <dt>allVariables</dt>
 <dd><p><code>logical(1)</code> whether all spectra variables in <code>x</code>
 should be exported or only those defined with <code>mapping</code>.</p></dd>
+
+
 <dt>exportName</dt>
 <dd><p><code>logical(1)</code> whether a <code>NAME</code> field should always be
 exported even if not provided in <code>x</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>MsBackendMsp</code> and <code>backendInitialize</code> return an instance of a
-<code>MsBackendMsp</code> class. <code>spectraVariableMapping</code> a named <code>character</code>vector with the mapping between spectra variables and MSP data fields.</p>
+    
+
+<p><code>MsBackendMsp</code> and <code>backendInitialize</code> return an instance of a
+<code>MsBackendMsp</code> class. <code>spectraVariableMapping</code> a named <code>character</code></p>
+
+
+<p>vector with the mapping between spectra variables and MSP data fields.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -214,14 +236,14 @@ exported even if not provided in <code>x</code>.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Import spectra from a MSP file from LipidBlast</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"small-export-LipidBlast.msp"</span>,</span>
-<span class="r-in">    package <span class="op">=</span> <span class="st">"MsBackendMsp"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">be</span> <span class="op">&lt;-</span> <span class="fu">backendInitialize</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">f</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Import spectra from a MSP file from LipidBlast</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"small-export-LipidBlast.msp"</span>,</span></span>
+<span class="r-in"><span>    package <span class="op">=</span> <span class="st">"MsBackendMsp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">be</span> <span class="op">&lt;-</span> <span class="fu">backendInitialize</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start data import from 1 files ... </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> done</span>
-<span class="r-in"><span class="va">be</span></span>
+<span class="r-in"><span><span class="va">be</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MsBackendMsp with 5 spectra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     msLevel     rtime scanIndex</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;integer&gt; &lt;numeric&gt; &lt;integer&gt;</span>
@@ -231,40 +253,40 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4         2        NA        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5         2        NA        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  ... 32 more variables/columns.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">msLevel</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">msLevel</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 2 2 2 2</span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">intensity</span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">intensity</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NumericList of length 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]] 80.08008 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]] 80.08008 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]] 80.08008 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[4]] 30.03003 50.05005 50.05005 50.05005 ... 70.07007 50.05005 50.05005 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[5]] 30.03003 50.05005 50.05005 50.05005 ... 70.07007 50.05005 50.05005 100</span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">mz</span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">mz</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NumericList of length 5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]] 85.02841 232.1543</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]] 85.02841 246.17</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[3]] 85.02841 260.1856</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[4]] 152.9958 227.2016 283.2643 327.2329 ... 691.4344 703.5283 1451.996</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[5]] 152.9958 253.2173 255.233 281.2486 ... 673.4814 721.4814 1451.996</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## precursor m/z are however all missing</span></span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">precursorMz</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## precursor m/z are however all missing</span></span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">precursorMz</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA NA NA NA NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Default spectra variable mapping</span></span>
-<span class="r-in"><span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Default spectra variable mapping</span></span></span>
+<span class="r-in"><span><span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            name       accession         formula        inchikey          adduct </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          "NAME"           "DB#"       "FORMULA"      "INCHIKEY" "PRECURSORTYPE" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       exactmass           rtime     precursorMz          adduct          smiles </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     "EXACTMASS" "RETENTIONTIME"   "PRECURSORMZ" "PRECURSORTYPE"        "SMILES" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           inchi        polarity      instrument </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         "INCHI"       "IONMODE"    "INSTRUMENT" </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## In fact, to read MSP files in "LipidBlast flavour" (same as MoNA) we</span></span>
-<span class="r-in"><span class="co">## should use a different spectra variable mapping</span></span>
-<span class="r-in"><span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="st">"mona"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## In fact, to read MSP files in "LipidBlast flavour" (same as MoNA) we</span></span></span>
+<span class="r-in"><span><span class="co">## should use a different spectra variable mapping</span></span></span>
+<span class="r-in"><span><span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="st">"mona"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  name               synonym             accession </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                "Name"               "Synon"                 "DB#" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              inchikey                adduct           precursorMz </span>
@@ -273,32 +295,32 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            "Ion_mode"             "Formula"           "ExactMass" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text               msLevel </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    "Collision_energy"       "Spectrum_type" </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Importing the data with this will correctly retrieve data</span></span>
-<span class="r-in"><span class="va">be</span> <span class="op">&lt;-</span> <span class="fu">backendInitialize</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">f</span>,</span>
-<span class="r-in">    mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="st">"mona"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Importing the data with this will correctly retrieve data</span></span></span>
+<span class="r-in"><span><span class="va">be</span> <span class="op">&lt;-</span> <span class="fu">backendInitialize</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">f</span>,</span></span>
+<span class="r-in"><span>    mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="st">"mona"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start data import from 1 files ... </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> done</span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">precursorMz</span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">precursorMz</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  232.1543  246.1700  260.1856 1451.9962 1451.9962</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Other fields are also correctly mapped, but might need to be converted</span></span>
-<span class="r-in"><span class="co">## to e.g. numeric, such as "exactmass"</span></span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">exactmass</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Other fields are also correctly mapped, but might need to be converted</span></span></span>
+<span class="r-in"><span><span class="co">## to e.g. numeric, such as "exactmass"</span></span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">exactmass</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "232.1543346040907"  "246.16998466809073" "260.18563473209076"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4] "1453.003526472"     "1453.003526472"    </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">exactmass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">be</span><span class="op">$</span><span class="va">exactmass</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">adduct</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">exactmass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">be</span><span class="op">$</span><span class="va">exactmass</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">adduct</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "[M]+"   "[M]+"   "[M]+"   "[M-H]-" "[M-H]-"</span>
-<span class="r-in"><span class="va">be</span><span class="op">$</span><span class="va">formula</span></span>
+<span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">formula</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "[C11H22NO4]+" "[C12H24NO4]+" "[C13H26NO4]+" "C81H146O17P2" "C81H146O17P2"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Exporting Spectra objects in MSP format.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">sps</span> <span class="op">&lt;-</span> <span class="fu">Spectra</span><span class="op">(</span><span class="va">be</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">export</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">sps</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/showConnections.html" class="external-link">stdout</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Exporting Spectra objects in MSP format.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">sps</span> <span class="op">&lt;-</span> <span class="fu">Spectra</span><span class="op">(</span><span class="va">be</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">export</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">sps</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/showConnections.html" class="external-link">stdout</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NAME: ACar 4:0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> msLevel: MS2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Positive</span>
@@ -433,7 +455,7 @@ exported even if not provided in <code>x</code>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
     </footer></div>
