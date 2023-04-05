@@ -15,4 +15,13 @@ The package defines the `MsBackendMsp` backend which can be used to
 import and use MS2 spectrum data from msp files with the
 [Spectra](https://github.com/rformassspectrometry/Spectra) R package.
 
-For more information see the package vignette or the package [homepage](https://rformassspectrometry.github.io/MsBackendMsp).
+For more information see the package vignette or the package
+[homepage](https://rformassspectrometry.github.io/MsBackendMsp).
+
+# Contributions
+
+Contributions are highly welcome and should follow the [contribution
+guidelines](https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#contributions).
+Also, please check the coding style guidelines in the [RforMassSpectrometry
+vignette](https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html).
+
