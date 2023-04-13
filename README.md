@@ -2,7 +2,7 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check-bioc](https://github.com/RforMassSpectrometry/MsBackendMsp/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/RforMassSpectrometry/MsBackendMsp/actions?query=workflow%3AR-CMD-check-bioc)
-[![codecov](https://codecov.io/gh/rformassspectrometry/MsBackendMsp/branch/devel/graph/badge.svg?token=RS145O5ER1)](https://codecov.io/gh/rformassspectrometry/MsBackendMsp)
+[![codecov](https://codecov.io/gh/rformassspectrometry/MsBackendMsp/branch/main/graph/badge.svg?token=RS145O5ER1)](https://codecov.io/gh/rformassspectrometry/MsBackendMsp)
 [![license](https://img.shields.io/badge/license-Artistic--2.0-brightgreen.svg)](https://opensource.org/licenses/Artistic-2.0)
 [![years in bioc](http://bioconductor.org/shields/years-in-bioc/MsBackendMsp.svg)](https://bioconductor.org/packages/release/bioc/html/MsBackendMsp.html)
 [![Ranking by downloads](http://bioconductor.org/shields/downloads/release/MsBackendMsp.svg)](https://bioconductor.org/packages/stats/bioc/MsBackendMsp/)
@@ -17,6 +17,17 @@ import and use MS2 spectrum data from msp files with the
 
 For more information see the package vignette or the package
 [homepage](https://rformassspectrometry.github.io/MsBackendMsp).
+
+
+# Installation
+
+The package can be installed with
+
+```r
+install.packages("BiocManager")
+BiocManager::install("MsBackendMsp")
+```
+
 
 # Contributions
 
