@@ -22,12 +22,61 @@ test_that("readMsp works", {
     expect_error(readMsp(c(f, f2)), "Please provide a single msp file.")
 })
 
+test_that("readMsp works for all test files", {
+    f <- system.file("extdata", "spectrum.msp", package = "MsBackendMsp")
+    res <- readMsp(f)
+    f <- system.file("extdata", "fail_spectrum.msp", package = "MsBackendMsp")
+    expect_warning(res_2 <- readMsp(f), "Unexpected")
+    expect_equal(res$intensity, res_2$intensity)
+    expect_equal(res$mz, res_2$mz)
+
+    f <- system.file("extdata", "fail_spectrum2.msp", package = "MsBackendMsp")
+    expect_error(readMsp(f), "multiple")
+
+    f <- system.file("extdata", "first-export-LipidBlast.msp",
+                     package = "MsBackendMsp")
+    res <- readMsp(f)
+    expect_true(nrow(res) == 1)
+    expect_equal(lengths(res$mz), 2)
+    expect_equal(lengths(res$intensity), 2)
+
+    f <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
+    res <- readMsp(f)
+    expect_true(nrow(res) > 1)
+    expect_equal(length(res$mz[[1L]]), 8)
+    expect_equal(length(res$intensity[[1L]]), 8)
+
+    f <- system.file("extdata", "msdial_pos.msp", package = "MsBackendMsp")
+    res <- readMsp(f)
+    expect_true(nrow(res) > 1)
+    expect_equal(length(res$mz[[1L]]), 1)
+    expect_equal(length(res$intensity[[1L]]), 1)
+    expect_equal(length(res$mz[[4L]]), 8)
+    expect_equal(length(res$intensity[[4L]]), 8)
+
+    f <- system.file("extdata", "small-export-LipidBlast.msp",
+                     package = "MsBackendMsp")
+    res <- readMsp(f)
+    expect_true(nrow(res) == 5)
+    expect_equal(length(res$mz[[1L]]), 2)
+    expect_equal(length(res$intensity[[1L]]), 2)
+    expect_equal(length(res$mz[[5L]]), 12)
+    expect_equal(length(res$intensity[[5L]]), 12)
+
+    f <- system.file("extdata", "spectrum2.msp", package = "MsBackendMsp")
+    res <- readMsp(f)
+    expect_true(nrow(res) == 2)
+    expect_equal(length(res$intensity[[1L]]), 86)
+    expect_equal(length(res$mz[[1L]]), 86)
+})
+
 test_that(".expect_msp_spectrum works", {
     f <- system.file("extdata", "msdial_pos.msp", package = "MsBackendMsp")
     x <- scan(file = f, what = "",
               sep = "\n", quote = "",
               allowEscapes = FALSE,
               quiet = TRUE)
+    x2 <- x[1:37]
     x <- x[15:22]
 
     mapping <- spectraVariableMapping(MsBackendMsp())
@@ -42,6 +91,17 @@ test_that(".expect_msp_spectrum works", {
     expect_true(sum(colnames(res) == "synonym") == 1)
     expect_true(length(res$other[[1L]]) == 3)
     expect_true(length(res$synonym[[1L]]) == 2)
+
+    ## Spectra not separated by blank lines.
+    expect_error(.extract_msp_spectrum(x2, mapping), "multiple 'Name'")
+
+    f <- system.file("extdata", "fail_spectrum.msp", package = "MsBackendMsp")
+    x <- scan(file = f, what = "",
+              sep = "\n", quote = "",
+              allowEscapes = FALSE,
+              quiet = TRUE)
+    expect_warning(.extract_msp_spectrum(x, mapping = mapping),
+                   "Unexpected number of values")
 })
 
 test_that(".process_polarity works", {

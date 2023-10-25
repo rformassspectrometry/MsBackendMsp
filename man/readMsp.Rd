@@ -28,6 +28,15 @@ and \code{"intensity"} in a list representation.
 \description{
 The \code{readMsp} function imports the data from a file in MGF format reading
 all specified fields and returning the data as a \code{\link[=DataFrame]{DataFrame()}}.
+
+Format contraints for MSP files:
+\itemize{
+\item Multiple spectra within the same MSP file should be separated by one (or
+more) blank lines.
+\item A line with peak data is expected to contain only values for a single peak.
+The first value is expected to be the m/z value, the second the peak's
+intensity. Any additional values/elements in the same line will be ignored.
+}
 }
 \examples{
 

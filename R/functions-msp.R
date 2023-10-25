@@ -5,6 +5,14 @@
 #' The `readMsp` function imports the data from a file in MGF format reading
 #' all specified fields and returning the data as a [DataFrame()].
 #'
+#' Format contraints for MSP files:
+#'
+#' - Multiple spectra within the same MSP file should be separated by one (or
+#'   more) blank lines.
+#' - A line with peak data is expected to contain only values for a single peak.
+#'   The first value is expected to be the m/z value, the second the peak's
+#'   intensity. Any additional values/elements in the same line will be ignored.
+#' 
 #' @param f `character(1)` with the path to an MSP file.
 #'
 #' @param msLevel `numeric(1)` with the MS level. Default is 2. This value will
@@ -49,19 +57,23 @@ readMsp <- function(f, msLevel = 2L,
     if (length(f) != 1L)
         stop("Please provide a single msp file.")
     
-    msp <- scan(file = f, what = "",
-                sep = "\n", quote = "",
-                allowEscapes = FALSE,
-                quiet = TRUE)
+    msp <- scan(file = f, what = "", sep = "\n", quote = "",
+                allowEscapes = FALSE, quiet = TRUE,
+                blank.lines.skip = FALSE, strip.white = TRUE)
     
     ## Ignore comments
     cmts <- grep("^[#]", msp)
     if (length(cmts))
         msp <- msp[-cmts]
 
-    ## Find individual records
-    begin <- grep("^NAME:", msp, ignore.case = TRUE)
-    end <- c(begin[-1] -1L, length(msp))
+    ## Find individual records. Instead of grepping by NAME: we use blank
+    ## lines. These are expected to separate entries.
+    wsp <- grep("^[[:space:]]|(^$)", msp)
+    begin <- c(1, wsp +1L)
+    end <- c(wsp -1L, length(msp))
+    keep <- begin < end # drop consecutive blank lines.
+    begin <- begin[keep]
+    end <- end[keep]
 
     sp <- mapply(begin, end, FUN = function(a, b) {
          .extract_msp_spectrum(msp[a:b], mapping = mapping)
@@ -99,10 +111,18 @@ readMsp <- function(f, msLevel = 2L,
     ## grep description
     desc.idx <- grep(":", msp)
     desc <- msp[desc.idx]
-    spec <- msp[-desc.idx]
-
-    ms <- do.call(rbind, strsplit(sub("^(\\t|[[:space:]]+)", "", spec),
-                                  "[[:space:]]+"))
+    spec <- trimws(msp[-desc.idx], "left")
+    
+    pks <- strsplit(sub("^(\\t|[[:space:]]+)", "", spec),
+                    "[[:space:]]+")
+    anns <- lengths(pks) > 2
+    if (any(anns)) {
+        warning("Unexpected number of values per peak found. These values ",
+                "(in addition to m/z and intensity) were ignored.",
+                call. = FALSE)
+        pks[anns] <- lapply(pks[anns], function(z) z[1:2])
+    }
+    ms <- do.call(rbind, pks)
     mode(ms) <- "double"
 
     if (!length(ms))
@@ -113,6 +133,12 @@ readMsp <- function(f, msLevel = 2L,
     r <- regexpr(":", desc, fixed = TRUE)
     desc <- setNames(substring(desc, r + 2L, nchar(desc)),
                      substring(desc, 1L, r - 1L))
+
+    ## Ensure we properly split entries.
+    if (sum(tolower(names(desc)) == "name") != 1L)
+        stop("Found multiple 'Name' entries! Are spectra in the MSP file(s) ",
+             "separated by blank lines?")
+
     ## map fields to spectra variables
     idx <- match(names(desc), mapping)
     not_na <- !is.na(idx)
@@ -258,6 +284,9 @@ readMsp <- function(f, msLevel = 2L,
 
 #' @title Parse the comment field from a MoNA MSP file
 #'
+#' @description
+#'
+#' Parse comment field from MoNA.
 #' 
 #' @author Johannes Rainer
 #'

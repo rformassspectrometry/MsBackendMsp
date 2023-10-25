@@ -1,5 +1,11 @@
 # MsBackendMsp 1.3
 
+
+## Changes in 
+
+- Add additional checks to the format of input MSP files to ensure proper data
+  import.
+
 ## Changes in 1.3.1
 
 - Use the full unit test suite from the `Spectra` package to check validity of
