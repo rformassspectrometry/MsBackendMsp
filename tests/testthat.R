@@ -13,8 +13,7 @@ be <- MsBackendMsp()
 be <- backendInitialize(
     be, fls, mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
 
-res <- test_file(paste0(test_suite, "/test_spectra_variables.R"),
-                 reporter = check_reporter(), stop_on_failure = TRUE)
+test_dir(test_suite, stop_on_failure = TRUE)
 
 
 

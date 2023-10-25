@@ -7,8 +7,8 @@ docs
 ^docs$
 Makefile
 local_data
-NEWS.md
-README.Rmd
+README.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 _pkgdown.yml
+logo.png

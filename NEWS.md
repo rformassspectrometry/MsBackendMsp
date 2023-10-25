@@ -1,3 +1,24 @@
+# MsBackendMsp 1.3
+
+## Changes in 1.3.1
+
+- Use the full unit test suite from the `Spectra` package to check validity of
+  the `MsBackendMsp`.
+
+# MsBackendMsp 0.99
+
+## Changes in 0.99.4
+
+- Import `coreSpectraVariables` from `Spectra`.
+
+## Changes in 0.99.2
+
+- Small updates and changes.
+
+## Changes in 0.99.1
+
+- Address review comments.
+
 # MsBackendMsp 0.98
 
 ## Changes in 0.98.2

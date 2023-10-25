@@ -1,14 +1,15 @@
 ---
-title: "Description and usage of MsBackendMsp"
+title: "MsBackendMsp"
 output:
     BiocStyle::html_document:
         toc_float: true
 vignette: >
-    %\VignetteIndexEntry{Description and usage of MsBackendMsp}
+    %\VignetteIndexEntry{MsBackendMsp}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
     %\VignettePackage{MsBackendMsp}
     %\VignetteDepends{Spectra,BiocStyle,BiocParallel}
+bibliography: references.bib
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message=FALSE}
@@ -30,7 +31,9 @@ The `r Biocpkg("Spectra")` package provides a central infrastructure for the
 handling of Mass Spectrometry (MS) data. The package supports interchangeable
 use of different *backends* to import MS data from a variety of sources (such as
 mzML files). The `MsBackendMsp` package adds support for files in NIST MSP
-format which are frequently used to share spectra libraries. This vignette
+format which are frequently used to share spectra libraries and hence enhances
+small compound annotation workflows using the `Spectra` and 
+`r Biocpkg("MetaboAnnotation")` packages [@rainer_modular_2022]. This vignette
 illustrates the usage of the `MsBackendMsp` package and how it can be used to
 import and export data in MSP file format.
 
@@ -192,3 +195,5 @@ flavors.
 ```{r}
 sessionInfo()
 ```
+
+# References

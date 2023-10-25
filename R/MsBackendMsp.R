@@ -168,7 +168,6 @@ setMethod("backendInitialize", signature = "MsBackendMsp",
               res <- do.call(rbindFill, res)
               spectraData(object) <- res
               object$dataStorage <- "<memory>"
-              ## object$centroided <- TRUE
               validObject(object)
               object
           })
