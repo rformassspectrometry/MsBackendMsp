@@ -1,3 +1,10 @@
+# MsBackendMsp 1.7
+
+## Changes in 1.7.1
+
+- Add additional checks to the format of input MSP files to ensure proper data
+  import.
+
 # MsBackendMsp 1.3
 
 ## Changes in 1.3.1
