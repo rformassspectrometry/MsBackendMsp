@@ -1,5 +1,10 @@
 # MsBackendMsp 1.3
 
+## Changes in 1.3.2
+
+- Import method generics from `ProtGenerics`. Requires `ProtGenerics` version
+  1.35.3.
+
 ## Changes in 1.3.1
 
 - Use the full unit test suite from the `Spectra` package to check validity of
