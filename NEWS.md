@@ -1,9 +1,11 @@
-# MsBackendMsp 1.3
+# MsBackendMsp 1.7
 
-## Changes in 1.3.2
+## Changes in 1.7.1
 
 - Import method generics from `ProtGenerics`. Requires `ProtGenerics` version
   1.35.3.
+
+# MsBackendMsp 1.3
 
 ## Changes in 1.3.1
 
