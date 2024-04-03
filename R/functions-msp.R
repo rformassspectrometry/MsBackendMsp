@@ -215,9 +215,9 @@ readMsp <- function(f, msLevel = 2L,
 #' 
 #' @author Michael Witting, Johannes Rainer
 #'
-#' @importMethodsFrom Spectra spectraVariables spectraNames
+#' @importMethodsFrom Spectra spectraVariables spectraNames spectraData
 #'
-#' @importMethodsFrom Spectra peaksData spectraData
+#' @importMethodsFrom ProtGenerics peaksData
 #'
 #' @noRd
 #'

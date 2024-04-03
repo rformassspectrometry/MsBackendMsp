@@ -1,9 +1,14 @@
 # MsBackendMsp 1.7
 
-## Changes in 1.7.1
+## Changes in 1.7.2
 
 - Add additional checks to the format of input MSP files to ensure proper data
   import.
+
+## Changes in 1.7.1
+
+- Import method generics from `ProtGenerics`. Requires `ProtGenerics` version
+  1.35.3.
 
 # MsBackendMsp 1.3
 
