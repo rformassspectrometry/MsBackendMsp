@@ -2,16 +2,19 @@
 #'
 #' @description
 #' 
-#' The `readMsp` function imports the data from a file in MGF format reading
+#' The `readMsp()` function imports the data from a file in MGF format reading
 #' all specified fields and returning the data as a [DataFrame()].
 #'
-#' Format contraints for MSP files:
+#' Format constraints for MSP files:
 #'
-#' - Multiple spectra within the same MSP file should be separated by one (or
-#'   more) blank lines.
-#' - A line with peak data is expected to contain only values for a single peak.
-#'   The first value is expected to be the m/z value, the second the peak's
-#'   intensity. Any additional values/elements in the same line will be ignored.
+#' - Comment lines are expected to start with a `#`.
+#' - Multiple spectra within the same MSP file are separated by an empty line.
+#' - The first n lines of a spectrum entry represent metadata.
+#' - Metadata is provided as "name: value" pairs (i.e. name and value separated
+#'   by a ":").
+#' - One line per mass peak, with values separated by a whitespace or tabulator.
+#' - Each line is expected to contain at least the m/z and intensity values (in
+#'   that order) of a peak. Additional values are currently ignored.
 #' 
 #' @param f `character(1)` with the path to an MSP file.
 #'
@@ -48,10 +51,9 @@
 #'
 #' @examples
 #'
-#' fls <- dir(system.file("extdata", package = "MsBackendMsp"),
-#'     full.names = TRUE, pattern = "msp$")[1L]
+#' f <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
 #'
-#' readMsp(fls)
+#' readMsp(f)
 readMsp <- function(f, msLevel = 2L,
                     mapping = spectraVariableMapping(MsBackendMsp()), ...) {
     if (length(f) != 1L)
@@ -86,13 +88,13 @@ readMsp <- function(f, msLevel = 2L,
         if (all(lengths(res[[i]]) == 1))
             res[[i]] <- unlist(res[[i]])
         if (any(col <- names(spv) == colnames(res)[i]))
-            res[[i]] <- as(res[[i]], spv[col][1])
+            res[[i]] <- suppressWarnings(as(res[[i]], spv[col][1]))
     }
 
     res$mz <- NumericList(res$mz, compress = FALSE)
     res$intensity <- NumericList(res$intensity, compress = FALSE)
     res$dataOrigin <- f
-    if (!any(colnames(res) == msLevel))
+    if (!any(colnames(res) == "msLevel"))
         res$msLevel <- as.integer(msLevel)
     res
 }
@@ -106,38 +108,52 @@ readMsp <- function(f, msLevel = 2L,
 #' 
 #' @importFrom stats setNames
 #'
+#' @note
+#'
+#' https://www.nist.gov/system/files/documents/srd/NIST1aVer22Man.pdf
+#' 
 #' @noRd
 .extract_msp_spectrum <- function(msp, mapping) {
     ## grep description
     desc.idx <- grep(":", msp)
     desc <- msp[desc.idx]
+
+    l <- length(desc.idx)
+    if (desc.idx[1L] != 1L || desc.idx[l] != l)
+        stop("MSP format error. Make sure that data for multiple spectra are ",
+             "separated by an empty new line and that general spectrum ",
+             "metadata/information is provided in 'name: value' format ",
+             "(i.e. name and value of the metadata field separated by ",
+             "a \":\").", call. = FALSE)
+    
     spec <- trimws(msp[-desc.idx], "left")
     
     pks <- strsplit(sub("^(\\t|[[:space:]]+)", "", spec),
                     "[[:space:]]+")
     anns <- lengths(pks) > 2
     if (any(anns)) {
-        warning("Unexpected number of values per peak found. These values ",
-                "(in addition to m/z and intensity) were ignored.",
-                call. = FALSE)
+        warning("Unexpected number of values per peak found. Keeping only the ",
+                "first two values assuming they correspond to m/z and ",
+                "intensity", call. = FALSE)
         pks[anns] <- lapply(pks[anns], function(z) z[1:2])
     }
     ms <- do.call(rbind, pks)
     mode(ms) <- "double"
-
+    
     if (!length(ms))
         ms <- matrix(numeric(), ncol = 2L)
-    else if (is.unsorted(ms[, 1L]))
-        ms <- ms[order(ms[, 1L]), ]
+    else {
+        if (anyNA(ms[, 1L]))
+            stop("MSP format error. Missing values (NA) for m/z are not ",
+                 "supported. Please ensure that no missing or non-numeric ",
+                 "values are reported as the peaks' m/z values.", call. = FALSE)
+        if (is.unsorted(ms[, 1L]))
+            ms <- ms[order(ms[, 1L]), ]
+    }
     
     r <- regexpr(":", desc, fixed = TRUE)
     desc <- setNames(substring(desc, r + 2L, nchar(desc)),
                      substring(desc, 1L, r - 1L))
-
-    ## Ensure we properly split entries.
-    if (sum(tolower(names(desc)) == "name") != 1L)
-        stop("Found multiple 'Name' entries! Are spectra in the MSP file(s) ",
-             "separated by blank lines?")
 
     ## map fields to spectra variables
     idx <- match(names(desc), mapping)

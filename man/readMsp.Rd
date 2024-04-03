@@ -26,24 +26,26 @@ in the MSP file. m/z and intensity values are available in columns \code{"mz"}
 and \code{"intensity"} in a list representation.
 }
 \description{
-The \code{readMsp} function imports the data from a file in MGF format reading
+The \code{readMsp()} function imports the data from a file in MGF format reading
 all specified fields and returning the data as a \code{\link[=DataFrame]{DataFrame()}}.
 
-Format contraints for MSP files:
+Format constraints for MSP files:
 \itemize{
-\item Multiple spectra within the same MSP file should be separated by one (or
-more) blank lines.
-\item A line with peak data is expected to contain only values for a single peak.
-The first value is expected to be the m/z value, the second the peak's
-intensity. Any additional values/elements in the same line will be ignored.
+\item Comment lines are expected to start with a \verb{#}.
+\item Multiple spectra within the same MSP file are separated by an empty line.
+\item The first n lines of a spectrum entry represent metadata.
+\item Metadata is provided as "name: value" pairs (i.e. name and value separated
+by a ":").
+\item One line per mass peak, with values separated by a whitespace or tabulator.
+\item Each line is expected to contain at least the m/z and intensity values (in
+that order) of a peak. Additional values are currently ignored.
 }
 }
 \examples{
 
-fls <- dir(system.file("extdata", package = "MsBackendMsp"),
-    full.names = TRUE, pattern = "msp$")[1L]
+f <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
 
-readMsp(fls)
+readMsp(f)
 }
 \author{
 Laurent Gatto, Steffen Neumann, Johannes Rainer
