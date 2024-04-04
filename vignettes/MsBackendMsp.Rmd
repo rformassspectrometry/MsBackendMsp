@@ -23,6 +23,8 @@ BiocStyle::markdown()
 ```{r, echo = FALSE, message = FALSE}
 library(Spectra)
 library(BiocStyle)
+library(BiocParallel)
+register(SerialParam())
 ```
 
 # Introduction
