@@ -4,7 +4,13 @@
 \alias{readMsp}
 \title{Reading MSP files}
 \usage{
-readMsp(f, msLevel = 2L, mapping = spectraVariableMapping(MsBackendMsp()), ...)
+readMsp(
+  f,
+  msLevel = 2L,
+  mapping = spectraVariableMapping(MsBackendMsp()),
+  fixupNISTRI = TRUE,
+  ...
+)
 }
 \arguments{
 \item{f}{\code{character(1)} with the path to an MSP file.}
@@ -17,6 +23,13 @@ defines the MS level.}
 variables (see \code{\link[=spectraVariableMapping]{spectraVariableMapping()}}). This allows to correctly
 import also custom fields or data from files with different MSP
 \emph{flavors}.}
+
+\item{fixupNISTRI}{\code{boolean(1)} specifying whether to use the fast parsing
+that relies specifically on standard conformant tags
+for the retention index: \code{RI: 2674}. If set to \code{TRUE}, the function
+will tolerate \code{RI:2674} lacking a space, a format that was written
+by several versions of the nist2lib tool, but at the expense
+of parsing speed. Set to \code{FALSE} if the input is known to be well-formed.}
 
 \item{...}{Additional parameters, currently ignored.}
 }

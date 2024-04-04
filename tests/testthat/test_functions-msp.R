@@ -96,13 +96,13 @@ test_that(".extract_msp_spectrum works", {
     x <- x[15:22]
 
     mapping <- spectraVariableMapping(MsBackendMsp())
-    res <- .extract_msp_spectrum(x, mapping = mapping)
+    res <- .extract_msp_spectrum(x, mapping = mapping, fixupNISTRI=FALSE)
     expect_true(is.data.frame(res))
     expect_true(nrow(res) == 1)
 
     ## Duplicated values
     x <- c("synonym: a", "synonym: b", "other: 1", "other: 2", "other: 3", x)
-    res <- MsBackendMsp:::.extract_msp_spectrum(x, mapping = mapping)
+    res <- .extract_msp_spectrum(x, mapping = mapping, fixupNISTRI=FALSE)
     expect_true(sum(colnames(res) == "other") == 1)
     expect_true(sum(colnames(res) == "synonym") == 1)
     expect_true(length(res$other[[1L]]) == 3)
@@ -116,7 +116,7 @@ test_that(".extract_msp_spectrum works", {
               sep = "\n", quote = "",
               allowEscapes = FALSE,
               quiet = TRUE)
-    expect_warning(.extract_msp_spectrum(x, mapping = mapping),
+    expect_warning(.extract_msp_spectrum(x, mapping = mapping, fixupNISTRI=FALSE),
                    "Unexpected number of values")
 })
 

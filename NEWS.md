@@ -2,6 +2,11 @@
 
 ## Changes in 1.7.2
 
+- Add parameter fixupNISTRI to choose between fast parsing
+  of correctly formatted MSP files, or slower more tolerant parsing 
+
+## Changes in 1.7.2
+
 - Add additional checks to the format of input MSP files to ensure proper data
   import.
 

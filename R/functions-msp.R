@@ -27,6 +27,13 @@
 #'     import also custom fields or data from files with different MSP
 #'     *flavors*.
 #'
+#' @param fixupNISTRI `boolean(1)` specifying whether to use the fast parsing
+#'     that relies specifically on standard conformant tags
+#'     for the retention index: `RI: 2674`. If set to `TRUE`, the function
+#'     will tolerate `RI:2674` lacking a space, a format that was written
+#'     by several versions of the nist2lib tool, but at the expense
+#'     of parsing speed. Set to `FALSE` if the input is known to be well-formed.
+#'
 #' @param ... Additional parameters, currently ignored.
 #'
 #' @return
@@ -55,7 +62,8 @@
 #'
 #' readMsp(f)
 readMsp <- function(f, msLevel = 2L,
-                    mapping = spectraVariableMapping(MsBackendMsp()), ...) {
+                    mapping = spectraVariableMapping(MsBackendMsp()),
+                    fixupNISTRI=TRUE, ...) {
     if (length(f) != 1L)
         stop("Please provide a single msp file.")
     
@@ -78,7 +86,9 @@ readMsp <- function(f, msLevel = 2L,
     end <- end[keep]
 
     sp <- mapply(begin, end, FUN = function(a, b) {
-         .extract_msp_spectrum(msp[a:b], mapping = mapping)
+        .extract_msp_spectrum(msp[a:b],
+                              mapping = mapping,
+                              fixupNISTRI = fixupNISTRI)
     }, SIMPLIFY = FALSE, USE.NAMES = FALSE)
     res <- DataFrame(rbindFill(sp))
 
@@ -103,8 +113,15 @@ readMsp <- function(f, msLevel = 2L,
 #'     format.
 #'
 #' @param mapping spectra variable mapping that allows renaming data fields.
+#'
+#' @param fixupNISTRI `boolean(1)` specifying whether to use the fast parsing
+#'     that relies specifically on standard conformant tags
+#'     for the retention index: `RI: 2674`. If set to `TRUE`, the function
+#'     will tolerate `RI:2674` lacking a space, a format that was written
+#'     by several versions of the nist2lib tool, but at the expense
+#'     of parsing speed. Set to `FALSE` if the input is known to be well-formed.
 #' 
-#' @author Laurent Gatto, Johannes Rainer
+#' @author Laurent Gatto, Johannes Rainer, Steffen Neumann
 #' 
 #' @importFrom stats setNames
 #'
@@ -113,7 +130,7 @@ readMsp <- function(f, msLevel = 2L,
 #' https://www.nist.gov/system/files/documents/srd/NIST1aVer22Man.pdf
 #' 
 #' @noRd
-.extract_msp_spectrum <- function(msp, mapping) {
+.extract_msp_spectrum <- function(msp, mapping, fixupNISTRI) {
     ## grep description
     desc.idx <- grep(":", msp)
     desc <- msp[desc.idx]
@@ -150,10 +167,17 @@ readMsp <- function(f, msLevel = 2L,
         if (is.unsorted(ms[, 1L]))
             ms <- ms[order(ms[, 1L]), ]
     }
-    
-    r <- regexpr(":", desc, fixed = TRUE)
-    desc <- setNames(substring(desc, r + 2L, nchar(desc)),
-                     substring(desc, 1L, r - 1L))
+
+    if (fixupNISTRI) {
+        r <- regexpr(":[[:space:]]*", desc)
+        desc <- setNames(substring(desc, r + attr(r,"match.length"),
+                                   nchar(desc)),
+                         substring(desc, 1L, r - 1L))        
+    } else {
+        r <- regexpr(":", desc, fixed = TRUE)
+        desc <- setNames(substring(desc, r + 2L, nchar(desc)),
+                         substring(desc, 1L, r - 1L))
+    }
 
     ## map fields to spectra variables
     idx <- match(names(desc), mapping)
