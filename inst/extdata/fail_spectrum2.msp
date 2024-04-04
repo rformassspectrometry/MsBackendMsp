@@ -99,10 +99,8 @@ Num Peaks: 86
 267	43.96
 283	22.98
 284	124.99
-
 NAME: 5-(4-Ethoxybenzylidene)-2-(4-morpholinyl)-1,3-thiazol-4(5H)-one
 PRECURSORMZ: 319.1111
-msLevel: 1
 PRECURSORTYPE: [M+H]+
 INSTRUMENTTYPE: IT/ion trap
 INSTRUMENT: Thermo Finnigan LCQ Deca

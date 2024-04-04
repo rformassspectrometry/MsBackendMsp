@@ -23,6 +23,8 @@ BiocStyle::markdown()
 ```{r, echo = FALSE, message = FALSE}
 library(Spectra)
 library(BiocStyle)
+library(BiocParallel)
+register(SerialParam())
 ```
 
 # Introduction
@@ -30,11 +32,11 @@ library(BiocStyle)
 The `r Biocpkg("Spectra")` package provides a central infrastructure for the
 handling of Mass Spectrometry (MS) data. The package supports interchangeable
 use of different *backends* to import MS data from a variety of sources (such as
-mzML files). The `MsBackendMsp` package adds support for files in NIST MSP
-format which are frequently used to share spectra libraries and hence enhances
-small compound annotation workflows using the `Spectra` and 
+mzML files). The `r Biocpkg("MsBackendMsp")` package adds support for files in
+NIST MSP format which are frequently used to share spectra libraries and hence
+enhances small compound annotation workflows using the `Spectra` and 
 `r Biocpkg("MetaboAnnotation")` packages [@rainer_modular_2022]. This vignette
-illustrates the usage of the `MsBackendMsp` package and how it can be used to
+illustrates the usage of the *MsBackendMsp* package and how it can be used to
 import and export data in MSP file format.
 
 
@@ -50,6 +52,24 @@ BiocManager::install("MsBackendMsp")
 ```
 
 This will install this package and all eventually missing dependencies.
+
+
+# MSP file format
+
+NIST MSP file format is supported. Some (eventually more stringent) requirements
+of the format are:
+
+- Comment lines are expected to start with a `#`.
+- Multiple spectra within the same MSP file are separated by an empty line.
+- The first n lines of a spectrum entry represent metadata.
+- Metadata is provided as "name: value" pairs (i.e. name and value separated
+  by a ":").
+- One line per mass peak, with values separated by a whitespace or tabulator.
+- Each line is expected to contain at least the m/z and intensity values (in
+  that order) of a peak. Additional values are currently ignored.
+
+An MSP file can define/provide data for any number of spectra, with no limit on
+the number of spectra, number of peaks per spectra or number of metadata lines.
 
 
 # Importing MS/MS data from MSP files
@@ -74,7 +94,7 @@ sp <- Spectra(nist, source = MsBackendMsp())
 ```
 
 With that we have now full access to all imported spectra variables that can be
-listed with the `spectraVariables` function.
+listed with the `spectraVariables()` function.
 
 ```{r spectravars}
 spectraVariables(sp)
@@ -97,7 +117,7 @@ format variations by defining and providing different mappings between MSP data
 fields and spectra variables. Also user-defined mappings can be used, which
 makes import from any MSP flavor possible. Pre-defined mappings between MSP data
 fields and spectra variables (i.e. variables within the `Spectra` object) are
-returned by the `spectraVariableMapping` function.
+returned by the `spectraVariableMapping()` function.
 
 ```{r}
 spectraVariableMapping(MsBackendMsp())
@@ -132,7 +152,7 @@ respective spectra variable in the resulting `Spectra` object (e.g. the
 precursor m/z would not be available with the expected spectra variable
 `$precursorMz`).
 
-The `spectraVariableMapping` provides however also the mapping for MSP files
+The `spectraVariableMapping()` provides however also the mapping for MSP files
 with MoNA flavor.
 
 ```{r}
