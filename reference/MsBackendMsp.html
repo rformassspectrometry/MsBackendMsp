@@ -3,12 +3,13 @@
 files in NIST MSP file format. MsBackendMsp extends the
 MsBackendDataFrame() backend directly and supports thus the
 applyProcessing() function to make data manipulations persistent.
-New objects are created with the MsBackendMsp function. The
-backendInitialize method has to be subsequently called to
+New objects are created with the MsBackendMsp() function. The
+backendInitialize() method has to be subsequently called to
 initialize the object and import MS/MS data from (one or more) msp
 files.
-The MsBackendMsp backend provides an export method that allows to export
-the data from the Spectra object (parameter x) to a file in msp format.
+The MsBackendMsp backend provides an export() method that allows to
+export the data from the Spectra object (parameter x) to a file in
+MSP format.
 Parameters to this function are:
 x: the Spectra object that should be exported.
 file: character(1) with the desired file name.
@@ -22,7 +23,7 @@ even if not provided in x.
 
 
 See the package vignette for details and examples.
-The spectraVariableMapping function allows to provide the mapping between
+The spectraVariableMapping() function allows to provide the mapping between
 spectra variable names (i.e. the names that will be used for the spectra
 variables in the Spectra() object) and the data field names of the
 MSP file. Parameter format allows to select pre-defined mappings. Currently
@@ -31,16 +32,17 @@ format = "msp": default MSP field names. Should work with standard NIST
 MSP files or MSP files exported from MS-DIAL.
 format = "mona": MSP file format from MoNA including LipidBlast.
 
-'><title>MS data backend for msp files — MsBackendMsp • MsBackendMsp</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="MS data backend for msp files — MsBackendMsp"><meta property="og:description" content='The MsBackendMsp class supports import of MS/MS spectra data from
+'><title>MS data backend for msp files — MsBackendMsp • MsBackendMsp</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="MS data backend for msp files — MsBackendMsp"><meta property="og:description" content='The MsBackendMsp class supports import of MS/MS spectra data from
 files in NIST MSP file format. MsBackendMsp extends the
 MsBackendDataFrame() backend directly and supports thus the
 applyProcessing() function to make data manipulations persistent.
-New objects are created with the MsBackendMsp function. The
-backendInitialize method has to be subsequently called to
+New objects are created with the MsBackendMsp() function. The
+backendInitialize() method has to be subsequently called to
 initialize the object and import MS/MS data from (one or more) msp
 files.
-The MsBackendMsp backend provides an export method that allows to export
-the data from the Spectra object (parameter x) to a file in msp format.
+The MsBackendMsp backend provides an export() method that allows to
+export the data from the Spectra object (parameter x) to a file in
+MSP format.
 Parameters to this function are:
 x: the Spectra object that should be exported.
 file: character(1) with the desired file name.
@@ -54,7 +56,7 @@ even if not provided in x.
 
 
 See the package vignette for details and examples.
-The spectraVariableMapping function allows to provide the mapping between
+The spectraVariableMapping() function allows to provide the mapping between
 spectra variable names (i.e. the names that will be used for the spectra
 variables in the Spectra() object) and the data field names of the
 MSP file. Parameter format allows to select pre-defined mappings. Currently
@@ -70,11 +72,11 @@ format = "mona": MSP file format from MoNA including LipidBlast.
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary" data-bs-theme="dark"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,13 +119,14 @@ format = "mona": MSP file format from MoNA including LipidBlast.
 files in NIST MSP file format. <code>MsBackendMsp</code> extends the
 <code>MsBackendDataFrame()</code> backend directly and supports thus the
 <code>applyProcessing()</code> function to make data manipulations persistent.</p>
-<p>New objects are created with the <code>MsBackendMsp</code> function. The
-<code>backendInitialize</code> method has to be subsequently called to
+<p>New objects are created with the <code>MsBackendMsp()</code> function. The
+<code>backendInitialize()</code> method has to be subsequently called to
 initialize the object and import MS/MS data from (one or more) msp
 files.</p>
-<p>The <code>MsBackendMsp</code> backend provides an <code>export</code> method that allows to export
-the data from the <code>Spectra</code> object (parameter <code>x</code>) to a file in msp format.
-Parameters to this function are:</p><ul><li><p><code>x</code>: the <code>Spectra</code> object that should be exported.</p></li>
+<p>The <code>MsBackendMsp</code> backend provides an <code>export()</code> method that allows to
+export the data from the <code>Spectra</code> object (parameter <code>x</code>) to a file in
+MSP format.</p>
+<p>Parameters to this function are:</p><ul><li><p><code>x</code>: the <code>Spectra</code> object that should be exported.</p></li>
 <li><p><code>file</code>: <code>character(1)</code> with the desired file name.</p></li>
 <li><p><code>mapping</code>: named <code>character</code> providing the mapping between spectra
 variables and MSP data fields. Defaults to
@@ -133,7 +136,7 @@ exported or only those defined with <code>mapping</code>.</p></li>
 <li><p><code>exportName</code>: <code>logical(1)</code> whether a <code>NAME</code> field should always be exported
 even if not provided in <code>x</code>.</p></li>
 </ul><p>See the package vignette for details and examples.</p>
-<p>The <code>spectraVariableMapping</code> function allows to provide the mapping between
+<p>The <code>spectraVariableMapping()</code> function allows to provide the mapping between
 spectra variable names (i.e. the names that will be used for the spectra
 variables in the <code>Spectra()</code> object) and the data field names of the
 MSP file. Parameter <code>format</code> allows to select pre-defined mappings. Currently
@@ -198,14 +201,14 @@ setup to import data in parallel. Defaults to <code>BPPARAM = bpparam()</code>. 
 
 
 <dt>format</dt>
-<dd><p>For <code>spectraVariableMapping</code>: <code>character(1)</code> specifying for
+<dd><p>For <code>spectraVariableMapping()</code>: <code>character(1)</code> specifying for
 which MSP <em>flavour</em> the mapping should be returned. Currently supported
 are: <code>format = "msp"</code> (generic MSP format, for example for MS-DIAL MSP
 files) and <code>format = "mona"</code> (MSP files in MoNA flavour).</p></dd>
 
 
 <dt>x</dt>
-<dd><p>For <code>export</code>: a <code>Spectra()</code> object that should be exported to the
+<dd><p>For <code>export()</code>: a <code>Spectra()</code> object that should be exported to the
 specified MSP file.</p></dd>
 
 
@@ -223,12 +226,23 @@ exported even if not provided in <code>x</code>.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>MsBackendMsp</code> and <code>backendInitialize</code> return an instance of a
-<code>MsBackendMsp</code> class. <code>spectraVariableMapping</code> a named <code>character</code></p>
+<p><code>MsBackendMsp()</code> and <code>backendInitialize()</code> return an instance of a
+<code>MsBackendMsp</code> class. <code>spectraVariableMapping()</code> a named <code>character</code></p>
 
 
 <p>vector with the mapping between spectra variables and MSP data fields.</p>
     </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Format requirements/assumptions of MSP files:</p><ul><li><p>Comment lines are expected to start with a <code>#</code>.</p></li>
+<li><p>Multiple spectra within the same MSP file are separated by an empty line.</p></li>
+<li><p>The first n lines of a spectrum entry represent metadata.</p></li>
+<li><p>Metadata is provided as "name: value" pairs (i.e. name and value separated
+by a ":").</p></li>
+<li><p>One line per mass peak, with values separated by a whitespace or tabulator.</p></li>
+<li><p>Each line is expected to contain at least the m/z and intensity values (in
+that order) of a peak. Additional values are currently ignored.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Steffen Neumann, Michael Witting, Laurent Gatto and Johannes Rainer</p>
@@ -293,8 +307,10 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            "InChIKey"      "Precursor_type"         "PrecursorMZ" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              polarity               formula             exactmass </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            "Ion_mode"             "Formula"           "ExactMass" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text               msLevel </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    "Collision_energy"       "Spectrum_type" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text               msLevel            instrument </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    "Collision_energy"       "Spectrum_type"          "Instrument" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       instrument_type </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "Instrument_type" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Importing the data with this will correctly retrieve data</span></span></span>
 <span class="r-in"><span><span class="va">be</span> <span class="op">&lt;-</span> <span class="fu">backendInitialize</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">f</span>,</span></span>
@@ -326,8 +342,6 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Positive</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 232.15433</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C11H21NO4/c1-5-6-11(15)16-9(7-10(13)14)8-12(2,3)4/h9H,5-8H2,1-4H3/p+1" "retention time=0.51" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.3431646471704717" "computed mass error=5.439758187435473E-4" "SPLASH=splash10-001r-7090000000-aa12589a2481560ea0d5" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MW: 232</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast000001</span>
@@ -336,6 +350,8 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 232.154334604091</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C11H22NO4]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: QWYFHHGCZUCMBN-UHFFFAOYSA-O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: [M]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 2</span>
@@ -347,8 +363,6 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Positive</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 246.16998</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C12H23NO4/c1-5-6-7-12(16)17-10(8-11(14)15)9-13(2,3)4/h10H,5-9H2,1-4H3/p+1" "retention time=0.68" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.209496944908765" "computed mass error=5.439118187382519E-4" "SPLASH=splash10-000b-7090000000-2b596f4df94dfefba50b" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MW: 246</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast000002</span>
@@ -357,6 +371,8 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 246.169984668091</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C12H24NO4]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: VSNFQQXVMPSASB-UHFFFAOYSA-O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: [M]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 2</span>
@@ -368,8 +384,6 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Positive</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 260.18563</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCCCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C13H25NO4/c1-5-6-7-8-13(17)18-11(9-12(15)16)10-14(2,3)4/h11H,5-10H2,1-4H3/p+1" "retention time=0.86" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.0902300356715053" "computed mass error=5.438478186761131E-4" "SPLASH=splash10-03dr-7090000000-a9ec485bc43949b4b278" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MW: 260</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast000003</span>
@@ -378,6 +392,8 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 260.185634732091</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C13H26NO4]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: VVPRQWTYSNDTEA-UHFFFAOYSA-O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: [M]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 2</span>
@@ -389,8 +405,6 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Negative</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 1451.99625</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCCCCCCCCCCCCCC(=O)OCC(COP(O)(=O)OCC(O)COP(O)(=O)OCC(COC(=O)CC\C=C/C\C=C/C\C=C/C\C=C/C\C=C/C\C=C/CC)OC(=O)CCCCCCCCCCCCC)OC(=O)CCCCCCCCCCCCCCCCC" "compound class=CL" "computed SMILES=O=C(OCC(OC(=O)CCCCCCCCCCCCC)COP(=O)(O)OCC(O)COP(=O)(O)OCC(OC(=O)CCCCCCCCCCCCCCCCC)COC(=O)CCCCCCCCCCCCCCCCC)CCC=CCC=CCC=CCC=CCC=CCC=CCC" "computed InChI=InChI=1S/C81H146O17P2/c1-5-9-13-17-21-25-29-32-35-36-37-38-41-43-47-50-54-58-62-66-79(84)91-71-76(97-80(85)67-63-59-55-51-45-28-24-20-16-12-8-4)73-95-99(87,88)93-69-75(82)70-94-100(89,90)96-74-77(98-81(86)68-64-60-56-52-48-44-40-34-31-27-23-19-15-11-7-3)72-92-78(83)65-61-57-53-49-46-42-39-33-30-26-22-18-14-10-6-2/h9,13,21,25,32,35,37-38,43,47,54,58,75-77,82H,5-8,10-12,14-20,22-24,26-31,33-34,36,39-42,44-46,48-53,55-57,59-74H2,1-4H3,(H,87,88)(H,89,90)/b13-9-,25-21-,35-32-,38-37-,47-43-,58-54-" "retention time=11.91" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=3.2506971738511424E-4" "computed mass error=-4.720000106317457E-7" "SPLASH=splash10-0w4i-0134901100-d27b9577a1230ec65177" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=4.5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MW: 1453</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast395475</span>
@@ -399,6 +413,8 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 1453.003526472</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: C81H146O17P2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: KWABUIIFXPUAEH-OXNFOSRESA-N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: CL 14:0-22:6-18:0-18:0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 10</span>
@@ -418,8 +434,6 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Negative</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 1451.99625</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCCCCCCCCCCCC(=O)OC(COC(=O)CCCCCCC\C=C/CCCCCCCC)COP(O)(=O)OCC(O)COP(O)(=O)OCC(COC(=O)CCCCCCCC\C=C/C\C=C/C\C=C/C\C=C/CC)OC(=O)CCCCCCC\C=C/CCCCCC" "compound class=CL" "computed SMILES=O=C(OCC(OC(=O)CCCCCCCCCCCCCCC)COP(=O)(O)OCC(O)COP(=O)(O)OCC(OC(=O)CCCCCCCC=CCCCCCC)COC(=O)CCCCCCCCC=CCC=CCC=CCC=CCC)CCCCCCCC=CCCCCCCCC" "computed InChI=InChI=1S/C81H146O17P2/c1-5-9-13-17-21-25-29-33-35-36-37-38-40-44-46-50-54-58-62-66-79(84)92-72-77(98-81(86)68-64-60-56-52-48-42-32-28-24-20-16-12-8-4)74-96-100(89,90)94-70-75(82)69-93-99(87,88)95-73-76(97-80(85)67-63-59-55-51-47-41-31-27-23-19-15-11-7-3)71-91-78(83)65-61-57-53-49-45-43-39-34-30-26-22-18-14-10-6-2/h9,13,21,25,28,32-35,37-39,75-77,82H,5-8,10-12,14-20,22-24,26-27,29-31,36,40-74H2,1-4H3,(H,87,88)(H,89,90)/b13-9-,25-21-,32-28-,35-33-,38-37-,39-34-" "retention time=11.65" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=3.2506971738511424E-4" "computed mass error=-4.720000106317457E-7" "SPLASH=splash10-0uyi-0157901100-d3b7dfa9dd7050026484" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=4.5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MW: 1453</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast398514</span>
@@ -428,6 +442,8 @@ exported even if not provided in <code>x</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 1453.003526472</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: C81H146O17P2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: WINXBODRGKNJDS-DUULZMMUSA-N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: CL 16:0-18:1-16:1-22:4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 12</span>
