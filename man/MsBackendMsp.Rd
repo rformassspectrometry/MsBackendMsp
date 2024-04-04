@@ -46,12 +46,12 @@ import also custom fields or data from files with different MSP
 \item{BPPARAM}{Parameter object defining the parallel processing
 setup to import data in parallel. Defaults to \code{BPPARAM = bpparam()}. See \code{\link[=bpparam]{bpparam()}} for more information.}
 
-\item{format}{For \code{spectraVariableMapping}: \code{character(1)} specifying for
+\item{format}{For \code{spectraVariableMapping()}: \code{character(1)} specifying for
 which MSP \emph{flavour} the mapping should be returned. Currently supported
 are: \code{format = "msp"} (generic MSP format, for example for MS-DIAL MSP
 files) and \code{format = "mona"} (MSP files in MoNA flavour).}
 
-\item{x}{For \code{export}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
+\item{x}{For \code{export()}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
 specified MSP file.}
 
 \item{allVariables}{\code{logical(1)} whether all spectra variables in \code{x}
@@ -61,8 +61,8 @@ should be exported or only those defined with \code{mapping}.}
 exported even if not provided in \code{x}.}
 }
 \value{
-\code{MsBackendMsp} and \code{backendInitialize} return an instance of a
-\code{MsBackendMsp} class. \code{spectraVariableMapping} a named \code{character}
+\code{MsBackendMsp()} and \code{backendInitialize()} return an instance of a
+\code{MsBackendMsp} class. \code{spectraVariableMapping()} a named \code{character}
 vector with the mapping between spectra variables and MSP data fields.
 }
 \description{
@@ -71,13 +71,15 @@ files in NIST MSP file format. \code{MsBackendMsp} extends the
 \code{\link[=MsBackendDataFrame]{MsBackendDataFrame()}} backend directly and supports thus the
 \code{\link[=applyProcessing]{applyProcessing()}} function to make data manipulations persistent.
 
-New objects are created with the \code{MsBackendMsp} function. The
-\code{backendInitialize} method has to be subsequently called to
+New objects are created with the \code{MsBackendMsp()} function. The
+\code{backendInitialize()} method has to be subsequently called to
 initialize the object and import MS/MS data from (one or more) msp
 files.
 
-The \code{MsBackendMsp} backend provides an \code{export} method that allows to export
-the data from the \code{Spectra} object (parameter \code{x}) to a file in msp format.
+The \code{MsBackendMsp} backend provides an \code{export()} method that allows to
+export the data from the \code{Spectra} object (parameter \code{x}) to a file in
+MSP format.
+
 Parameters to this function are:
 \itemize{
 \item \code{x}: the \code{Spectra} object that should be exported.
@@ -93,7 +95,7 @@ even if not provided in \code{x}.
 
 See the package vignette for details and examples.
 
-The \code{spectraVariableMapping} function allows to provide the mapping between
+The \code{spectraVariableMapping()} function allows to provide the mapping between
 spectra variable names (i.e. the names that will be used for the spectra
 variables in the \code{\link[=Spectra]{Spectra()}} object) and the data field names of the
 MSP file. Parameter \code{format} allows to select pre-defined mappings. Currently
@@ -102,6 +104,19 @@ supported mapping flavors are:
 \item \code{format = "msp"}: default MSP field names. Should work with standard NIST
 MSP files or MSP files exported from MS-DIAL.
 \item \code{format = "mona"}: MSP file format from MoNA including LipidBlast.
+}
+}
+\note{
+Format requirements/assumptions of MSP files:
+\itemize{
+\item Comment lines are expected to start with a \verb{#}.
+\item Multiple spectra within the same MSP file are separated by an empty line.
+\item The first n lines of a spectrum entry represent metadata.
+\item Metadata is provided as "name: value" pairs (i.e. name and value separated
+by a ":").
+\item One line per mass peak, with values separated by a whitespace or tabulator.
+\item Each line is expected to contain at least the m/z and intensity values (in
+that order) of a peak. Additional values are currently ignored.
 }
 }
 \examples{

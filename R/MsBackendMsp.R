@@ -12,13 +12,15 @@ NULL
 #' [MsBackendDataFrame()] backend directly and supports thus the
 #' [applyProcessing()] function to make data manipulations persistent.
 #'
-#' New objects are created with the `MsBackendMsp` function. The
-#' `backendInitialize` method has to be subsequently called to
+#' New objects are created with the `MsBackendMsp()` function. The
+#' `backendInitialize()` method has to be subsequently called to
 #' initialize the object and import MS/MS data from (one or more) msp
 #' files.
 #'
-#' The `MsBackendMsp` backend provides an `export` method that allows to export
-#' the data from the `Spectra` object (parameter `x`) to a file in msp format.
+#' The `MsBackendMsp` backend provides an `export()` method that allows to
+#' export the data from the `Spectra` object (parameter `x`) to a file in
+#' MSP format.
+#'
 #' Parameters to this function are:
 #'
 #' - `x`: the `Spectra` object that should be exported.
@@ -33,7 +35,7 @@ NULL
 #' 
 #' See the package vignette for details and examples.
 #'
-#' The `spectraVariableMapping` function allows to provide the mapping between
+#' The `spectraVariableMapping()` function allows to provide the mapping between
 #' spectra variable names (i.e. the names that will be used for the spectra
 #' variables in the [Spectra()] object) and the data field names of the
 #' MSP file. Parameter `format` allows to select pre-defined mappings. Currently
@@ -42,13 +44,26 @@ NULL
 #' - `format = "msp"`: default MSP field names. Should work with standard NIST
 #'   MSP files or MSP files exported from MS-DIAL.
 #' - `format = "mona"`: MSP file format from MoNA including LipidBlast.
+#'
+#' @note
+#'
+#' Format requirements/assumptions of MSP files:
+#'
+#' - Comment lines are expected to start with a `#`.
+#' - Multiple spectra within the same MSP file are separated by an empty line.
+#' - The first n lines of a spectrum entry represent metadata.
+#' - Metadata is provided as "name: value" pairs (i.e. name and value separated
+#'   by a ":").
+#' - One line per mass peak, with values separated by a whitespace or tabulator.
+#' - Each line is expected to contain at least the m/z and intensity values (in
+#'   that order) of a peak. Additional values are currently ignored.
 #' 
 #' @param object Instance of `MsBackendMsp` class.
 #'
 #' @param file `character` with the (full) file name(s) of the msp file(s)
 #'     from which MS/MS data should be imported or exported.
 #'
-#' @param format For `spectraVariableMapping`: `character(1)` specifying for
+#' @param format For `spectraVariableMapping()`: `character(1)` specifying for
 #'     which MSP *flavour* the mapping should be returned. Currently supported
 #'     are: `format = "msp"` (generic MSP format, for example for MS-DIAL MSP
 #'     files) and `format = "mona"` (MSP files in MoNA flavour).
@@ -68,13 +83,13 @@ NULL
 #'     setup to import data in parallel. Defaults to `BPPARAM =
 #'     bpparam()`. See [bpparam()] for more information.
 #'
-#' @param x For `export`: a [Spectra()] object that should be exported to the
+#' @param x For `export()`: a [Spectra()] object that should be exported to the
 #'     specified MSP file.
 #' 
 #' @param ... Currently ignored.
 #'
-#' @return `MsBackendMsp` and `backendInitialize` return an instance of a
-#'     `MsBackendMsp` class. `spectraVariableMapping` a named `character`
+#' @return `MsBackendMsp()` and `backendInitialize()` return an instance of a
+#'     `MsBackendMsp` class. `spectraVariableMapping()` a named `character`
 #'     vector with the mapping between spectra variables and MSP data fields.
 #' 
 #' @author Steffen Neumann, Michael Witting, Laurent Gatto and Johannes Rainer
@@ -133,8 +148,10 @@ setClass("MsBackendMsp",
                                readonly = FALSE,
                                version = "0.1"))
 
-#' @importMethodsFrom Spectra backendInitialize spectraData<- $<- $
+#' @importMethodsFrom Spectra spectraData<- $<- $
 #'
+#' @importMethodsFrom ProtGenerics backendInitialize
+#' 
 #' @importFrom BiocParallel bpparam
 #'
 #' @importMethodsFrom BiocParallel bplapply
@@ -215,7 +232,9 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          formula = "Formula",
                          exactmass = "ExactMass",
                          collision_energy_text = "Collision_energy",
-                         msLevel = "Spectrum_type"
+                         msLevel = "Spectrum_type",
+                         instrument = "Instrument",
+                         instrument_type = "Instrument_type"
                      )
                      )
           })
