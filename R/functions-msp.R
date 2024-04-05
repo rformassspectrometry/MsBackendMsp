@@ -27,6 +27,8 @@
 #'     import also custom fields or data from files with different MSP
 #'     *flavors*.
 #'
+#' @param BPPARAM parallel processing setup. See [bpparam()] for more details.
+#' 
 #' @param ... Additional parameters, currently ignored.
 #'
 #' @return
@@ -55,7 +57,8 @@
 #'
 #' readMsp(f)
 readMsp <- function(f, msLevel = 2L,
-                    mapping = spectraVariableMapping(MsBackendMsp()), ...) {
+                    mapping = spectraVariableMapping(MsBackendMsp()),
+                    BPPARAM = SerialParam(), ...) {
     if (length(f) != 1L)
         stop("Please provide a single msp file.")
     
@@ -77,9 +80,9 @@ readMsp <- function(f, msLevel = 2L,
     begin <- begin[keep]
     end <- end[keep]
 
-    sp <- mapply(begin, end, FUN = function(a, b) {
+    sp <- bpmapply(begin, end, FUN = function(a, b) {
          .extract_msp_spectrum(msp[a:b], mapping = mapping)
-    }, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+    }, SIMPLIFY = FALSE, USE.NAMES = FALSE, BPPARAM = BPPARAM)
     res <- DataFrame(rbindFill(sp))
 
     spv <- coreSpectraVariables()
@@ -152,7 +155,7 @@ readMsp <- function(f, msLevel = 2L,
     }
     
     r <- regexpr(":", desc, fixed = TRUE)
-    desc <- setNames(substring(desc, r + 2L, nchar(desc)),
+    desc <- setNames(trimws(substring(desc, r + 1L, nchar(desc)), "left"),
                      substring(desc, 1L, r - 1L))
 
     ## map fields to spectra variables
