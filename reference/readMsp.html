@@ -34,7 +34,7 @@ that order) of a peak. Additional values are currently ignored.
     
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,13 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">readMsp</span><span class="op">(</span><span class="va">f</span>, msLevel <span class="op">=</span> <span class="fl">2L</span>, mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu"><a href="MsBackendMsp.html">MsBackendMsp</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">readMsp</span><span class="op">(</span></span>
+<span>  <span class="va">f</span>,</span>
+<span>  msLevel <span class="op">=</span> <span class="fl">2L</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu"><a href="MsBackendMsp.html">MsBackendMsp</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -107,6 +113,10 @@ defines the MS level.</p></dd>
 variables (see <code>spectraVariableMapping()</code>). This allows to correctly
 import also custom fields or data from files with different MSP
 <em>flavors</em>.</p></dd>
+
+
+<dt>BPPARAM</dt>
+<dd><p>parallel processing setup. See <code>bpparam()</code> for more details.</p></dd>
 
 
 <dt>...</dt>

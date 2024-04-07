@@ -76,7 +76,7 @@ format = "mona": MSP file format from MoNA including LipidBlast.
     
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +153,7 @@ MSP files or MSP files exported from MS-DIAL.</p></li>
 <span>  <span class="va">file</span>,</span>
 <span>  mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="va">object</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span>,</span>
-<span>  BPPARAM <span class="op">=</span> <span class="fu">bpparam</span><span class="op">(</span><span class="op">)</span></span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span></span>
@@ -197,7 +197,10 @@ import also custom fields or data from files with different MSP
 
 <dt>BPPARAM</dt>
 <dd><p>Parameter object defining the parallel processing
-setup to import data in parallel. Defaults to <code>BPPARAM = bpparam()</code>. See <code>bpparam()</code> for more information.</p></dd>
+setup to import data in parallel. Defaults to <code>BPPARAM = SerialParam()</code>. See <code>bpparam()</code> for more information. Parallel processing
+would make most sense for import from a large set of individual MSP
+files, but could also improve performance for import from a (very large)
+single MSP file.</p></dd>
 
 
 <dt>format</dt>
@@ -255,8 +258,6 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"small-export-LipidBlast.msp"</span>,</span></span>
 <span class="r-in"><span>    package <span class="op">=</span> <span class="st">"MsBackendMsp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">be</span> <span class="op">&lt;-</span> <span class="fu">backendInitialize</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">f</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start data import from 1 files ... </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> done</span>
 <span class="r-in"><span><span class="va">be</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MsBackendMsp with 5 spectra</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     msLevel     rtime scanIndex</span>
@@ -315,8 +316,6 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-in"><span><span class="co">## Importing the data with this will correctly retrieve data</span></span></span>
 <span class="r-in"><span><span class="va">be</span> <span class="op">&lt;-</span> <span class="fu">backendInitialize</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="va">f</span>,</span></span>
 <span class="r-in"><span>    mapping <span class="op">=</span> <span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span>, <span class="st">"mona"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start data import from 1 files ... </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> done</span>
 <span class="r-in"><span><span class="va">be</span><span class="op">$</span><span class="va">precursorMz</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  232.1543  246.1700  260.1856 1451.9962 1451.9962</span>
 <span class="r-in"><span></span></span>
