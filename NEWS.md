@@ -1,5 +1,12 @@
 # MsBackendMsp 1.7
 
+## Changes in 1.7.3
+
+- Strip whitespaces in values of comments/header information
+- Support also `name:value` header pairs in addition to `name: value` 
+  (issue #14).
+- Add support for parallel processing for import from a single (large) MSP file.
+
 ## Changes in 1.7.2
 
 - Add additional checks to the format of input MSP files to ensure proper data

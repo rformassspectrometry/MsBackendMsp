@@ -81,7 +81,10 @@ NULL
 #' 
 #' @param BPPARAM Parameter object defining the parallel processing
 #'     setup to import data in parallel. Defaults to `BPPARAM =
-#'     bpparam()`. See [bpparam()] for more information.
+#'     SerialParam()`. See [bpparam()] for more information. Parallel processing
+#'     would make most sense for import from a large set of individual MSP
+#'     files, but could also improve performance for import from a (very large)
+#'     single MSP file.
 #'
 #' @param x For `export()`: a [Spectra()] object that should be exported to the
 #'     specified MSP file.
@@ -154,6 +157,8 @@ setClass("MsBackendMsp",
 #' 
 #' @importFrom BiocParallel bpparam
 #'
+#' @importFrom BiocParallel SerialParam
+#'
 #' @importMethodsFrom BiocParallel bplapply
 #'
 #' @importFrom methods validObject
@@ -164,7 +169,7 @@ setClass("MsBackendMsp",
 setMethod("backendInitialize", signature = "MsBackendMsp",
           function(object, file, 
                    mapping = spectraVariableMapping(object), ...,
-                   BPPARAM = bpparam()) {
+                   BPPARAM = SerialParam()) {
               if (missing(file) || !length(file))
                   stop("Parameter 'file' is mandatory for ", class(object))
               if (!is.character(file))
@@ -177,12 +182,15 @@ setMethod("backendInitialize", signature = "MsBackendMsp",
                        paste(file[!file.exists(file)], collapse = ", "),
                        " not found")
               ## Import data and rbind.
-              message("Start data import from ", length(file), " files ... ",
-                      appendLF = FALSE)
-              res <- bplapply(file, FUN = readMsp, mapping = mapping,
-                              BPPARAM = BPPARAM)
-              message("done")
-              res <- do.call(rbindFill, res)
+              if (length(file) > 1) {
+                  message("Start data import from ", length(file)," files ... ",
+                          appendLF = FALSE)
+                  res <- bplapply(file, FUN = readMsp, mapping = mapping,
+                                  BPPARAM = BPPARAM)
+                  message("done")
+                  res <- do.call(rbindFill, res)
+              } else
+                  res <- readMsp(file, mapping = mapping, BPPARAM = BPPARAM)
               spectraData(object) <- res
               object$dataStorage <- "<memory>"
               validObject(object)

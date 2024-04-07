@@ -4,7 +4,13 @@
 \alias{readMsp}
 \title{Reading MSP files}
 \usage{
-readMsp(f, msLevel = 2L, mapping = spectraVariableMapping(MsBackendMsp()), ...)
+readMsp(
+  f,
+  msLevel = 2L,
+  mapping = spectraVariableMapping(MsBackendMsp()),
+  BPPARAM = SerialParam(),
+  ...
+)
 }
 \arguments{
 \item{f}{\code{character(1)} with the path to an MSP file.}
@@ -17,6 +23,8 @@ defines the MS level.}
 variables (see \code{\link[=spectraVariableMapping]{spectraVariableMapping()}}). This allows to correctly
 import also custom fields or data from files with different MSP
 \emph{flavors}.}
+
+\item{BPPARAM}{parallel processing setup. See \code{\link[=bpparam]{bpparam()}} for more details.}
 
 \item{...}{Additional parameters, currently ignored.}
 }

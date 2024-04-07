@@ -13,7 +13,7 @@
   file,
   mapping = spectraVariableMapping(object),
   ...,
-  BPPARAM = bpparam()
+  BPPARAM = SerialParam()
 )
 
 MsBackendMsp()
@@ -44,7 +44,10 @@ import also custom fields or data from files with different MSP
 \item{...}{Currently ignored.}
 
 \item{BPPARAM}{Parameter object defining the parallel processing
-setup to import data in parallel. Defaults to \code{BPPARAM = bpparam()}. See \code{\link[=bpparam]{bpparam()}} for more information.}
+setup to import data in parallel. Defaults to \code{BPPARAM = SerialParam()}. See \code{\link[=bpparam]{bpparam()}} for more information. Parallel processing
+would make most sense for import from a large set of individual MSP
+files, but could also improve performance for import from a (very large)
+single MSP file.}
 
 \item{format}{For \code{spectraVariableMapping()}: \code{character(1)} specifying for
 which MSP \emph{flavour} the mapping should be returned. Currently supported
