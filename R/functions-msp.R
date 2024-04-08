@@ -47,6 +47,8 @@
 #'
 #' @importFrom MsCoreUtils rbindFill
 #'
+#' @importFrom BiocParallel bpmapply
+#'
 #' @importFrom methods as
 #'
 #' @author Laurent Gatto, Steffen Neumann, Johannes Rainer
