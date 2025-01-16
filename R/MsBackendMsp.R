@@ -9,8 +9,8 @@ NULL
 #'
 #' The `MsBackendMsp` class supports import of MS/MS spectra data from
 #' files in NIST MSP file format. `MsBackendMsp` extends the
-#' [MsBackendDataFrame()] backend directly and supports thus the
-#' [applyProcessing()] function to make data manipulations persistent.
+#' [Spectra::MsBackendDataFrame()] backend directly and supports thus the
+#' [Spectra::applyProcessing()] function to make data manipulations persistent.
 #'
 #' New objects are created with the `MsBackendMsp()` function. The
 #' `backendInitialize()` method has to be subsequently called to
@@ -35,11 +35,11 @@ NULL
 #' 
 #' See the package vignette for details and examples.
 #'
-#' The `spectraVariableMapping()` function allows to provide the mapping between
-#' spectra variable names (i.e. the names that will be used for the spectra
-#' variables in the [Spectra()] object) and the data field names of the
-#' MSP file. Parameter `format` allows to select pre-defined mappings. Currently
-#' supported mapping flavors are:
+#' The `spectraVariableMapping()` function allows to provide the mapping
+#' between spectra variable names (i.e. the names that will be used for the
+#' spectra variables in the [Spectra::Spectra()] object) and the data field
+#' names of the MSP file. Parameter `format` allows to select pre-defined
+#' mappings. Currently supported mapping flavors are:
 #' 
 #' - `format = "msp"`: default MSP field names. Should work with standard NIST
 #'   MSP files or MSP files exported from MS-DIAL.
@@ -69,9 +69,8 @@ NULL
 #'     files) and `format = "mona"` (MSP files in MoNA flavour).
 #' 
 #' @param mapping named `character` vector to rename MSP fields to spectra
-#'     variables (see [spectraVariableMapping()]). This allows to correctly
-#'     import also custom fields or data from files with different MSP
-#'     *flavors*.
+#'     variables. This allows to correctly import also custom fields or data
+#'     from files with different MSP *flavors*.
 #' 
 #' @param allVariables `logical(1)` whether all spectra variables in `x`
 #'     should be exported or only those defined with `mapping`.
@@ -81,13 +80,13 @@ NULL
 #' 
 #' @param BPPARAM Parameter object defining the parallel processing
 #'     setup to import data in parallel. Defaults to `BPPARAM =
-#'     SerialParam()`. See [bpparam()] for more information. Parallel processing
-#'     would make most sense for import from a large set of individual MSP
-#'     files, but could also improve performance for import from a (very large)
-#'     single MSP file.
+#'     SerialParam()`. See [BiocParallel::bpparam()] for more information.
+#'     Parallel processing would make most sense for import from a large
+#'     set of individual MSP files, but could also improve performance for
+#'     import from a (very large) single MSP file.
 #'
-#' @param x For `export()`: a [Spectra()] object that should be exported to the
-#'     specified MSP file.
+#' @param x For `export()`: a [Spectra::Spectra()] object that should be
+#'     exported to the specified MSP file.
 #' 
 #' @param ... Currently ignored.
 #'

@@ -3,7 +3,7 @@
 #' @description
 #' 
 #' The `readMsp()` function imports the data from a file in MGF format reading
-#' all specified fields and returning the data as a [DataFrame()].
+#' all specified fields and returning the data as a [S4Vectors::DataFrame()].
 #'
 #' Format constraints for MSP files:
 #'
@@ -23,11 +23,12 @@
 #'     defines the MS level.
 #'
 #' @param mapping named `character` vector to rename MSP fields to spectra
-#'     variables (see [spectraVariableMapping()]). This allows to correctly
-#'     import also custom fields or data from files with different MSP
-#'     *flavors*.
+#'     variables (see `spectraVariableMapping()` help). This allows to
+#'     correctly import also custom fields or data from files with different
+#'     MSP *flavors*.
 #'
-#' @param BPPARAM parallel processing setup. See [bpparam()] for more details.
+#' @param BPPARAM parallel processing setup. See [BiocParallel::bpparam()]
+#'     for more details.
 #' 
 #' @param ... Additional parameters, currently ignored.
 #'
@@ -303,24 +304,24 @@ readMsp <- function(f, msLevel = 2L,
     writeLines(apply(tmp, 1, paste0, collapse = ""), con = con)
 }
 
-#' @title Parse the comment field from a MoNA MSP file
-#'
-#' @description
-#'
-#' Parse comment field from MoNA.
-#' 
-#' @author Johannes Rainer
-#'
-#' @noRd
-parseMoNaComment <- function(x, names = c("InChI", "author", "SMILES",
-                                          "date", "cas", "kegg",
-                                          "pubchem cid")) {
-    ## extract value between "<name>= and ".
-    names(names) <- names
-    as.data.frame(lapply(names, function(z) {
-        tmp <- sub(paste0(".*?\"", z, "=(.*?)\".*"), "\\1", x, perl = TRUE)
-        tmp[tmp == x] <- NA_character_
-        tmp
-    }))
-}
+## #' @title Parse the comment field from a MoNA MSP file
+## #'
+## #' @description
+## #'
+## #' Parse comment field from MoNA.
+## #' 
+## #' @author Johannes Rainer
+## #'
+## #' @noRd
+## parseMoNaComment <- function(x, names = c("InChI", "author", "SMILES",
+##                                           "date", "cas", "kegg",
+##                                           "pubchem cid")) {
+##     ## extract value between "<name>= and ".
+##     names(names) <- names
+##     as.data.frame(lapply(names, function(z) {
+##         tmp <- sub(paste0(".*?\"", z, "=(.*?)\".*"), "\\1", x, perl = TRUE)
+##         tmp[tmp == x] <- NA_character_
+##         tmp
+##     }))
+## }
 

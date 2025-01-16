@@ -10,6 +10,17 @@ test_that("readMsp works", {
     expect_s4_class(res$intensity, "NumericList")
     expect_true(length(res$mz[1L]) == 1)
 
+    ## with comments.
+    tmpf <- tempfile()
+    r <- readLines(f)
+    r <- c("# comment 1", "# comment 2", r)
+    writeLines(r, tmpf)
+    res <- readMsp(tmpf)
+    expect_s4_class(res, "DataFrame")
+    expect_true(all(c("name", "precursorMz", "adduct", "rtime") %in%
+                    colnames(res)))
+    file.remove(tmpf)
+    
     f <- system.file("extdata", "spectrum.msp", package = "MsBackendMsp")
     f2 <- system.file("extdata", "spectrum2.msp", package = "MsBackendMsp")
 
@@ -100,6 +111,11 @@ test_that(".extract_msp_spectrum works", {
     expect_true(is.data.frame(res))
     expect_true(nrow(res) == 1)
 
+    ## missing m/z values.
+    xf <- x
+    xf[8] <- c("NA\t55")
+    expect_error(.extract_msp_spectrum(xf, mapping = mapping), "not supported")
+    
     ## Duplicated values
     x <- c("synonym: a", "synonym: b", "other: 1", "other: 2", "other: 3", x)
     res <- MsBackendMsp:::.extract_msp_spectrum(x, mapping = mapping)
@@ -156,5 +172,8 @@ test_that(".export_msp works", {
     expect_output(.export_msp(sps, mapping = map), "OTHER: b\\nOTHER: c")
     expect_output(.export_msp(sps, mapping = map), "TIME: 1")
     expect_output(.export_msp(sps, mapping = map), "TIME: 2")
-    expect_output(.export_msp(sps, mapping = map), "TIME: 3.2")    
+    expect_output(.export_msp(sps, mapping = map), "TIME: 3.2")
+
+    expect_output(.export_msp(sps, allVariables = FALSE,
+                              exportName = FALSE), "RETENTIONTIME: ")
 })

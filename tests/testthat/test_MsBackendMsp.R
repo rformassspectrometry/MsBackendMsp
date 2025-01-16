@@ -45,3 +45,23 @@ test_that("spectraVariableMapping works", {
     expect_true(length(res) > 0)
     expect_error(spectraVariableMapping(MsBackendMsp(), "other"), "should be")
 })
+
+test_that("export,Spectra works", {
+    fls <- system.file("extdata", "small-export-LipidBlast.msp",
+                       package = "MsBackendMsp")
+    be <- MsBackendMsp()
+
+    ## Import a LipidBlast file.
+    res <- backendInitialize(be, fls)
+    sps <- Spectra(res)
+
+    tmpf <- tempfile()
+    export(be, sps, tmpf)
+    res_2 <- backendInitialize(be, tmpf)
+    expect_equal(res$msLevel, res_2$msLevel)
+    expect_equal(mz(res), mz(res_2))
+    file.remove(tmpf)
+
+    expect_error(export(be, file = tmpf), "'x' is missing.")
+    expect_error(export(be, 4, file = tmpf), "supposed to be")
+})
