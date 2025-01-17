@@ -20,11 +20,12 @@ be reported as the spectra's MS level \strong{unless} the source MSP file
 defines the MS level.}
 
 \item{mapping}{named \code{character} vector to rename MSP fields to spectra
-variables (see \code{\link[=spectraVariableMapping]{spectraVariableMapping()}}). This allows to correctly
-import also custom fields or data from files with different MSP
-\emph{flavors}.}
+variables (see \code{spectraVariableMapping()} help). This allows to
+correctly import also custom fields or data from files with different
+MSP \emph{flavors}.}
 
-\item{BPPARAM}{parallel processing setup. See \code{\link[=bpparam]{bpparam()}} for more details.}
+\item{BPPARAM}{parallel processing setup. See \code{\link[BiocParallel:register]{BiocParallel::bpparam()}}
+for more details.}
 
 \item{...}{Additional parameters, currently ignored.}
 }
@@ -35,7 +36,7 @@ and \code{"intensity"} in a list representation.
 }
 \description{
 The \code{readMsp()} function imports the data from a file in MGF format reading
-all specified fields and returning the data as a \code{\link[=DataFrame]{DataFrame()}}.
+all specified fields and returning the data as a \code{\link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame()}}.
 
 Format constraints for MSP files:
 \itemize{

@@ -1,3 +1,10 @@
+# MsBackendMsp 1.11
+
+## Changes in 1.11.1
+
+- Complete unit test coverage.
+
+
 # MsBackendMsp 1.7
 
 ## Changes in 1.7.3

@@ -37,25 +37,24 @@ MsBackendMsp()
 from which MS/MS data should be imported or exported.}
 
 \item{mapping}{named \code{character} vector to rename MSP fields to spectra
-variables (see \code{\link[=spectraVariableMapping]{spectraVariableMapping()}}). This allows to correctly
-import also custom fields or data from files with different MSP
-\emph{flavors}.}
+variables. This allows to correctly import also custom fields or data
+from files with different MSP \emph{flavors}.}
 
 \item{...}{Currently ignored.}
 
 \item{BPPARAM}{Parameter object defining the parallel processing
-setup to import data in parallel. Defaults to \code{BPPARAM = SerialParam()}. See \code{\link[=bpparam]{bpparam()}} for more information. Parallel processing
-would make most sense for import from a large set of individual MSP
-files, but could also improve performance for import from a (very large)
-single MSP file.}
+setup to import data in parallel. Defaults to \code{BPPARAM = SerialParam()}. See \code{\link[BiocParallel:register]{BiocParallel::bpparam()}} for more information.
+Parallel processing would make most sense for import from a large
+set of individual MSP files, but could also improve performance for
+import from a (very large) single MSP file.}
 
 \item{format}{For \code{spectraVariableMapping()}: \code{character(1)} specifying for
 which MSP \emph{flavour} the mapping should be returned. Currently supported
 are: \code{format = "msp"} (generic MSP format, for example for MS-DIAL MSP
 files) and \code{format = "mona"} (MSP files in MoNA flavour).}
 
-\item{x}{For \code{export()}: a \code{\link[=Spectra]{Spectra()}} object that should be exported to the
-specified MSP file.}
+\item{x}{For \code{export()}: a \code{\link[Spectra:Spectra]{Spectra::Spectra()}} object that should be
+exported to the specified MSP file.}
 
 \item{allVariables}{\code{logical(1)} whether all spectra variables in \code{x}
 should be exported or only those defined with \code{mapping}.}
@@ -71,8 +70,8 @@ vector with the mapping between spectra variables and MSP data fields.
 \description{
 The \code{MsBackendMsp} class supports import of MS/MS spectra data from
 files in NIST MSP file format. \code{MsBackendMsp} extends the
-\code{\link[=MsBackendDataFrame]{MsBackendDataFrame()}} backend directly and supports thus the
-\code{\link[=applyProcessing]{applyProcessing()}} function to make data manipulations persistent.
+\code{\link[Spectra:MsBackend]{Spectra::MsBackendDataFrame()}} backend directly and supports thus the
+\code{\link[Spectra:addProcessing]{Spectra::applyProcessing()}} function to make data manipulations persistent.
 
 New objects are created with the \code{MsBackendMsp()} function. The
 \code{backendInitialize()} method has to be subsequently called to
@@ -98,11 +97,11 @@ even if not provided in \code{x}.
 
 See the package vignette for details and examples.
 
-The \code{spectraVariableMapping()} function allows to provide the mapping between
-spectra variable names (i.e. the names that will be used for the spectra
-variables in the \code{\link[=Spectra]{Spectra()}} object) and the data field names of the
-MSP file. Parameter \code{format} allows to select pre-defined mappings. Currently
-supported mapping flavors are:
+The \code{spectraVariableMapping()} function allows to provide the mapping
+between spectra variable names (i.e. the names that will be used for the
+spectra variables in the \code{\link[Spectra:Spectra]{Spectra::Spectra()}} object) and the data field
+names of the MSP file. Parameter \code{format} allows to select pre-defined
+mappings. Currently supported mapping flavors are:
 \itemize{
 \item \code{format = "msp"}: default MSP field names. Should work with standard NIST
 MSP files or MSP files exported from MS-DIAL.
