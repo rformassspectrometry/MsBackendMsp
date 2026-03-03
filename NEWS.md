@@ -1,6 +1,6 @@
-# MsBackendMsp 1.11
+# MsBackendMsp 1.15
 
-## Changes in 1.11.2
+## Changes in 1.15.1
 
 - Use `data.table::rbindlist()` to combine individual spectra into one 
   resulting `data.frame`/`DataFrame` in `readMsp()`. This improves the 
