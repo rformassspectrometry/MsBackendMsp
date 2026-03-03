@@ -1,0 +1,91 @@
+# Changelog
+
+## MsBackendMsp 1.15
+
+### Changes in 1.15.1
+
+- Use
+  [`data.table::rbindlist()`](https://rdrr.io/pkg/data.table/man/rbindlist.html)
+  to combine individual spectra into one resulting
+  `data.frame`/`DataFrame` in
+  [`readMsp()`](https://rformassspectrometry.github.io/MsBackendMsp/reference/readMsp.md).
+  This improves the performance of
+  [`readMsp()`](https://rformassspectrometry.github.io/MsBackendMsp/reference/readMsp.md)
+  as well as
+  [`backendInitialize()`](https://rdrr.io/pkg/ProtGenerics/man/backendInitialize.html)
+  in particular for large MGF files.
+
+### Changes in 1.11.1
+
+- Complete unit test coverage.
+
+## MsBackendMsp 1.7
+
+### Changes in 1.7.3
+
+- Strip whitespaces in values of comments/header information
+- Support also `name:value` header pairs in addition to `name: value`
+  (issue
+  [\#14](https://github.com/RforMassSpectrometry/MsBackendMsp/issues/14)).
+- Add support for parallel processing for import from a single (large)
+  MSP file.
+
+### Changes in 1.7.2
+
+- Add additional checks to the format of input MSP files to ensure
+  proper data import.
+
+### Changes in 1.7.1
+
+- Import method generics from `ProtGenerics`. Requires `ProtGenerics`
+  version 1.35.3.
+
+## MsBackendMsp 1.3
+
+### Changes in 1.3.1
+
+- Use the full unit test suite from the `Spectra` package to check
+  validity of the `MsBackendMsp`.
+
+## MsBackendMsp 0.99
+
+### Changes in 0.99.4
+
+- Import `coreSpectraVariables` from `Spectra`.
+
+### Changes in 0.99.2
+
+- Small updates and changes.
+
+### Changes in 0.99.1
+
+- Address review comments.
+
+## MsBackendMsp 0.98
+
+### Changes in 0.98.2
+
+- Vignette added.
+
+### Changes in 0.98.1
+
+- Improve export method to support multi-value fields and user-provided
+  mappings.
+
+### Changes in 0.98.0
+
+- Add additional spectra variable mappings.
+- Call unit tests from the Spectra package.
+
+## MsBackendMsp 0.0
+
+### Changes in 0.0.5
+
+- Add possibility to define mapping between spectra variables and MSP
+  data fields.
+- Support duplicated data fields in a single MSP entry.
+
+### Changes in 0.0.4
+
+- Fix tests to match new columns in MSP parsing
+- Start using Spectra generic tests

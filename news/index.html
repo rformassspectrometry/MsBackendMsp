@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.11.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +33,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.11" id="msbackendmsp-111">MsBackendMsp 1.11<a class="anchor" aria-label="anchor" href="#msbackendmsp-111"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.15" id="msbackendmsp-115">MsBackendMsp 1.15<a class="anchor" aria-label="anchor" href="#msbackendmsp-115"></a></h2>
 <div class="section level3">
-<h3 id="changes-in-1-11">Changes in 1.11.1<a class="anchor" aria-label="anchor" href="#changes-in-1-11"></a></h3>
+<h3 id="changes-in-1-15">Changes in 1.15.1<a class="anchor" aria-label="anchor" href="#changes-in-1-15"></a></h3>
+<ul><li>Use <code><a href="https://rdrr.io/pkg/data.table/man/rbindlist.html" class="external-link">data.table::rbindlist()</a></code> to combine individual spectra into one resulting <code>data.frame</code>/<code>DataFrame</code> in <code><a href="../reference/readMsp.html">readMsp()</a></code>. This improves the performance of <code><a href="../reference/readMsp.html">readMsp()</a></code> as well as <code><a href="https://rdrr.io/pkg/ProtGenerics/man/backendInitialize.html" class="external-link">backendInitialize()</a></code> in particular for large MGF files.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-in-1-15-1">Changes in 1.11.1<a class="anchor" aria-label="anchor" href="#changes-in-1-15-1"></a></h3>
 <ul><li>Complete unit test coverage.</li>
 </ul></div>
 </div>
@@ -116,7 +120,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
 </div>
 
     </footer></div>
