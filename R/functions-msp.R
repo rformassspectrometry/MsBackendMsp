@@ -29,6 +29,10 @@
 #'
 #' @param BPPARAM parallel processing setup. See [BiocParallel::bpparam()]
 #'     for more details.
+#'
+#' @param return.type `character(1)` defining whether the results should be
+#'     returned as a `DataFrame` (`return.type = "DataFrame"`, the default)
+#'     or a `data.frame` (`return.type = "data.frame"`).
 #' 
 #' @param ... Additional parameters, currently ignored.
 #'
@@ -52,6 +56,8 @@
 #'
 #' @importFrom methods as
 #'
+#' @importFrom data.table rbindlist
+#'
 #' @author Laurent Gatto, Steffen Neumann, Johannes Rainer
 #'
 #' @examples
@@ -61,7 +67,9 @@
 #' readMsp(f)
 readMsp <- function(f, msLevel = 2L,
                     mapping = spectraVariableMapping(MsBackendMsp()),
-                    BPPARAM = SerialParam(), ...) {
+                    BPPARAM = SerialParam(),
+                    return.type = c("DataFrame", "data.frame"), ...) {
+    return.type <- match.arg(return.type)
     if (length(f) != 1L)
         stop("Please provide a single msp file.")
     
@@ -86,7 +94,7 @@ readMsp <- function(f, msLevel = 2L,
     sp <- bpmapply(begin, end, FUN = function(a, b) {
          .extract_msp_spectrum(msp[a:b], mapping = mapping)
     }, SIMPLIFY = FALSE, USE.NAMES = FALSE, BPPARAM = BPPARAM)
-    res <- DataFrame(rbindFill(sp))
+    res <- rbindlist(sp, use.names = TRUE, fill = TRUE)
 
     spv <- coreSpectraVariables()
     spv <- spv[!names(spv) %in% c("mz", "intensity")]
@@ -97,8 +105,11 @@ readMsp <- function(f, msLevel = 2L,
             res[[i]] <- suppressWarnings(as(res[[i]], spv[col][1]))
     }
 
-    res$mz <- NumericList(res$mz, compress = FALSE)
-    res$intensity <- NumericList(res$intensity, compress = FALSE)
+    if (return.type == "DataFrame") {
+        res <- DataFrame(res)
+        res$mz <- NumericList(res$mz, compress = FALSE)
+        res$intensity <- NumericList(res$intensity, compress = FALSE)
+    }
     res$dataOrigin <- f
     if (!any(colnames(res) == "msLevel"))
         res$msLevel <- as.integer(msLevel)
@@ -109,6 +120,8 @@ readMsp <- function(f, msLevel = 2L,
 #'     format.
 #'
 #' @param mapping spectra variable mapping that allows renaming data fields.
+#'
+#' @return `data.frame`
 #' 
 #' @author Laurent Gatto, Johannes Rainer
 #' 
