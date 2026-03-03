@@ -34,6 +34,15 @@ test_that("readMsp works", {
     expect_equal(res, res2[1L, ])
     
     expect_error(readMsp(c(f, f2)), "Please provide a single msp file.")
+
+    expect_error(readMsp(f, return.type = "other"), "should be one of")
+
+    ## data.frame
+    res <- readMsp(f, return.type = "data.frame")
+    expect_true(is.data.frame(res))
+    expect_true(is.list(res$mz))
+    expect_true(is.list(res$intensity))
+    expect_true(nrow(res) == 1L)
 })
 
 test_that("readMsp works for all test files", {

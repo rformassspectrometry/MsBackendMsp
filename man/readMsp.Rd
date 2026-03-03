@@ -9,6 +9,7 @@ readMsp(
   msLevel = 2L,
   mapping = spectraVariableMapping(MsBackendMsp()),
   BPPARAM = SerialParam(),
+  return.type = c("DataFrame", "data.frame"),
   ...
 )
 }
@@ -26,6 +27,10 @@ MSP \emph{flavors}.}
 
 \item{BPPARAM}{parallel processing setup. See \code{\link[BiocParallel:register]{BiocParallel::bpparam()}}
 for more details.}
+
+\item{return.type}{\code{character(1)} defining whether the results should be
+returned as a \code{DataFrame} (\code{return.type = "DataFrame"}, the default)
+or a \code{data.frame} (\code{return.type = "data.frame"}).}
 
 \item{...}{Additional parameters, currently ignored.}
 }

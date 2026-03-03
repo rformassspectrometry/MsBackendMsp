@@ -1,9 +1,15 @@
 # MsBackendMsp 1.11
 
+## Changes in 1.11.2
+
+- Use `data.table::rbindlist()` to combine individual spectra into one 
+  resulting `data.frame`/`DataFrame` in `readMsp()`. This improves the 
+  performance of `readMsp()` as well as `backendInitialize()` in particular
+  for large MGF files.
+
 ## Changes in 1.11.1
 
 - Complete unit test coverage.
-
 
 # MsBackendMsp 1.7
 
