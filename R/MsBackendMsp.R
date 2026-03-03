@@ -187,8 +187,8 @@ setMethod("backendInitialize", signature = "MsBackendMsp",
                   res <- bplapply(file, FUN = readMsp, mapping = mapping,
                                   BPPARAM = BPPARAM, return.type = "data.frame")
                   message("done")
-                  res <- DataFrame(rbindlist(res, use.names = TRUE,
-                                             fill = TRUE))
+                  res <- DataFrame(as.data.frame(
+                      rbindlist(res, use.names = TRUE, fill = TRUE)))
                   res$mz <- NumericList(res$mz, compress = FALSE)
                   res$intensity <- NumericList(res$intensity, compress = FALSE)
               } else
