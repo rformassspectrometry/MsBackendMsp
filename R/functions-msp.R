@@ -94,7 +94,7 @@ readMsp <- function(f, msLevel = 2L,
     sp <- bpmapply(begin, end, FUN = function(a, b) {
          .extract_msp_spectrum(msp[a:b], mapping = mapping)
     }, SIMPLIFY = FALSE, USE.NAMES = FALSE, BPPARAM = BPPARAM)
-    res <- rbindlist(sp, use.names = TRUE, fill = TRUE)
+    res <- as.data.frame(rbindlist(sp, use.names = TRUE, fill = TRUE))
 
     spv <- coreSpectraVariables()
     spv <- spv[!names(spv) %in% c("mz", "intensity")]
