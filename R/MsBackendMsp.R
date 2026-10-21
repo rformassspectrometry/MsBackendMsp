@@ -235,7 +235,7 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          links = "LINKS",
                          comment = "Comment",
                          splash = "Splash",
-                         peak_count = "Num.Peaks"
+                         peak_count = "Num Peaks"
                      ),
                      "mona" = c(
                          name = "Name",

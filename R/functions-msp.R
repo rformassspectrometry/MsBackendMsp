@@ -303,11 +303,13 @@ readMsp <- function(f, msLevel = 2L,
 
 #' @rdname MsBackendMsp
 #'
-#' @importFrom Spectra Spectra
+#' @importFrom Spectra Spectra MsBackendMemory
+#'
+#' @importMethodsFrom Spectra setBackend
 #' 
 #' @export
 MspSpectra <- function(x, ...) {
-    Spectra(x, source = MsBackendMsp(), ...)
+    setBackend(Spectra(x, source = MsBackendMsp(), ...), MsBackendMemory())
 }
 
 ## #' @title Parse the comment field from a MoNA MSP file
