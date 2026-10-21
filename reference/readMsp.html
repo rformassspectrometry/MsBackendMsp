@@ -31,7 +31,7 @@ that order) of a peak. Additional values are currently ignored.
 
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,7 +162,7 @@ and <code>"intensity"</code> in a list representation.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 28   MoNA011544 GREOXQBULJWSQV-UHFFF..               NA           NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 29   MoNA011545 GPDSFBGRMDEPAY-UHFFF..               NA           NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 30   MoNA011546 QGMGRNCZWXKENS-UHFFF..               NA           NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              MW         ExactMass               Comments   Num.Peaks</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              MW         ExactMass               Comments  peak_count</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;       &lt;character&gt;            &lt;character&gt; &lt;character&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           720 720.3127606360001 "computed SMILES=OC(..           8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2            18      18.010564684 "computed SMILES=O" ..          29</span>
@@ -188,19 +188,19 @@ and <code>"intensity"</code> in a list representation.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 28  266.248,311.306,494.457,...    60.0601,40.0400,30.0300,...         [M+H]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 29  266.248,311.306,494.457,...    60.0601,40.0400,30.0300,...         [M+H]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 30  266.248,311.306,494.457,...    60.0601,40.0400,30.0300,...         [M+H]+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     PrecursorMZ Collision_energy    Ion_mode Spectrum_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;      &lt;character&gt; &lt;character&gt;   &lt;character&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1            NA               NA          NA            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      189.1603               NA          NA            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      265.1188            35 eV          NA            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      265.1188            45 eV          NA            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      263.1031           -35 eV          NA            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ...         ...              ...         ...           ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26    539.51462               NA           P            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27    539.51462               NA           P            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28    539.51462               NA           P            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29    539.51462               NA           P            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30    539.51462               NA           P            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     PrecursorMZ Collision_energy Spectrum_type    Ion_mode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;character&gt;      &lt;character&gt;   &lt;character&gt; &lt;character&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            NA               NA            NA          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      189.1603               NA            NA          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      265.1188            35 eV            NA          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      265.1188            45 eV            NA          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      263.1031           -35 eV            NA          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ...         ...              ...           ...         ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26    539.51462               NA            NA           P</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27    539.51462               NA            NA           P</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28    539.51462               NA            NA           P</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29    539.51462               NA            NA           P</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30    539.51462               NA            NA           P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 dataOrigin   msLevel</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                &lt;character&gt; &lt;integer&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   /__w/_temp/Library/M..         2</span>

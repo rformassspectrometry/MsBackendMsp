@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script><p><strong>Package</strong>: <em><a href="https://bioconductor.org/packages/3.24/MsBackendMsp" class="external-link">MsBackendMsp</a></em><br><strong>Authors</strong>: Neumann Steffen [aut] (ORCID: <a href="https://orcid.org/0000-0002-7899-7192" class="external-link uri">https://orcid.org/0000-0002-7899-7192</a>), Johannes Rainer
 [aut, cre] (ORCID: <a href="https://orcid.org/0000-0002-6977-7147" class="external-link uri">https://orcid.org/0000-0002-6977-7147</a>), Michael Witting
-[ctb] (ORCID: <a href="https://orcid.org/0000-0002-1462-4426" class="external-link uri">https://orcid.org/0000-0002-1462-4426</a>)<br><strong>Compiled</strong>: Wed Oct 21 08:30:11 2026</p>
+[ctb] (ORCID: <a href="https://orcid.org/0000-0002-1462-4426" class="external-link uri">https://orcid.org/0000-0002-1462-4426</a>)<br><strong>Compiled</strong>: Wed Oct 21 14:21:52 2026</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -154,12 +154,12 @@ function.</p>
 <span><span class="co">## [13] "precursorCharge"         "collisionEnergy"        </span></span>
 <span><span class="co">## [15] "isolationWindowLowerMz"  "isolationWindowTargetMz"</span></span>
 <span><span class="co">## [17] "isolationWindowUpperMz"  "name"                   </span></span>
-<span><span class="co">## [19] "adduct"                  "INSTRUMENTTYPE"         </span></span>
+<span><span class="co">## [19] "adduct"                  "instrument_type"        </span></span>
 <span><span class="co">## [21] "instrument"              "smiles"                 </span></span>
 <span><span class="co">## [23] "inchikey"                "inchi"                  </span></span>
 <span><span class="co">## [25] "formula"                 "PUBCHEMID"              </span></span>
 <span><span class="co">## [27] "SOURCE"                  "COMMENT"                </span></span>
-<span><span class="co">## [29] "Num.Peaks"</span></span></code></pre>
+<span><span class="co">## [29] "peak_count"</span></span></code></pre>
 <p>Besides default spectra variables, such as <code>msLevel</code>,
 <code>rtime</code>, <code>precursorMz</code>, we also have additional
 spectra variables such as the <code>name</code> or <code>adduct</code>
@@ -186,12 +186,16 @@ within the <code>Spectra</code> object) are returned by the
 <code><a href="https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html" class="external-link">spectraVariableMapping()</a></code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html" class="external-link">spectraVariableMapping</a></span><span class="op">(</span><span class="fu"><a href="../reference/MsBackendMsp.html">MsBackendMsp</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##            name       accession         formula        inchikey          adduct </span></span>
-<span><span class="co">##          "NAME"           "DB#"       "FORMULA"      "INCHIKEY" "PRECURSORTYPE" </span></span>
-<span><span class="co">##       exactmass           rtime     precursorMz          adduct          smiles </span></span>
-<span><span class="co">##     "EXACTMASS" "RETENTIONTIME"   "PRECURSORMZ" "PRECURSORTYPE"        "SMILES" </span></span>
-<span><span class="co">##           inchi        polarity      instrument </span></span>
-<span><span class="co">##         "INCHI"       "IONMODE"    "INSTRUMENT"</span></span></code></pre>
+<pre><code><span><span class="co">##             name        accession          formula         inchikey </span></span>
+<span><span class="co">##           "NAME"            "DB#"        "FORMULA"       "INCHIKEY" </span></span>
+<span><span class="co">##           adduct        exactmass            rtime      precursorMz </span></span>
+<span><span class="co">##  "PRECURSORTYPE"      "EXACTMASS"  "RETENTIONTIME"    "PRECURSORMZ" </span></span>
+<span><span class="co">##           adduct           smiles            inchi         polarity </span></span>
+<span><span class="co">##  "PRECURSORTYPE"         "SMILES"          "INCHI"        "IONMODE" </span></span>
+<span><span class="co">##       instrument         ontology  instrument_type            links </span></span>
+<span><span class="co">##     "INSTRUMENT"       "ontology" "INSTRUMENTTYPE"          "LINKS" </span></span>
+<span><span class="co">##          comment           splash       peak_count </span></span>
+<span><span class="co">##        "Comment"         "Splash"      "Num Peaks"</span></span></code></pre>
 <p>The names of this <code>character</code> vector represent the spectra
 variable names and the values of the vector the MSP data fields. Note
 that by default, also all data fields for which no mapping is provided
@@ -286,7 +290,7 @@ the default NIST MSP format.</p>
 <span><span class="co">## [3] "synonym: $:00in-source"               </span></span>
 <span><span class="co">## [4] "DB#: MoNA000010"                      </span></span>
 <span><span class="co">## [5] "INCHIKEY: NCDNCNXCDXHOMX-XGKFQTDJSA-N"</span></span>
-<span><span class="co">## [6] "instrument_type: Waters Synapt G2"</span></span></code></pre>
+<span><span class="co">## [6] "INSTRUMENTTYPE: Waters Synapt G2"</span></span></code></pre>
 <p>Or export the <code>Spectra</code> with data in NIST MSP format to a
 MSP file with MoNA flavor.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
@@ -300,7 +304,7 @@ MSP file with MoNA flavor.</p>
 <span><span class="co">## [3] "Ion_mode: Positive"                                                           </span></span>
 <span><span class="co">## [4] "PrecursorMZ: 284.0917"                                                        </span></span>
 <span><span class="co">## [5] "Precursor_type: [M+H]+"                                                       </span></span>
-<span><span class="co">## [6] "INSTRUMENTTYPE: IT/ion trap"</span></span></code></pre>
+<span><span class="co">## [6] "Instrument_type: IT/ion trap"</span></span></code></pre>
 <p>Thus, this could also be used to convert between MSP files with
 different flavors.</p>
 </div>
@@ -333,7 +337,7 @@ different flavors.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] MsBackendMsp_1.17.0  Spectra_1.23.5       BiocParallel_1.47.0 </span></span>
+<span><span class="co">## [1] MsBackendMsp_1.17.1  Spectra_1.23.5       BiocParallel_1.47.0 </span></span>
 <span><span class="co">## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      </span></span>
 <span><span class="co">## [7] BiocStyle_2.41.0    </span></span>
 <span><span class="co">## </span></span>

@@ -73,7 +73,7 @@ format = "mona": MSP file format from MoNA including LipidBlast.
 
     <a class="navbar-brand me-2" href="../index.html">MsBackendMsp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.17.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@ format = "mona": MSP file format from MoNA including LipidBlast.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>MS data backend for msp files</h1>
-      <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/MsBackendMsp/blob/main/R/MsBackendMsp.R" class="external-link"><code>R/MsBackendMsp.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RforMassSpectrometry/MsBackendMsp/blob/main/R/MsBackendMsp.R" class="external-link"><code>R/MsBackendMsp.R</code></a>, <a href="https://github.com/RforMassSpectrometry/MsBackendMsp/blob/main/R/functions-msp.R" class="external-link"><code>R/functions-msp.R</code></a></small>
       <div class="d-none name"><code>MsBackendMsp.Rd</code></div>
     </div>
 
@@ -155,7 +155,9 @@ MSP files or MSP files exported from MS-DIAL.</p></li>
 <span>  allVariables <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  exportName <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">MspSpectra</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -274,12 +276,16 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Default spectra variable mapping</span></span></span>
 <span class="r-in"><span><span class="fu">spectraVariableMapping</span><span class="op">(</span><span class="fu">MsBackendMsp</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            name       accession         formula        inchikey          adduct </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          "NAME"           "DB#"       "FORMULA"      "INCHIKEY" "PRECURSORTYPE" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       exactmass           rtime     precursorMz          adduct          smiles </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "EXACTMASS" "RETENTIONTIME"   "PRECURSORMZ" "PRECURSORTYPE"        "SMILES" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           inchi        polarity      instrument </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "INCHI"       "IONMODE"    "INSTRUMENT" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             name        accession          formula         inchikey </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           "NAME"            "DB#"        "FORMULA"       "INCHIKEY" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           adduct        exactmass            rtime      precursorMz </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  "PRECURSORTYPE"      "EXACTMASS"  "RETENTIONTIME"    "PRECURSORMZ" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           adduct           smiles            inchi         polarity </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  "PRECURSORTYPE"         "SMILES"          "INCHI"        "IONMODE" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       instrument         ontology  instrument_type            links </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "INSTRUMENT"       "ontology" "INSTRUMENTTYPE"          "LINKS" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          comment           splash       peak_count </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        "Comment"         "Splash"      "Num Peaks" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## In fact, to read MSP files in "LipidBlast flavour" (same as MoNA) we</span></span></span>
 <span class="r-in"><span><span class="co">## should use a different spectra variable mapping</span></span></span>
@@ -322,17 +328,17 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> msLevel: MS2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Positive</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 232.15433</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C11H21NO4/c1-5-6-11(15)16-9(7-10(13)14)8-12(2,3)4/h9H,5-8H2,1-4H3/p+1" "retention time=0.51" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.3431646471704717" "computed mass error=5.439758187435473E-4" "SPLASH=splash10-001r-7090000000-aa12589a2481560ea0d5" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 232</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast000001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M]+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 232.154334604091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C11H22NO4]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: QWYFHHGCZUCMBN-UHFFFAOYSA-O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M]+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENTTYPE: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C11H22NO4]+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 232.154334604091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C11H21NO4/c1-5-6-11(15)16-9(7-10(13)14)8-12(2,3)4/h9H,5-8H2,1-4H3/p+1" "retention time=0.51" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.3431646471704717" "computed mass error=5.439758187435473E-4" "SPLASH=splash10-001r-7090000000-aa12589a2481560ea0d5" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: [M]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 2</span>
@@ -343,17 +349,17 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> msLevel: MS2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Positive</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 246.16998</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C12H23NO4/c1-5-6-7-12(16)17-10(8-11(14)15)9-13(2,3)4/h10H,5-9H2,1-4H3/p+1" "retention time=0.68" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.209496944908765" "computed mass error=5.439118187382519E-4" "SPLASH=splash10-000b-7090000000-2b596f4df94dfefba50b" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 246</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast000002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M]+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 246.169984668091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C12H24NO4]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: VSNFQQXVMPSASB-UHFFFAOYSA-O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M]+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENTTYPE: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C12H24NO4]+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 246.169984668091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C12H23NO4/c1-5-6-7-12(16)17-10(8-11(14)15)9-13(2,3)4/h10H,5-9H2,1-4H3/p+1" "retention time=0.68" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.209496944908765" "computed mass error=5.439118187382519E-4" "SPLASH=splash10-000b-7090000000-2b596f4df94dfefba50b" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: [M]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 2</span>
@@ -364,17 +370,17 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> msLevel: MS2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Positive</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 260.18563</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCCCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C13H25NO4/c1-5-6-7-8-13(17)18-11(9-12(15)16)10-14(2,3)4/h11H,5-10H2,1-4H3/p+1" "retention time=0.86" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.0902300356715053" "computed mass error=5.438478186761131E-4" "SPLASH=splash10-03dr-7090000000-a9ec485bc43949b4b278" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 260</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast000003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M]+</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 260.185634732091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C13H26NO4]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: VVPRQWTYSNDTEA-UHFFFAOYSA-O</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M]+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENTTYPE: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: [C13H26NO4]+</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 260</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 260.185634732091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCC(=O)OC(CC(O)=O)C[N+](C)(C)C" "compound class=ACar" "computed SMILES=O=C(O)CC(OC(=O)CCCCC)C[N+](C)(C)C" "computed InChI=InChI=1S/C13H25NO4/c1-5-6-7-8-13(17)18-11(9-12(15)16)10-14(2,3)4/h11H,5-10H2,1-4H3/p+1" "retention time=0.86" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=2.0902300356715053" "computed mass error=5.438478186761131E-4" "SPLASH=splash10-03dr-7090000000-a9ec485bc43949b4b278" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=3.6363636363636367"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: [M]+</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 2</span>
@@ -385,17 +391,17 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> msLevel: MS2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Negative</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 1451.99625</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCCCCCCCCCCCCCC(=O)OCC(COP(O)(=O)OCC(O)COP(O)(=O)OCC(COC(=O)CC\C=C/C\C=C/C\C=C/C\C=C/C\C=C/C\C=C/CC)OC(=O)CCCCCCCCCCCCC)OC(=O)CCCCCCCCCCCCCCCCC" "compound class=CL" "computed SMILES=O=C(OCC(OC(=O)CCCCCCCCCCCCC)COP(=O)(O)OCC(O)COP(=O)(O)OCC(OC(=O)CCCCCCCCCCCCCCCCC)COC(=O)CCCCCCCCCCCCCCCCC)CCC=CCC=CCC=CCC=CCC=CCC=CCC" "computed InChI=InChI=1S/C81H146O17P2/c1-5-9-13-17-21-25-29-32-35-36-37-38-41-43-47-50-54-58-62-66-79(84)91-71-76(97-80(85)67-63-59-55-51-45-28-24-20-16-12-8-4)73-95-99(87,88)93-69-75(82)70-94-100(89,90)96-74-77(98-81(86)68-64-60-56-52-48-44-40-34-31-27-23-19-15-11-7-3)72-92-78(83)65-61-57-53-49-46-42-39-33-30-26-22-18-14-10-6-2/h9,13,21,25,32,35,37-38,43,47,54,58,75-77,82H,5-8,10-12,14-20,22-24,26-31,33-34,36,39-42,44-46,48-53,55-57,59-74H2,1-4H3,(H,87,88)(H,89,90)/b13-9-,25-21-,35-32-,38-37-,47-43-,58-54-" "retention time=11.91" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=3.2506971738511424E-4" "computed mass error=-4.720000106317457E-7" "SPLASH=splash10-0w4i-0134901100-d27b9577a1230ec65177" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=4.5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 1453</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast395475</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M-H]-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 1453.003526472</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: C81H146O17P2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: KWABUIIFXPUAEH-OXNFOSRESA-N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M-H]-</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENTTYPE: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: C81H146O17P2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 1453</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 1453.003526472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCCCCCCCCCCCCCC(=O)OCC(COP(O)(=O)OCC(O)COP(O)(=O)OCC(COC(=O)CC\C=C/C\C=C/C\C=C/C\C=C/C\C=C/C\C=C/CC)OC(=O)CCCCCCCCCCCCC)OC(=O)CCCCCCCCCCCCCCCCC" "compound class=CL" "computed SMILES=O=C(OCC(OC(=O)CCCCCCCCCCCCC)COP(=O)(O)OCC(O)COP(=O)(O)OCC(OC(=O)CCCCCCCCCCCCCCCCC)COC(=O)CCCCCCCCCCCCCCCCC)CCC=CCC=CCC=CCC=CCC=CCC=CCC" "computed InChI=InChI=1S/C81H146O17P2/c1-5-9-13-17-21-25-29-32-35-36-37-38-41-43-47-50-54-58-62-66-79(84)91-71-76(97-80(85)67-63-59-55-51-45-28-24-20-16-12-8-4)73-95-99(87,88)93-69-75(82)70-94-100(89,90)96-74-77(98-81(86)68-64-60-56-52-48-44-40-34-31-27-23-19-15-11-7-3)72-92-78(83)65-61-57-53-49-46-42-39-33-30-26-22-18-14-10-6-2/h9,13,21,25,32,35,37-38,43,47,54,58,75-77,82H,5-8,10-12,14-20,22-24,26-31,33-34,36,39-42,44-46,48-53,55-57,59-74H2,1-4H3,(H,87,88)(H,89,90)/b13-9-,25-21-,35-32-,38-37-,47-43-,58-54-" "retention time=11.91" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=3.2506971738511424E-4" "computed mass error=-4.720000106317457E-7" "SPLASH=splash10-0w4i-0134901100-d27b9577a1230ec65177" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=4.5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: CL 14:0-22:6-18:0-18:0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 10</span>
@@ -414,17 +420,17 @@ that order) of a peak. Additional values are currently ignored.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> msLevel: MS2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IONMODE: Negative</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORMZ: 1451.99625</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCCCCCCCCCCCC(=O)OC(COC(=O)CCCCCCC\C=C/CCCCCCCC)COP(O)(=O)OCC(O)COP(O)(=O)OCC(COC(=O)CCCCCCCC\C=C/C\C=C/C\C=C/C\C=C/CC)OC(=O)CCCCCCC\C=C/CCCCCC" "compound class=CL" "computed SMILES=O=C(OCC(OC(=O)CCCCCCCCCCCCCCC)COP(=O)(O)OCC(O)COP(=O)(O)OCC(OC(=O)CCCCCCCC=CCCCCCC)COC(=O)CCCCCCCCC=CCC=CCC=CCC=CCC)CCCCCCCC=CCCCCCCCC" "computed InChI=InChI=1S/C81H146O17P2/c1-5-9-13-17-21-25-29-33-35-36-37-38-40-44-46-50-54-58-62-66-79(84)92-72-77(98-81(86)68-64-60-56-52-48-42-32-28-24-20-16-12-8-4)74-96-100(89,90)94-70-75(82)69-93-99(87,88)95-73-76(97-80(85)67-63-59-55-51-47-41-31-27-23-19-15-11-7-3)71-91-78(83)65-61-57-53-49-45-43-39-34-30-26-22-18-14-10-6-2/h9,13,21,25,28,32-35,37-39,75-77,82H,5-8,10-12,14-20,22-24,26-27,29-31,36,40-74H2,1-4H3,(H,87,88)(H,89,90)/b13-9-,25-21-,32-28-,35-33-,38-37-,39-34-" "retention time=11.65" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=3.2506971738511424E-4" "computed mass error=-4.720000106317457E-7" "SPLASH=splash10-0uyi-0157901100-d3b7dfa9dd7050026484" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=4.5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 1453</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DB#: LipidBlast398514</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M-H]-</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 1453.003526472</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: C81H146O17P2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INCHIKEY: WINXBODRGKNJDS-DUULZMMUSA-N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PRECURSORTYPE: [M-H]-</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENTTYPE: in-silico QTOF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> INSTRUMENT: SCIEX 5600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> instrument_type: in-silico QTOF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> collision_energy_text: 45 V</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FORMULA: C81H146O17P2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MW: 1453</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> EXACTMASS: 1453.003526472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comments: "SMILES=CCCCCCCCCCCCCCCC(=O)OC(COC(=O)CCCCCCC\C=C/CCCCCCCC)COP(O)(=O)OCC(O)COP(O)(=O)OCC(COC(=O)CCCCCCCC\C=C/C\C=C/C\C=C/C\C=C/CC)OC(=O)CCCCCCC\C=C/CCCCCC" "compound class=CL" "computed SMILES=O=C(OCC(OC(=O)CCCCCCCCCCCCCCC)COP(=O)(O)OCC(O)COP(=O)(O)OCC(OC(=O)CCCCCCCC=CCCCCCC)COC(=O)CCCCCCCCC=CCC=CCC=CCC=CCC)CCCCCCCC=CCCCCCCCC" "computed InChI=InChI=1S/C81H146O17P2/c1-5-9-13-17-21-25-29-33-35-36-37-38-40-44-46-50-54-58-62-66-79(84)92-72-77(98-81(86)68-64-60-56-52-48-42-32-28-24-20-16-12-8-4)74-96-100(89,90)94-70-75(82)69-93-99(87,88)95-73-76(97-80(85)67-63-59-55-51-47-41-31-27-23-19-15-11-7-3)71-91-78(83)65-61-57-53-49-45-43-39-34-30-26-22-18-14-10-6-2/h9,13,21,25,28,32-35,37-39,75-77,82H,5-8,10-12,14-20,22-24,26-27,29-31,36,40-74H2,1-4H3,(H,87,88)(H,89,90)/b13-9-,25-21-,32-28-,35-33-,38-37-,39-34-" "retention time=11.65" "collision energy spread=15 V" "author=Tobias Kind, Hiroshi Tsugawa" "computed mass accuracy=3.2506971738511424E-4" "computed mass error=-4.720000106317457E-7" "SPLASH=splash10-0uyi-0157901100-d3b7dfa9dd7050026484" "submitter=Tobias Kind (University of California, Davis)" "MoNA Rating=4.5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Num.Peaks: 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: CL 16:0-18:1-16:1-22:4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> synonym: $:00in-source</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Num Peaks: 12</span>

@@ -113,7 +113,7 @@ readMsp(f)
 #> 28   MoNA011544 GREOXQBULJWSQV-UHFFF..               NA           NA
 #> 29   MoNA011545 GPDSFBGRMDEPAY-UHFFF..               NA           NA
 #> 30   MoNA011546 QGMGRNCZWXKENS-UHFFF..               NA           NA
-#>              MW         ExactMass               Comments   Num.Peaks
+#>              MW         ExactMass               Comments  peak_count
 #>     <character>       <character>            <character> <character>
 #> 1           720 720.3127606360001 "computed SMILES=OC(..           8
 #> 2            18      18.010564684 "computed SMILES=O" ..          29
@@ -139,19 +139,19 @@ readMsp(f)
 #> 28  266.248,311.306,494.457,...    60.0601,40.0400,30.0300,...         [M+H]+
 #> 29  266.248,311.306,494.457,...    60.0601,40.0400,30.0300,...         [M+H]+
 #> 30  266.248,311.306,494.457,...    60.0601,40.0400,30.0300,...         [M+H]+
-#>     PrecursorMZ Collision_energy    Ion_mode Spectrum_type
-#>     <character>      <character> <character>   <character>
-#> 1            NA               NA          NA            NA
-#> 2      189.1603               NA          NA            NA
-#> 3      265.1188            35 eV          NA            NA
-#> 4      265.1188            45 eV          NA            NA
-#> 5      263.1031           -35 eV          NA            NA
-#> ...         ...              ...         ...           ...
-#> 26    539.51462               NA           P            NA
-#> 27    539.51462               NA           P            NA
-#> 28    539.51462               NA           P            NA
-#> 29    539.51462               NA           P            NA
-#> 30    539.51462               NA           P            NA
+#>     PrecursorMZ Collision_energy Spectrum_type    Ion_mode
+#>     <character>      <character>   <character> <character>
+#> 1            NA               NA            NA          NA
+#> 2      189.1603               NA            NA          NA
+#> 3      265.1188            35 eV            NA          NA
+#> 4      265.1188            45 eV            NA          NA
+#> 5      263.1031           -35 eV            NA          NA
+#> ...         ...              ...           ...         ...
+#> 26    539.51462               NA            NA           P
+#> 27    539.51462               NA            NA           P
+#> 28    539.51462               NA            NA           P
+#> 29    539.51462               NA            NA           P
+#> 30    539.51462               NA            NA           P
 #>                 dataOrigin   msLevel
 #>                <character> <integer>
 #> 1   /__w/_temp/Library/M..         2

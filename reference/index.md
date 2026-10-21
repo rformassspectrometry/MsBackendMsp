@@ -6,6 +6,7 @@
   [`MsBackendMsp()`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)
   [`spectraVariableMapping(`*`<MsBackendMsp>`*`)`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)
   [`export(`*`<MsBackendMsp>`*`)`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)
+  [`MspSpectra()`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)
   : MS data backend for msp files
 - [`readMsp()`](https://rformassspectrometry.github.io/MsBackendMsp/reference/readMsp.md)
   : Reading MSP files

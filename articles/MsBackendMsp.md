@@ -6,7 +6,7 @@
 <https://orcid.org/0000-0002-7899-7192>), Johannes Rainer \[aut, cre\]
 (ORCID: <https://orcid.org/0000-0002-6977-7147>), Michael Witting
 \[ctb\] (ORCID: <https://orcid.org/0000-0002-1462-4426>)\
-**Compiled**: Wed Oct 21 08:30:11 2026
+**Compiled**: Wed Oct 21 14:21:52 2026
 
 ## Introduction
 
@@ -93,12 +93,12 @@ function.
     ## [13] "precursorCharge"         "collisionEnergy"        
     ## [15] "isolationWindowLowerMz"  "isolationWindowTargetMz"
     ## [17] "isolationWindowUpperMz"  "name"                   
-    ## [19] "adduct"                  "INSTRUMENTTYPE"         
+    ## [19] "adduct"                  "instrument_type"        
     ## [21] "instrument"              "smiles"                 
     ## [23] "inchikey"                "inchi"                  
     ## [25] "formula"                 "PUBCHEMID"              
     ## [27] "SOURCE"                  "COMMENT"                
-    ## [29] "Num.Peaks"
+    ## [29] "peak_count"
 
 Besides default spectra variables, such as `msLevel`, `rtime`,
 `precursorMz`, we also have additional spectra variables such as the
@@ -135,12 +135,16 @@ function.
 \
 [`spectraVariableMapping`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)`(`[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``)`
 
-    ##            name       accession         formula        inchikey          adduct 
-    ##          "NAME"           "DB#"       "FORMULA"      "INCHIKEY" "PRECURSORTYPE" 
-    ##       exactmass           rtime     precursorMz          adduct          smiles 
-    ##     "EXACTMASS" "RETENTIONTIME"   "PRECURSORMZ" "PRECURSORTYPE"        "SMILES" 
-    ##           inchi        polarity      instrument 
-    ##         "INCHI"       "IONMODE"    "INSTRUMENT"
+    ##             name        accession          formula         inchikey 
+    ##           "NAME"            "DB#"        "FORMULA"       "INCHIKEY" 
+    ##           adduct        exactmass            rtime      precursorMz 
+    ##  "PRECURSORTYPE"      "EXACTMASS"  "RETENTIONTIME"    "PRECURSORMZ" 
+    ##           adduct           smiles            inchi         polarity 
+    ##  "PRECURSORTYPE"         "SMILES"          "INCHI"        "IONMODE" 
+    ##       instrument         ontology  instrument_type            links 
+    ##     "INSTRUMENT"       "ontology" "INSTRUMENTTYPE"          "LINKS" 
+    ##          comment           splash       peak_count 
+    ##        "Comment"         "Splash"      "Num Peaks"
 
 The names of this `character` vector represent the spectra variable
 names and the values of the vector the MSP data fields. Note that by
@@ -254,7 +258,7 @@ default NIST MSP format.
     ## [3] "synonym: $:00in-source"               
     ## [4] "DB#: MoNA000010"                      
     ## [5] "INCHIKEY: NCDNCNXCDXHOMX-XGKFQTDJSA-N"
-    ## [6] "instrument_type: Waters Synapt G2"
+    ## [6] "INSTRUMENTTYPE: Waters Synapt G2"
 
 Or export the `Spectra` with data in NIST MSP format to a MSP file with
 MoNA flavor.
@@ -271,7 +275,7 @@ MoNA flavor.
     ## [3] "Ion_mode: Positive"                                                           
     ## [4] "PrecursorMZ: 284.0917"                                                        
     ## [5] "Precursor_type: [M+H]+"                                                       
-    ## [6] "INSTRUMENTTYPE: IT/ion trap"
+    ## [6] "Instrument_type: IT/ion trap"
 
 Thus, this could also be used to convert between MSP files with
 different flavors.
@@ -305,7 +309,7 @@ different flavors.
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsBackendMsp_1.17.0  Spectra_1.23.5       BiocParallel_1.47.0 
+    ## [1] MsBackendMsp_1.17.1  Spectra_1.23.5       BiocParallel_1.47.0 
     ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      
     ## [7] BiocStyle_2.41.0    
     ## 
