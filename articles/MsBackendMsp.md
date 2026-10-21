@@ -1,25 +1,25 @@
 # MsBackendMsp
 
 **Package**:
-*[MsBackendMsp](https://bioconductor.org/packages/3.23/MsBackendMsp)*\
+*[MsBackendMsp](https://bioconductor.org/packages/3.24/MsBackendMsp)*\
 **Authors**: Neumann Steffen \[aut\] (ORCID:
 <https://orcid.org/0000-0002-7899-7192>), Johannes Rainer \[aut, cre\]
 (ORCID: <https://orcid.org/0000-0002-6977-7147>), Michael Witting
 \[ctb\] (ORCID: <https://orcid.org/0000-0002-1462-4426>)\
-**Compiled**: Tue Mar 3 07:03:10 2026
+**Compiled**: Wed Oct 21 08:30:11 2026
 
 ## Introduction
 
-The *[Spectra](https://bioconductor.org/packages/3.23/Spectra)* package
+The *[Spectra](https://bioconductor.org/packages/3.24/Spectra)* package
 provides a central infrastructure for the handling of Mass Spectrometry
 (MS) data. The package supports interchangeable use of different
 *backends* to import MS data from a variety of sources (such as mzML
 files). The
-*[MsBackendMsp](https://bioconductor.org/packages/3.23/MsBackendMsp)*
+*[MsBackendMsp](https://bioconductor.org/packages/3.24/MsBackendMsp)*
 package adds support for files in NIST MSP format which are frequently
 used to share spectra libraries and hence enhances small compound
 annotation workflows using the `Spectra` and
-*[MetaboAnnotation](https://bioconductor.org/packages/3.23/MetaboAnnotation)*
+*[MetaboAnnotation](https://bioconductor.org/packages/3.24/MetaboAnnotation)*
 packages (Rainer et al. 2022). This vignette illustrates the usage of
 the *MsBackendMsp* package and how it can be used to import and export
 data in MSP file format.
@@ -28,13 +28,11 @@ data in MSP file format.
 
 To install this package, start `R` and enter:
 
-``` r
-
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("MsBackendMsp")
-```
+\
+`if`` ``(``!`[`requireNamespace`](https://rdrr.io/r/base/ns-load.html)`(``"BiocManager"``, quietly ``=`` ``TRUE``)``)`\
+`    `[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"BiocManager"``)`\
+\
+`BiocManager``::`[`install`](https://bioconductor.github.io/BiocManager/reference/install.html)`(``"MsBackendMsp"``)`
 
 This will install this package and all eventually missing dependencies.
 
@@ -66,31 +64,25 @@ single MSP file can thus contain a single or multiple spectra. Below we
 load the package and define the file name of an MSP file which is
 distributed with this package.
 
-``` r
-
-library(MsBackendMsp)
-
-nist <- system.file("extdata", "spectrum2.msp", package = "MsBackendMsp")
-```
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`MsBackendMsp`](https://github.com/RforMassSpectrometry/MsBackendMsp)`)`\
+\
+`nist`` ``<-`` `[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"extdata"``, ``"spectrum2.msp"``, package ``=`` ``"MsBackendMsp"``)`
 
 We next import the data into a `Spectra` object by specifying in the
 constructor function the *backend* class which can be used to read the
 data (in our case a `MsBackendMsp`).
 
-``` r
-
-sp <- Spectra(nist, source = MsBackendMsp())
-```
+\
+`sp`` ``<-`` `[`Spectra`](https://rdrr.io/pkg/Spectra/man/Spectra.html)`(``nist``, source ``=`` `[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``)`
 
 With that we have now full access to all imported spectra variables that
 can be listed with the
 [`spectraVariables()`](https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html)
 function.
 
-``` r
-
-spectraVariables(sp)
-```
+\
+[`spectraVariables`](https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html)`(``sp``)`
 
     ##  [1] "msLevel"                 "rtime"                  
     ##  [3] "acquisitionNum"          "scanIndex"              
@@ -112,25 +104,19 @@ Besides default spectra variables, such as `msLevel`, `rtime`,
 `precursorMz`, we also have additional spectra variables such as the
 `name` or `adduct` that are additional data fields from the MSP file.
 
-``` r
-
-sp$msLevel
-```
+\
+`sp``$``msLevel`
 
     ## [1] NA  1
 
-``` r
-
-sp$name
-```
+\
+`sp``$``name`
 
     ## [1] "3-Hydroxy-3-(2-(2-hydroxyphenyl)-2-oxoethyl)-1,3-dihydro-2H-indol-2-one"
     ## [2] "5-(4-Ethoxybenzylidene)-2-(4-morpholinyl)-1,3-thiazol-4(5H)-one"
 
-``` r
-
-sp$adduct
-```
+\
+`sp``$``adduct`
 
     ## [1] "[M+H]+" "[M+H]+"
 
@@ -146,10 +132,8 @@ returned by the
 [`spectraVariableMapping()`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)
 function.
 
-``` r
-
-spectraVariableMapping(MsBackendMsp())
-```
+\
+[`spectraVariableMapping`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)`(`[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``)`
 
     ##            name       accession         formula        inchikey          adduct 
     ##          "NAME"           "DB#"       "FORMULA"      "INCHIKEY" "PRECURSORTYPE" 
@@ -169,11 +153,9 @@ tools such as MS-DIAL. MassBank of North America
 different format. Below we read the first 6 lines of a MSP file from
 MoNA.
 
-``` r
-
-mona <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
-head(readLines(mona))
-```
+\
+`mona`` ``<-`` `[`system.file`](https://rdrr.io/r/base/system.file.html)`(``"extdata"``, ``"minimona.msp"``, package ``=`` ``"MsBackendMsp"``)`\
+[`head`](https://rdrr.io/r/utils/head.html)`(`[`readLines`](https://rdrr.io/r/base/readLines.html)`(``mona``)``)`
 
     ## [1] "Name: Ritonavir"                      
     ## [2] "Synon: $:00in-source"                 
@@ -184,10 +166,8 @@ head(readLines(mona))
 
 The first 6 lines from a NIST MSP file:
 
-``` r
-
-head(readLines(nist))
-```
+\
+[`head`](https://rdrr.io/r/utils/head.html)`(`[`readLines`](https://rdrr.io/r/base/readLines.html)`(``nist``)``)`
 
     ## [1] "NAME: 3-Hydroxy-3-(2-(2-hydroxyphenyl)-2-oxoethyl)-1,3-dihydro-2H-indol-2-one"
     ## [2] "PRECURSORMZ: 284.0917"                                                        
@@ -208,10 +188,8 @@ The
 [`spectraVariableMapping()`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)
 provides however also the mapping for MSP files with MoNA flavor.
 
-``` r
-
-spectraVariableMapping(MsBackendMsp(), "mona")
-```
+\
+[`spectraVariableMapping`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)`(`[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``, ``"mona"``)`
 
     ##                  name               synonym             accession 
     ##                "Name"               "Synon"                 "DB#" 
@@ -227,12 +205,10 @@ spectraVariableMapping(MsBackendMsp(), "mona")
 Using this mapping in the data import will ensure that the fields get
 correctly mapped.
 
-``` r
-
-sp_mona <- Spectra(mona, source = MsBackendMsp(),
-                   mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
-sp_mona$precursorMz
-```
+\
+`sp_mona`` ``<-`` `[`Spectra`](https://rdrr.io/pkg/Spectra/man/Spectra.html)`(``mona``, source ``=`` `[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``,`\
+`                   mapping ``=`` `[`spectraVariableMapping`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)`(`[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``, ``"mona"``)``)`\
+`sp_mona``$``precursorMz`
 
     ##  [1]       NA 189.1603 265.1188 265.1188 263.1031 263.1031 229.1552 312.1302
     ##  [9] 525.4990 525.4990 525.4990 525.4990 525.4990 525.4990 525.4990 525.4990
@@ -250,10 +226,8 @@ data. MoNA MSP files use for example multiple `"Synon"` fields to list
 all synonyms of a compound. Below we extract such values for two spectra
 within our `Spectra` object from MoNA.
 
-``` r
-
-sp_mona[29:30]$synonym
-```
+\
+`sp_mona``[``29``:``30``]``$``synonym`
 
     ## [[1]]
     ## [1] "$:00 ms2"                "$:05 30V CID"           
@@ -268,14 +242,12 @@ to **export** `Spectra` to files in MSP format. Below we export for
 example the `Spectra` with data from MoNA to a temporary file, using the
 default NIST MSP format.
 
-``` r
-
-tmpf <- tempfile()
-
-export(sp_mona, backend = MsBackendMsp(), file = tmpf,
-       mapping = spectraVariableMapping(MsBackendMsp()))
-head(readLines(tmpf))
-```
+\
+`tmpf`` ``<-`` `[`tempfile`](https://rdrr.io/r/base/tempfile.html)`(``)`\
+\
+[`export`](https://rdrr.io/pkg/Spectra/man/Spectra.html)`(``sp_mona``, backend ``=`` `[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``, file ``=`` ``tmpf``,`\
+`       mapping ``=`` `[`spectraVariableMapping`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)`(`[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``)``)`\
+[`head`](https://rdrr.io/r/utils/head.html)`(`[`readLines`](https://rdrr.io/r/base/readLines.html)`(``tmpf``)``)`
 
     ## [1] "NAME: Ritonavir"                      
     ## [2] "msLevel: MSNA"                        
@@ -287,14 +259,12 @@ head(readLines(tmpf))
 Or export the `Spectra` with data in NIST MSP format to a MSP file with
 MoNA flavor.
 
-``` r
-
-tmpf <- tempfile()
-
-export(sp, backend = MsBackendMsp(), file = tmpf,
-       mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
-head(readLines(tmpf))
-```
+\
+`tmpf`` ``<-`` `[`tempfile`](https://rdrr.io/r/base/tempfile.html)`(``)`\
+\
+[`export`](https://rdrr.io/pkg/Spectra/man/Spectra.html)`(``sp``, backend ``=`` `[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``, file ``=`` ``tmpf``,`\
+`       mapping ``=`` `[`spectraVariableMapping`](https://rdrr.io/pkg/Spectra/man/spectraVariableMapping.html)`(`[`MsBackendMsp`](https://rformassspectrometry.github.io/MsBackendMsp/reference/MsBackendMsp.md)`(``)``, ``"mona"``)``)`\
+[`head`](https://rdrr.io/r/utils/head.html)`(`[`readLines`](https://rdrr.io/r/base/readLines.html)`(``tmpf``)``)`
 
     ## [1] "Name: 3-Hydroxy-3-(2-(2-hydroxyphenyl)-2-oxoethyl)-1,3-dihydro-2H-indol-2-one"
     ## [2] "Spectrum_type: MSNA"                                                          
@@ -308,14 +278,12 @@ different flavors.
 
 ## Session information
 
-``` r
+\
+[`sessionInfo`](https://rdrr.io/r/utils/sessionInfo.html)`(``)`
 
-sessionInfo()
-```
-
-    ## R Under development (unstable) (2026-03-01 r89508)
+    ## R version 4.6.1 (2026-06-24)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Ubuntu 24.04.4 LTS
+    ## Running under: Ubuntu 24.04.5 LTS
     ## 
     ## Matrix products: default
     ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -337,24 +305,24 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsBackendMsp_1.15.1 Spectra_1.21.1      BiocParallel_1.45.0
-    ## [4] S4Vectors_0.49.0    BiocGenerics_0.57.0 generics_0.1.4     
-    ## [7] BiocStyle_2.39.0   
+    ## [1] MsBackendMsp_1.17.0  Spectra_1.23.5       BiocParallel_1.47.0 
+    ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      
+    ## [7] BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] jsonlite_2.0.0         compiler_4.6.0         BiocManager_1.30.27   
-    ##  [4] parallel_4.6.0         cluster_2.1.8.2        jquerylib_0.1.4       
-    ##  [7] systemfonts_1.3.1      IRanges_2.45.0         textshaping_1.0.4     
+    ##  [1] jsonlite_2.0.0         compiler_4.6.1         BiocManager_1.30.27   
+    ##  [4] parallel_4.6.1         cluster_2.1.8.3        jquerylib_0.1.4       
+    ##  [7] systemfonts_1.3.2      IRanges_2.47.5         textshaping_1.0.5     
     ## [10] yaml_2.3.12            fastmap_1.2.0          R6_2.6.1              
-    ## [13] ProtGenerics_1.43.0    knitr_1.51             htmlwidgets_1.6.4     
-    ## [16] MASS_7.3-65            bookdown_0.46          desc_1.4.3            
-    ## [19] bslib_0.10.0           rlang_1.1.7            cachem_1.1.0          
-    ## [22] xfun_0.56              fs_1.6.6               MsCoreUtils_1.23.2    
-    ## [25] sass_0.4.10            otel_0.2.0             cli_3.6.5             
-    ## [28] pkgdown_2.2.0.9000     digest_0.6.39          MetaboCoreUtils_1.19.2
-    ## [31] lifecycle_1.0.5        clue_0.3-67            data.table_1.18.2.1   
-    ## [34] evaluate_1.0.5         codetools_0.2-20       ragg_1.5.0            
-    ## [37] rmarkdown_2.30         tools_4.6.0            htmltools_0.5.9
+    ## [13] ProtGenerics_1.45.0    knitr_1.52             htmlwidgets_1.6.4     
+    ## [16] MASS_7.3-66            bookdown_0.48          desc_1.4.3            
+    ## [19] bslib_0.12.0           rlang_1.3.0            cachem_1.1.0          
+    ## [22] xfun_0.62              fs_2.1.0               MsCoreUtils_1.25.4    
+    ## [25] sass_0.4.10            otel_0.2.0             cli_3.6.6             
+    ## [28] pkgdown_2.2.1.9000     digest_0.6.39          MetaboCoreUtils_1.21.1
+    ## [31] lifecycle_1.0.5        clue_0.3-68            data.table_1.18.6.1   
+    ## [34] evaluate_1.0.5         codetools_0.2-20       ragg_1.5.2            
+    ## [37] rmarkdown_2.32         tools_4.6.1            htmltools_0.5.9
 
 ## References
 

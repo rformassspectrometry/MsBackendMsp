@@ -28,11 +28,9 @@ For more information see the package vignette or the package
 
 The package can be installed with
 
-``` r
-
-install.packages("BiocManager")
-BiocManager::install("MsBackendMsp")
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"BiocManager"``)`\
+`BiocManager``::`[`install`](https://bioconductor.github.io/BiocManager/reference/install.html)`(``"MsBackendMsp"``)`
 
 # Contributions
 
