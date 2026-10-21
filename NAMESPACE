@@ -7,17 +7,21 @@ exportMethods(backendInitialize)
 exportMethods(export)
 exportMethods(spectraVariableMapping)
 importClassesFrom(Spectra,MsBackendDataFrame)
-importFrom(BiocParallel,SerialParam)
-importFrom(BiocParallel,bpmapply)
-importFrom(BiocParallel,bpparam)
+importFrom(BiocParallel,
+  SerialParam,
+  bpmapply,
+  bpparam
+)
 importFrom(IRanges,NumericList)
 importFrom(MsCoreUtils,rbindFill)
 importFrom(S4Vectors,DataFrame)
 importFrom(Spectra,coreSpectraVariables)
 importFrom(data.table,rbindlist)
-importFrom(methods,as)
-importFrom(methods,new)
-importFrom(methods,validObject)
+importFrom(methods,
+  as,
+  new,
+  validObject
+)
 importFrom(stats,setNames)
 importMethodsFrom(BiocParallel,bplapply)
 importMethodsFrom(ProtGenerics,backendInitialize)

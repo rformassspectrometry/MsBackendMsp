@@ -43,7 +43,7 @@ from files with different MSP \emph{flavors}.}
 \item{...}{Currently ignored.}
 
 \item{BPPARAM}{Parameter object defining the parallel processing
-setup to import data in parallel. Defaults to \code{BPPARAM = SerialParam()}. See \code{\link[BiocParallel:register]{BiocParallel::bpparam()}} for more information.
+setup to import data in parallel. Defaults to \code{BPPARAM = SerialParam()}. See \code{\link[BiocParallel:bpparam]{BiocParallel::bpparam()}} for more information.
 Parallel processing would make most sense for import from a large
 set of individual MSP files, but could also improve performance for
 import from a (very large) single MSP file.}
@@ -70,8 +70,8 @@ vector with the mapping between spectra variables and MSP data fields.
 \description{
 The \code{MsBackendMsp} class supports import of MS/MS spectra data from
 files in NIST MSP file format. \code{MsBackendMsp} extends the
-\code{\link[Spectra:MsBackend]{Spectra::MsBackendDataFrame()}} backend directly and supports thus the
-\code{\link[Spectra:addProcessing]{Spectra::applyProcessing()}} function to make data manipulations persistent.
+\code{\link[Spectra:MsBackendDataFrame]{Spectra::MsBackendDataFrame()}} backend directly and supports thus the
+\code{\link[Spectra:applyProcessing]{Spectra::applyProcessing()}} function to make data manipulations persistent.
 
 New objects are created with the \code{MsBackendMsp()} function. The
 \code{backendInitialize()} method has to be subsequently called to

@@ -1,3 +1,9 @@
+# MsBackendMsp 1.17
+
+## Changes in 1.17.1
+
+- Refactor the peak extraction to improve overall performance.
+
 # MsBackendMsp 1.15
 
 ## Changes in 1.15.1
