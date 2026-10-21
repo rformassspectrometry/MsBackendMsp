@@ -301,6 +301,15 @@ readMsp <- function(f, msLevel = 2L,
     writeLines(apply(tmp, 1, paste0, collapse = ""), con = con)
 }
 
+#' @rdname MsBackendMsp
+#'
+#' @importFrom Spectra Spectra
+#' 
+#' @export
+MspSpectra <- function(x, ...) {
+    Spectra(x, source = MsBackendMsp(), ...)
+}
+
 ## #' @title Parse the comment field from a MoNA MSP file
 ## #'
 ## #' @description

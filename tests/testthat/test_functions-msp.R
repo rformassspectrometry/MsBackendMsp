@@ -182,3 +182,14 @@ test_that(".set_polarity works", {
     res <- .set_polarity(p)
     expect_equal(res, c("Positive", "Positive", NA_character_, "Negative"))
 })
+
+test_that("MspSpectra works", {
+    f <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
+    s <- MspSpectra(f)
+    expect_s4_class(s, "Spectra")
+    expect_true(all(msLevel(s) == 2L))
+
+    s <- MspSpectra(f, mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
+    expect_s4_class(s, "Spectra")
+    expect_true(sum(!is.na(s$msLevel)) == 2L)
+})
