@@ -1,6 +1,6 @@
 Package: MsBackendMsp
 Title: Mass Spectrometry Data Backend for NIST msp Files
-Version: 1.17.0
+Version: 1.17.1
 Authors@R: 
     c(person(given = "Neumann", family = "Steffen",
              role = c("aut"),
@@ -47,8 +47,8 @@ BugReports: https://github.com/RforMassSpectrometry/MsBackendMsp/issues
 URL: https://github.com/RforMassSpectrometry/MsBackendMsp
 biocViews: Infrastructure, Proteomics, MassSpectrometry, Metabolomics, DataImport
 Roxygen: list(markdown=TRUE)
-RoxygenNote: 7.3.3
 Collate: 
     'hidden_aliases.R'
     'MsBackendMsp.R'
     'functions-msp.R'
+Config/roxygen2/version: 8.1.1

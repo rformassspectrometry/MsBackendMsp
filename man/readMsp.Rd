@@ -25,7 +25,7 @@ variables (see \code{spectraVariableMapping()} help). This allows to
 correctly import also custom fields or data from files with different
 MSP \emph{flavors}.}
 
-\item{BPPARAM}{parallel processing setup. See \code{\link[BiocParallel:register]{BiocParallel::bpparam()}}
+\item{BPPARAM}{parallel processing setup. See \code{\link[BiocParallel:bpparam]{BiocParallel::bpparam()}}
 for more details.}
 
 \item{return.type}{\code{character(1)} defining whether the results should be
@@ -41,7 +41,7 @@ and \code{"intensity"} in a list representation.
 }
 \description{
 The \code{readMsp()} function imports the data from a file in MGF format reading
-all specified fields and returning the data as a \code{\link[S4Vectors:DataFrame-class]{S4Vectors::DataFrame()}}.
+all specified fields and returning the data as a \code{\link[S4Vectors:DataFrame]{S4Vectors::DataFrame()}}.
 
 Format constraints for MSP files:
 \itemize{

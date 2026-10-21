@@ -229,7 +229,13 @@ setMethod("spectraVariableMapping", "MsBackendMsp",
                          smiles = "SMILES",
                          inchi = "INCHI",
                          polarity = "IONMODE",
-                         instrument = "INSTRUMENT"
+                         instrument = "INSTRUMENT",
+                         ontology = "ontology",
+                         instrument_type = "INSTRUMENTTYPE",
+                         links = "LINKS",
+                         comment = "Comment",
+                         splash = "Splash",
+                         peak_count = "Num Peaks"
                      ),
                      "mona" = c(
                          name = "Name",

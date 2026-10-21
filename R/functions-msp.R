@@ -72,19 +72,18 @@ readMsp <- function(f, msLevel = 2L,
     return.type <- match.arg(return.type)
     if (length(f) != 1L)
         stop("Please provide a single msp file.")
-    
+
     msp <- scan(file = f, what = "", sep = "\n", quote = "",
                 allowEscapes = FALSE, quiet = TRUE,
                 blank.lines.skip = FALSE, strip.white = TRUE)
-    
     ## Ignore comments
-    cmts <- grep("^[#]", msp)
-    if (length(cmts))
-        msp <- msp[-cmts]
+    cmts <- grepl("^#", msp, perl = TRUE)
+    if (any(cmts))
+        msp <- msp[!cmts]
 
     ## Find individual records. Instead of grepping by NAME: we use blank
     ## lines. These are expected to separate entries.
-    wsp <- grep("^[[:space:]]|(^$)", msp)
+    wsp <- grep("^[[:space:]]|(^$)", msp, perl = TRUE)
     begin <- c(1, wsp +1L)
     end <- c(wsp -1L, length(msp))
     keep <- begin < end # drop consecutive blank lines.
@@ -94,8 +93,16 @@ readMsp <- function(f, msLevel = 2L,
     sp <- bpmapply(begin, end, FUN = function(a, b) {
          .extract_msp_spectrum(msp[a:b], mapping = mapping)
     }, SIMPLIFY = FALSE, USE.NAMES = FALSE, BPPARAM = BPPARAM)
-    res <- as.data.frame(rbindlist(sp, use.names = TRUE, fill = TRUE))
+    res <- as.data.frame(rbindlist(sp, use.names = TRUE, fill = TRUE,
+                                   ignore.attr = FALSE))
 
+    if (any(colnames(res) == "polarity"))
+        res$polarity <- .parse_polarity(res$polarity)
+    if (any(colnames(res) == "msLevel"))
+        res$msLevel <- suppressWarnings(
+            as.integer(sub("ms", "", res$msLevel,
+                           ignore.case = TRUE, perl = TRUE)))
+    
     spv <- coreSpectraVariables()
     spv <- spv[!names(spv) %in% c("mz", "intensity")]
     for (i in seq_along(res)) {
@@ -111,8 +118,8 @@ readMsp <- function(f, msLevel = 2L,
         res$intensity <- NumericList(res$intensity, compress = FALSE)
     }
     res$dataOrigin <- f
-    if (!any(colnames(res) == "msLevel"))
-        res$msLevel <- as.integer(msLevel)
+    if(!"msLevel" %in% colnames(res))
+      res$msLevel <- as.integer(msLevel)
     res
 }
 
@@ -134,7 +141,7 @@ readMsp <- function(f, msLevel = 2L,
 #' @noRd
 .extract_msp_spectrum <- function(msp, mapping) {
     ## grep description
-    desc.idx <- grep(":", msp)
+    desc.idx <- grep(":", msp, fixed = TRUE)
     desc <- msp[desc.idx]
 
     l <- length(desc.idx)
@@ -144,32 +151,27 @@ readMsp <- function(f, msLevel = 2L,
              "metadata/information is provided in 'name: value' format ",
              "(i.e. name and value of the metadata field separated by ",
              "a \":\").", call. = FALSE)
-    
-    spec <- trimws(msp[-desc.idx], "left")
-    
-    pks <- strsplit(sub("^(\\t|[[:space:]]+)", "", spec),
-                    "[[:space:]]+")
-    anns <- lengths(pks) > 2
-    if (any(anns)) {
+    ## peaks
+    pks <- strsplit(trimws(msp[-desc.idx], "left"), "[[:space:]]+", perl = TRUE)
+    if (any(anns <- lengths(pks) > 2)) {
         warning("Unexpected number of values per peak found. Keeping only the ",
                 "first two values assuming they correspond to m/z and ",
                 "intensity", call. = FALSE)
         pks[anns] <- lapply(pks[anns], function(z) z[1:2])
     }
-    ms <- do.call(rbind, pks)
-    mode(ms) <- "double"
-    
-    if (!length(ms))
+    if (!length(pks) || length(pks[[1L]]) == 1L)
         ms <- matrix(numeric(), ncol = 2L)
-    else {
-        if (anyNA(ms[, 1L]))
-            stop("MSP format error. Missing values (NA) for m/z are not ",
-                 "supported. Please ensure that no missing or non-numeric ",
-                 "values are reported as the peaks' m/z values.", call. = FALSE)
-        if (is.unsorted(ms[, 1L]))
-            ms <- ms[order(ms[, 1L]), ]
-    }
-    
+    else
+        ms <- matrix(
+            as.double(unlist(pks, use.names = FALSE, recursive = FALSE)),
+            ncol = length(pks[[1L]]), byrow = TRUE)    
+    if (anyNA(ms[, 1L]))
+        stop("MSP format error. Missing values (NA) for m/z are not ",
+             "supported. Please ensure that no missing or non-numeric ",
+             "values are reported as the peaks' m/z values.", call. = FALSE)
+    if (nrow(ms) && is.unsorted(ms[, 1L]))
+        ms <- ms[order(ms[, 1L]), , drop = FALSE]
+    ## metadata
     r <- regexpr(":", desc, fixed = TRUE)
     desc <- setNames(trimws(substring(desc, r + 1L, nchar(desc)), "left"),
                      substring(desc, 1L, r - 1L))
@@ -182,50 +184,32 @@ readMsp <- function(f, msLevel = 2L,
 
     ## Handle eventually duplicated names -> list
     if (anyDuplicated(names(desc))) {
-        res <- split(unname(desc), names(desc))
-        dups <- lengths(res) > 1L
-        dup_res <- res[dups]
-        res <- as.data.frame(res[!dups])
+        tbl <- table(names(desc))
+        dup_desc <- desc[names(desc) %in% names(tbl)[tbl > 1L]]
+        desc <- desc[names(desc) %in% names(tbl)[tbl == 1L]] 
+        dup_res <- split(unname(dup_desc), names(dup_desc))
+        res <- as.data.frame.matrix(
+            matrix(desc, nrow = 1, dimnames = list(NULL, names(desc))))
         for (name in names(dup_res))
             res <- do.call("$<-", list(res, name, unname(dup_res[name])))
-    } else res <- as.data.frame(as.list(desc))
-    
-    ## Ensure correct data type
-    ## polarity
-    if (any(have <- colnames(res) == "polarity"))
-        res[, have] <- .process_polarity(res[, have])
-    if (any(have <- colnames(res) == "msLevel"))
-        res[, have] <- .process_mslevel(res[, have])
+    } else res <- as.data.frame(
+               matrix(desc, nrow = 1, dimnames = list(NULL, names(desc))))
 
     res$mz <- list(ms[, 1L])
     res$intensity <- list(ms[, 2L])
     res
 }
 
-.process_polarity <- function(x, input = TRUE) {
-    if (input) {
-        if (grepl("^(p|\\+)", x, ignore.case = TRUE))
-            return(1L)
-        if (grepl("^(n|-)", x, ignore.case = TRUE))
-            return(0L)
-        -1L
-    } else {
-        xnew <- rep(NA_character_, length(x))
-        xnew[x == 1L] <- "Positive"
-        xnew[x == 0L] <- "Negative"
-        xnew
-    }
+.parse_polarity <- function(x) {
+    x <- sub("^(p|\\+).*", "1", x, ignore.case = TRUE, perl = TRUE)
+    as.integer(sub("^(n|\\-).*", "0", x, ignore.case = TRUE, perl = TRUE))
 }
 
-#' @param x value to be formatted
-#'
-#' @param input `logical(1)` whether the data is imported or exported.
-#'
-#' @noRd
-.process_mslevel <- function(x, input = TRUE) {
-    if (input)
-        as.integer(sub("ms", "", x, ignore.case = TRUE))
-    else paste0("MS", x)
+.set_polarity <- function(x) {
+    xnew <- rep(NA_character_, length(x))
+    xnew[x == 1L] <- "Positive"
+    xnew[x == 0L] <- "Negative"
+    xnew
 }
 
 #' @description
@@ -280,9 +264,9 @@ readMsp <- function(f, msLevel = 2L,
     spd <- spectraData(x, spv)
     ## Process any known required data conversions
     if (any(spv == "msLevel"))
-        spd$msLevel <- .process_mslevel(spd$msLevel, input = FALSE)
+        spd$msLevel <- paste0("MS", spd$msLevel)
     if (any(spv == "polarity"))
-        spd$polarity <- .process_polarity(spd$polarity, input = FALSE)
+        spd$polarity <- .set_polarity(spd$polarity)
     idx <- match(colnames(spd), names(mapping))
     colnames(spd)[!is.na(idx)] <- mapping[idx[!is.na(idx)]]
     ## Force variable NAME:
@@ -315,6 +299,17 @@ readMsp <- function(f, msLevel = 2L,
     tmp <- do.call(cbind, c(tmp, list(pks)))
     tmp[grep(": NA\n", tmp, fixed = TRUE)] <- ""
     writeLines(apply(tmp, 1, paste0, collapse = ""), con = con)
+}
+
+#' @rdname MsBackendMsp
+#'
+#' @importFrom Spectra Spectra MsBackendMemory
+#'
+#' @importMethodsFrom Spectra setBackend
+#' 
+#' @export
+MspSpectra <- function(x, ...) {
+    setBackend(Spectra(x, source = MsBackendMsp(), ...), MsBackendMemory())
 }
 
 ## #' @title Parse the comment field from a MoNA MSP file

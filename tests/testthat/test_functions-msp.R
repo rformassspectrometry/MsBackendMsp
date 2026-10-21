@@ -145,24 +145,6 @@ test_that(".extract_msp_spectrum works", {
                    "Unexpected number of values")
 })
 
-test_that(".process_polarity works", {
-    expect_equal(.process_polarity("some"), -1L)
-    expect_equal(.process_polarity("Pos"), 1L)
-    expect_equal(.process_polarity("+"), 1L)
-    expect_equal(.process_polarity("Neg"), 0L)
-    expect_equal(.process_polarity("-"), 0L)
-
-    expect_equal(.process_polarity(1, input = FALSE), "Positive")
-    expect_equal(.process_polarity(0, input = FALSE), "Negative")
-    expect_equal(.process_polarity(2, input = FALSE), NA_character_)
-})
-
-test_that(".process_mslevel works", {
-    expect_equal(.process_mslevel("MS 2"), 2L)
-    expect_equal(.process_mslevel("ms1"), 1L)
-    expect_equal(.process_mslevel(1, input = FALSE), "MS1")
-})
-
 test_that(".export_msp works", {
     spd <- DataFrame(msLevel = c(2L, 1L, 2L), rtime = c(1, 2, 3.2))
     spd$mz <- list(c(12, 14, 45, 56), c(14.1, 34, 56.1), c(12.1, 14.15, 34.1))
@@ -185,4 +167,29 @@ test_that(".export_msp works", {
 
     expect_output(.export_msp(sps, allVariables = FALSE,
                               exportName = FALSE), "RETENTIONTIME: ")
+})
+
+test_that(".parse_polarity works", {
+    x <- c("posi polarity", "Positive", "+ dfd", "+", "neg",
+           "Neg pol", "- ", "bo")
+    expect_warning(res <- .parse_polarity(x))
+    expect_true(is.integer(res))
+    expect_equal(res, c(1L, 1L, 1L, 1L, 0L, 0L, 0L, NA_integer_))
+})
+
+test_that(".set_polarity works", {
+    p <- c(1L, 1L, NA_integer_, 0L)
+    res <- .set_polarity(p)
+    expect_equal(res, c("Positive", "Positive", NA_character_, "Negative"))
+})
+
+test_that("MspSpectra works", {
+    f <- system.file("extdata", "minimona.msp", package = "MsBackendMsp")
+    s <- MspSpectra(f)
+    expect_s4_class(s, "Spectra")
+    expect_true(all(msLevel(s) == 2L))
+
+    s <- MspSpectra(f, mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
+    expect_s4_class(s, "Spectra")
+    expect_true(sum(!is.na(s$msLevel)) == 2L)
 })
