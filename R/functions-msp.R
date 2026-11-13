@@ -134,6 +134,8 @@ readMsp <- function(f, msLevel = 2L,
 #' 
 #' @importFrom stats setNames
 #'
+#' @importFrom stringi stri_split_charclass stri_split_fixed stri_trim_left
+#' 
 #' @note
 #'
 #' https://www.nist.gov/system/files/documents/srd/NIST1aVer22Man.pdf
@@ -145,14 +147,16 @@ readMsp <- function(f, msLevel = 2L,
     desc <- msp[desc.idx]
 
     l <- length(desc.idx)
-    if (desc.idx[1L] != 1L || desc.idx[l] != l)
+    if (!l || desc.idx[l] != l)
         stop("MSP format error. Make sure that data for multiple spectra are ",
              "separated by an empty new line and that general spectrum ",
              "metadata/information is provided in 'name: value' format ",
              "(i.e. name and value of the metadata field separated by ",
              "a \":\").", call. = FALSE)
+
     ## peaks
-    pks <- strsplit(trimws(msp[-desc.idx], "left"), "[[:space:]]+", perl = TRUE)
+    pks <- stri_split_charclass(msp[-desc.idx], "\\p{WHITE_SPACE}",
+                                omit_empty = TRUE)    
     if (any(anns <- lengths(pks) > 2)) {
         warning("Unexpected number of values per peak found. Keeping only the ",
                 "first two values assuming they correspond to m/z and ",
@@ -169,13 +173,13 @@ readMsp <- function(f, msLevel = 2L,
         stop("MSP format error. Missing values (NA) for m/z are not ",
              "supported. Please ensure that no missing or non-numeric ",
              "values are reported as the peaks' m/z values.", call. = FALSE)
-    if (nrow(ms) && is.unsorted(ms[, 1L]))
+    if (nrow(ms) && base::is.unsorted(ms[, 1L]))
         ms <- ms[order(ms[, 1L]), , drop = FALSE]
-    ## metadata
-    r <- regexpr(":", desc, fixed = TRUE)
-    desc <- setNames(trimws(substring(desc, r + 1L, nchar(desc)), "left"),
-                     substring(desc, 1L, r - 1L))
 
+    ## metadata
+    a <- stri_split_fixed(desc, ":", n = 2, simplify = TRUE)
+    desc <- setNames(stri_trim_left(a[, 2L]), a[, 1L])
+    
     ## map fields to spectra variables
     idx <- match(names(desc), mapping)
     not_na <- !is.na(idx)

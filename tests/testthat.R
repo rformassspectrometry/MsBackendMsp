@@ -14,6 +14,3 @@ be <- backendInitialize(
     be, fls, mapping = spectraVariableMapping(MsBackendMsp(), "mona"))
 
 test_dir(test_suite, stop_on_failure = TRUE)
-
-
-

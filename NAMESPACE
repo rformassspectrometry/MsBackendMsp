@@ -17,6 +17,7 @@ importFrom(IRanges,NumericList)
 importFrom(MsCoreUtils,rbindFill)
 importFrom(S4Vectors,DataFrame)
 importFrom(Spectra,
+  MsBackendMemory,
   Spectra,
   coreSpectraVariables
 )
@@ -27,6 +28,11 @@ importFrom(methods,
   validObject
 )
 importFrom(stats,setNames)
+importFrom(stringi,
+  stri_split_charclass,
+  stri_split_fixed,
+  stri_trim_left
+)
 importMethodsFrom(BiocParallel,bplapply)
 importMethodsFrom(ProtGenerics,backendInitialize)
 importMethodsFrom(ProtGenerics,peaksData)
@@ -34,6 +40,7 @@ importMethodsFrom(Spectra,"$")
 importMethodsFrom(Spectra,"$<-")
 importMethodsFrom(Spectra,"spectraData<-")
 importMethodsFrom(Spectra,export)
+importMethodsFrom(Spectra,setBackend)
 importMethodsFrom(Spectra,spectraData)
 importMethodsFrom(Spectra,spectraNames)
 importMethodsFrom(Spectra,spectraVariableMapping)
