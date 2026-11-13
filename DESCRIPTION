@@ -1,6 +1,6 @@
 Package: MsBackendMsp
 Title: Mass Spectrometry Data Backend for NIST msp Files
-Version: 1.17.1
+Version: 1.17.2
 Authors@R: 
     c(person(given = "Neumann", family = "Steffen",
              role = c("aut"),
@@ -33,7 +33,8 @@ Imports:
     MsCoreUtils,
     methods,
     stats,
-    data.table
+    data.table,
+    stringi
 Suggests:
     testthat,
     knitr (>= 1.1.0),
