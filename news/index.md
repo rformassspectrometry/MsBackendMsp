@@ -2,6 +2,10 @@
 
 ## MsBackendMsp 1.17
 
+### Changes in 1.17.2
+
+- Small performance improvement through *stringi*.
+
 ### Changes in 1.17.1
 
 - Refactor the peak extraction to improve overall performance.

@@ -6,7 +6,7 @@
 <https://orcid.org/0000-0002-7899-7192>), Johannes Rainer \[aut, cre\]
 (ORCID: <https://orcid.org/0000-0002-6977-7147>), Michael Witting
 \[ctb\] (ORCID: <https://orcid.org/0000-0002-1462-4426>)\
-**Compiled**: Wed Oct 21 14:21:52 2026
+**Compiled**: Fri Nov 13 11:36:38 2026
 
 ## Introduction
 
@@ -309,8 +309,8 @@ different flavors.
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] MsBackendMsp_1.17.1  Spectra_1.23.5       BiocParallel_1.47.0 
-    ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.12 generics_0.1.4      
+    ## [1] MsBackendMsp_1.17.2  Spectra_1.23.7       BiocParallel_1.47.0 
+    ## [4] S4Vectors_0.51.10    BiocGenerics_0.59.13 generics_0.1.4      
     ## [7] BiocStyle_2.41.0    
     ## 
     ## loaded via a namespace (and not attached):
@@ -320,13 +320,14 @@ different flavors.
     ## [10] yaml_2.3.12            fastmap_1.2.0          R6_2.6.1              
     ## [13] ProtGenerics_1.45.0    knitr_1.52             htmlwidgets_1.6.4     
     ## [16] MASS_7.3-66            bookdown_0.48          desc_1.4.3            
-    ## [19] bslib_0.12.0           rlang_1.3.0            cachem_1.1.0          
-    ## [22] xfun_0.62              fs_2.1.0               MsCoreUtils_1.25.4    
-    ## [25] sass_0.4.10            otel_0.2.0             cli_3.6.6             
-    ## [28] pkgdown_2.2.1.9000     digest_0.6.39          MetaboCoreUtils_1.21.1
-    ## [31] lifecycle_1.0.5        clue_0.3-68            data.table_1.18.6.1   
-    ## [34] evaluate_1.0.5         codetools_0.2-20       ragg_1.5.2            
-    ## [37] rmarkdown_2.32         tools_4.6.1            htmltools_0.5.9
+    ## [19] bslib_0.12.0           rlang_1.3.0            stringi_1.8.9         
+    ## [22] cachem_1.1.0           xfun_0.62              fs_2.1.0              
+    ## [25] MsCoreUtils_1.25.4     sass_0.4.10            otel_0.2.0            
+    ## [28] cli_3.6.6              pkgdown_2.2.1.9000     digest_0.6.39         
+    ## [31] MetaboCoreUtils_1.21.2 lifecycle_1.0.5        clue_0.3-68           
+    ## [34] data.table_1.18.6.1    evaluate_1.0.5         codetools_0.2-20      
+    ## [37] ragg_1.5.2             rmarkdown_2.32         tools_4.6.1           
+    ## [40] htmltools_0.5.9
 
 ## References
 
